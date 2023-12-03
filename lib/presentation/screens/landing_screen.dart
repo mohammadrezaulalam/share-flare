@@ -8,7 +8,7 @@ class LandingScreen extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Center(
-          child: Container(
+          child: SizedBox(
             height: 156,
             width: 295,
             child: Column(
