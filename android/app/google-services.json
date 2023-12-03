@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "633242387263",
+    "project_id": "share-flare-social-app",
+    "storage_bucket": "share-flare-social-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:633242387263:android:39cff3d1cdae0a0275c98a",
+        "android_client_info": {
+          "package_name": "com.rezaulalam.share_flare"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB6mCrOOvqrUIlVV9F7qXGR7mE64ULgMWA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
