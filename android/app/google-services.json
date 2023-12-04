@@ -12,7 +12,20 @@
           "package_name": "com.rezaulalam.share_flare"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "633242387263-6roj73o2dghvs8pmt0329etmpqkck0se.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rezaulalam.share_flare",
+            "certificate_hash": "e31606a5429a7db10c7d5dce1c258929c2dc2c2f"
+          }
+        },
+        {
+          "client_id": "633242387263-e49lr2nin0108sn1m3fal71v7r06l8f7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyB6mCrOOvqrUIlVV9F7qXGR7mE64ULgMWA"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "633242387263-e49lr2nin0108sn1m3fal71v7r06l8f7.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "633242387263-1a0vb7nf895sjh6h50kdr0dt9cc7uipb.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.rezaulalam.shareFlare"
+              }
+            }
+          ]
         }
       }
     }

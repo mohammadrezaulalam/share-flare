@@ -69,6 +69,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '633242387263',
     projectId: 'share-flare-social-app',
     storageBucket: 'share-flare-social-app.appspot.com',
+    androidClientId: '633242387263-6roj73o2dghvs8pmt0329etmpqkck0se.apps.googleusercontent.com',
+    iosClientId: '633242387263-1a0vb7nf895sjh6h50kdr0dt9cc7uipb.apps.googleusercontent.com',
     iosBundleId: 'com.rezaulalam.shareFlare',
   );
 }
