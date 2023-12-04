@@ -25,18 +25,6 @@ class ProfileGridView extends StatelessWidget {
       ),
 
     );
-
-    //   GridView.builder(
-    //   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-    //     crossAxisCount: 2,
-    //     crossAxisSpacing: 8.0,
-    //     mainAxisSpacing: 8.0,
-    //   ),
-    //   itemBuilder: (BuildContext context, int index) {
-    //     return StaggeredTileItem(index: index);
-    //   },
-    //   itemCount: 12,
-    // );
   }
 }
 

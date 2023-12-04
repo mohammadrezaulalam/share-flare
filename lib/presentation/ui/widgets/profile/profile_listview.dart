@@ -12,7 +12,7 @@ class ProfileListView extends StatelessWidget {
         mainAxisSpacing: 4,
         crossAxisSpacing: 4,
         repeatPattern: QuiltedGridRepeatPattern.inverted,
-        pattern: [
+        pattern: const[
           QuiltedGridTile(1, 1),
           QuiltedGridTile(2, 1),
         ],
