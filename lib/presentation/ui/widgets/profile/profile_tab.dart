@@ -22,7 +22,7 @@ class ProfileTabBar extends StatelessWidget {
                   indicator: UnderlineTabIndicator(
                     borderSide: BorderSide(width: 2.0, color: Colors.black),
                     insets: EdgeInsets.symmetric(
-                        horizontal: 20.0), // Adjust the width of the indicator
+                        horizontal: 29.0), // Adjust the width of the indicator
                   ),
                   indicatorColor: Colors.black,
                   tabs: [
@@ -34,10 +34,11 @@ class ProfileTabBar extends StatelessWidget {
                           Icon(
                             Icons.grid_view_outlined,
                             color: Colors.black,
+                            size: 16,
                           ),
                           SizedBox(width: 8),
                           // Add some spacing between icon and text
-                          Text("Grid view"),
+                          Text("Grid view", style: TextStyle(fontSize: 12,),),
                         ],
                       ),
                     ),
@@ -48,10 +49,11 @@ class ProfileTabBar extends StatelessWidget {
                           Icon(
                             Icons.list,
                             color: Colors.black,
+                        size: 16,
                           ),
                           SizedBox(width: 8),
                           // Add some spacing between icon and text
-                          Text("List view"),
+                          Text("List view", style: TextStyle(fontSize: 12,)),
                         ],
                       ),
                     ),

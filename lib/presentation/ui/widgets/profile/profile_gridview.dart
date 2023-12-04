@@ -8,15 +8,14 @@ class ProfileGridView extends StatelessWidget {
   Widget build(BuildContext context) {
     return GridView.custom(
       gridDelegate: SliverQuiltedGridDelegate(
-        crossAxisCount: 4,
-        mainAxisSpacing: 4,
-        crossAxisSpacing: 4,
+        crossAxisCount: 3,
+        mainAxisSpacing: 10,
+        crossAxisSpacing: 10,
         repeatPattern: QuiltedGridRepeatPattern.inverted,
         pattern: const [
           QuiltedGridTile(2, 2),
           QuiltedGridTile(1, 1),
           QuiltedGridTile(1, 1),
-          QuiltedGridTile(1, 2),
         ],
       ),
       childrenDelegate: SliverChildBuilderDelegate(

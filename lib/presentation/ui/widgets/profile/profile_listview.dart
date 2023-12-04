@@ -9,8 +9,8 @@ class ProfileListView extends StatelessWidget {
     return GridView.custom(
       gridDelegate: SliverQuiltedGridDelegate(
         crossAxisCount: 1, // Set crossAxisCount to 1 for a single column
-        mainAxisSpacing: 4,
-        crossAxisSpacing: 4,
+        mainAxisSpacing: 10,
+        crossAxisSpacing: 0,
         repeatPattern: QuiltedGridRepeatPattern.inverted,
         pattern: const[
           QuiltedGridTile(1, 1),
