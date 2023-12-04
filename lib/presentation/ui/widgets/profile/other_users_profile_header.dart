@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:share_flare/presentation/ui/widgets/round_divider.dart';
 
-Widget profileHeaderWidget(BuildContext context) {
+Widget otherProfilesHeaderWidget(BuildContext context) {
   return Container(
     width: double.infinity,
     decoration: const BoxDecoration(color: Colors.white),
     child: Padding(
-      padding: const EdgeInsets.only(left: 10.0, right: 10.0, bottom: 20),
+      padding: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 22),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -18,7 +18,7 @@ Widget profileHeaderWidget(BuildContext context) {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const CircleAvatar(
-                radius: 50,
+                radius: 45,
                 backgroundColor: Color(0xFFFFEB3B),
               ),
               const SizedBox(
@@ -101,7 +101,7 @@ Widget profileHeaderWidget(BuildContext context) {
                     ],
                   ),
                   const SizedBox(
-                    height: 7,
+                    height: 5,
                   ),
                   const Text(
                     "Visit: www.ostad.app",
@@ -119,7 +119,7 @@ Widget profileHeaderWidget(BuildContext context) {
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.grey[200],
                           // Set the button color to light grey
-                          minimumSize: const Size(60, 30),
+                          minimumSize: const Size(15, 30),
                           elevation: 0,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(
@@ -127,7 +127,7 @@ Widget profileHeaderWidget(BuildContext context) {
                         ),
                         child: const Text(
                           "Follow",
-                          style: TextStyle(color: Colors.black),
+                          style: TextStyle(color: Colors.black, fontSize: 12),
                         ),
                       ),
                       const SizedBox(
@@ -140,14 +140,14 @@ Widget profileHeaderWidget(BuildContext context) {
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.grey[200],
                           // Set the button color to light grey
-                          minimumSize: const Size(60, 30),
+                          minimumSize: const Size(15, 30),
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(4)),
                           elevation: 0, // Set the minimum size of the button
                         ),
                         child: const Text(
                           "Message",
-                          style: TextStyle(color: Colors.black),
+                          style: TextStyle(color: Colors.black, fontSize: 12),
                         ),
                       ),
                     ],

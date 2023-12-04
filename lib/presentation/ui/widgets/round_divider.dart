@@ -10,9 +10,10 @@ class RoundDivider extends StatelessWidget {
       child: Container(
         width: 4.0,
         height: 4.0,
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: Colors.grey,), // You can set the color of the dot
+          color: Colors.grey[350],
+        ), // You can set the color of the dot
       ),
     );
   }

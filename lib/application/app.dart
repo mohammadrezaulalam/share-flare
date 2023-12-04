@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:share_flare/presentation/ui/screens/other_users_profile_screen.dart';
+import 'package:share_flare/presentation/ui/screens/own_profile_screen.dart';
 
 import '../presentation/ui/utilities/colors.dart';
 import '../presentation/ui/utilities/theme/theme.dart';
@@ -15,14 +17,7 @@ class MyApp extends StatelessWidget {
       title: 'Share Flare',
       theme: SFAppTheme.lightTheme,
       darkTheme: SFAppTheme.darkTheme,
-      home: const Scaffold(
-        backgroundColor: SFColors.white,
-        body: Center(
-          child: CircularProgressIndicator(
-            color: Colors.red,
-          ),
-        ),
-      ),
+      home:  const OtherUsersProfileScreen(),
     );
   }
 }
