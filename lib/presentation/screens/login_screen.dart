@@ -131,25 +131,30 @@ class _LoginScreenState extends State<LoginScreen> {
                         }),
                   ),
                   const SizedBox(
-                    height: 8,
+                    height: 24,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Checkbox(
-                          activeColor: Colors.blue, //only check box
-                          value: check1, //unchecked
-                          onChanged: (bool? value) {
-                            //value returned when checkbox is clicked
-                            setState(() {
-                              check1 = value;
-                            });
-                          }),
+                      SizedBox(
+                        height: 18,
+                        width: 18,
+                        child: Checkbox(
+                            activeColor: Colors.blue, //only check box
+                            value: check1, //unchecked
+                            onChanged: (bool? value) {
+                              //value returned when checkbox is clicked
+                              setState(() {
+                                check1 = value;
+                              });
+                            }),
+                      ),
+                      const SizedBox(width: 16,),
                       const Text("Save password")
                     ],
                   ),
                   const SizedBox(
-                    height: 8,
+                    height: 16,
                   ),
                   SizedBox(
                     width: double.infinity,

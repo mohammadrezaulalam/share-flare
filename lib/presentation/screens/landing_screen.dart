@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:shareflare/presentation/screens/login_screen.dart';
 
 class LandingScreen extends StatelessWidget {
@@ -15,23 +16,36 @@ class LandingScreen extends StatelessWidget {
             width: 295,
             child: Column(
               children: [
-                const Text("Shareflare"),
-                const SizedBox(height: 40,),
+                Text(
+                  "Shareware",
+                  style: GoogleFonts.lobster(
+                      textStyle: const TextStyle(fontSize: 32)),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
                 SizedBox(
+                  height: 36,
                   width: double.infinity,
                   child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.blue,
-                        shape: RoundedRectangleBorder( //to set border radius to button
-                            borderRadius: BorderRadius.circular(4)
-                        ),
+                        shape: RoundedRectangleBorder(
+                            //to set border radius to button
+                            borderRadius: BorderRadius.circular(4)),
                       ),
                       onPressed: () {},
-                      child: const Text("Create Account",style: TextStyle(color: Colors.white),)),
+                      child: const Text(
+                        "Create Account",
+                        style: TextStyle(color: Colors.white),
+                      )),
                 ),
-                TextButton(onPressed: () {
-                  Get.offAll(()=> const LoginScreen());
-                }, child: const Text("Log in",style: TextStyle(color: Colors.blue)))
+                TextButton(
+                    onPressed: () {
+                      Get.offAll(() => const LoginScreen());
+                    },
+                    child: const Text("Log in",
+                        style: TextStyle(color: Colors.blue)))
               ],
             ),
           ),
