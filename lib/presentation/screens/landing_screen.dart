@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:shareflare/presentation/screens/login_screen.dart';
 
 class LandingScreen extends StatelessWidget {
   const LandingScreen({super.key});
@@ -27,7 +29,9 @@ class LandingScreen extends StatelessWidget {
                       onPressed: () {},
                       child: const Text("Create Account",style: TextStyle(color: Colors.white),)),
                 ),
-                TextButton(onPressed: () {}, child: const Text("Log in",style: TextStyle(color: Colors.blue)))
+                TextButton(onPressed: () {
+                  Get.offAll(()=> const LoginScreen());
+                }, child: const Text("Log in",style: TextStyle(color: Colors.blue)))
               ],
             ),
           ),
