@@ -16,15 +16,15 @@ class _FollowerListTapState extends State<FollowerListTap> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
 
-        Padding(
-          padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-          child: Row(
+          Row(
             mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const CircleAvatar(
                 radius: 19,
@@ -34,18 +34,19 @@ class _FollowerListTapState extends State<FollowerListTap> {
               const SizedBox(
                 width: 10,
               ),
-              const Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              const Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text("Md Shagor",
                     style: TextStyle(fontSize: 14, color: Colors.black87, fontWeight: FontWeight.w600),),
                   SizedBox(
                     height: 0,
                   ),
+                  RoundDivider(),
                   Text(
-                    "@shagor06",
+                    "Follow",
                     style: TextStyle(
-                      color: Colors.grey,
+                      color: Colors.blue,
                       fontWeight: FontWeight.w500,
                       fontSize: 12,
                     ),
@@ -53,8 +54,9 @@ class _FollowerListTapState extends State<FollowerListTap> {
 
                 ],
               ),
+
               const SizedBox(
-                width: 110,
+                width: 70,
               ),
               Expanded(
                 child:
@@ -66,13 +68,13 @@ class _FollowerListTapState extends State<FollowerListTap> {
                     },
                     child: AnimatedContainer (duration: Duration(microseconds:  300), height: 34,
                       decoration: BoxDecoration(
-                          color:  user.isFollowedByMe? Colors.grey[200] : Colors.blue,
+                          color:  Colors.grey[200] ,
 
                           borderRadius: BorderRadius.circular(5),
-                          border: Border.all(color: user.isFollowedByMe? Colors.white24 : Colors.transparent,)
+                          border: Border.all(color:  Colors.transparent,)
                       ),
-                      child: Center(
-                        child: Text(user.isFollowedByMe? 'Unfollow' : 'Follow', style: TextStyle(color: user.isFollowedByMe? Colors.black: Colors.white,fontWeight: FontWeight.w500),),
+                      child: const Center(
+                        child: Text('Remove' , style: TextStyle(color: Colors.black,fontWeight: FontWeight.w500),),
                       ),
                     )
 
@@ -82,12 +84,9 @@ class _FollowerListTapState extends State<FollowerListTap> {
             ],
 
           ),
-        ),
-        Divider(
-          thickness: 1,
-          color: Colors.grey[200],
-        ),
-      ],
+
+        ],
+      ),
     );
   }
 }

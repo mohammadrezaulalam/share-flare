@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:share_flare/presentation/ui/widgets/round_divider.dart';
+
 
 
 
@@ -24,7 +24,7 @@ class _FollowingListTapState extends State<FollowingListTap> {
           padding: const EdgeInsets.only(left: 16.0, right: 16.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const CircleAvatar(
                 radius: 19,
@@ -34,19 +34,18 @@ class _FollowingListTapState extends State<FollowingListTap> {
               const SizedBox(
                 width: 10,
               ),
-              const Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
+              const Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text("Md Shagor",
                     style: TextStyle(fontSize: 14, color: Colors.black87, fontWeight: FontWeight.w600),),
                   SizedBox(
                     height: 0,
                   ),
-                  RoundDivider(),
                   Text(
-                    "Follow",
+                    "@shagor06",
                     style: TextStyle(
-                      color: Colors.blue,
+                      color: Colors.grey,
                       fontWeight: FontWeight.w500,
                       fontSize: 12,
                     ),
@@ -54,9 +53,8 @@ class _FollowingListTapState extends State<FollowingListTap> {
 
                 ],
               ),
-
               const SizedBox(
-                width: 50,
+                width: 110,
               ),
               Expanded(
                 child:
@@ -68,13 +66,13 @@ class _FollowingListTapState extends State<FollowingListTap> {
                     },
                     child: AnimatedContainer (duration: Duration(microseconds:  300), height: 34,
                       decoration: BoxDecoration(
-                          color:  Colors.grey[200] ,
+                          color:  user.isFollowedByMe? Colors.grey[200] : Colors.blue,
 
                           borderRadius: BorderRadius.circular(5),
-                          border: Border.all(color:  Colors.transparent,)
+                          border: Border.all(color: user.isFollowedByMe? Colors.white24 : Colors.transparent,)
                       ),
-                      child: const Center(
-                        child: Text('Remove' , style: TextStyle(color: Colors.black,fontWeight: FontWeight.w500),),
+                      child: Center(
+                        child: Text(user.isFollowedByMe? 'Unfollow' : 'Follow', style: TextStyle(color: user.isFollowedByMe? Colors.black: Colors.white,fontWeight: FontWeight.w500),),
                       ),
                     )
 
@@ -85,7 +83,10 @@ class _FollowingListTapState extends State<FollowingListTap> {
 
           ),
         ),
-
+        Divider(
+          thickness: 1,
+          color: Colors.grey[200],
+        ),
       ],
     );
   }

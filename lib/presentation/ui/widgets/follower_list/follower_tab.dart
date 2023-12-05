@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:share_flare/presentation/ui/widgets/follower_list/follower_list_tap.dart';
-import 'package:share_flare/presentation/ui/widgets/follower_list/following_list.dart';
-import 'package:share_flare/presentation/ui/widgets/profile/profile_gridview.dart';
-import 'package:share_flare/presentation/ui/widgets/profile/profile_listview.dart';
+import 'package:share_flare/presentation/ui/widgets/follower_list/follower_listview.dart';
+import 'package:share_flare/presentation/ui/widgets/follower_list/following_list_tap.dart';
+import 'package:share_flare/presentation/ui/widgets/follower_list/following_listview.dart';
+
 
 class FollowerTabBar extends StatelessWidget {
   const FollowerTabBar({super.key});
@@ -45,8 +45,9 @@ class FollowerTabBar extends StatelessWidget {
             padding: EdgeInsets.all(16.0),
             child: TabBarView(
               children: [
-              FollowerListTap(),
-                FollowingListTap()
+                FollowingListView(),
+                FollowerListView(),
+
               ],
             ),
           ),
