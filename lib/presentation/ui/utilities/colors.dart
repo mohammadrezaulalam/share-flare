@@ -14,6 +14,10 @@ class SFColors{
   static const Color tickBoxBgColor = Color(0xFF8FAEFF);
   static const Color white = Color(0xFFFFFFFF);
   static const Color black = Color(0xFF232323);
+  static const Color storyCardColor = Color(0xFFFDFDFD);
+  static const Color storyLiveColor = Color(0xFFDAD7D7);
+  static const Color liteBackgroundColor = Color(0xF5F5F5F5);
+  static const Color heartRedColor = Color(0xF5F60505);
 
 
 }

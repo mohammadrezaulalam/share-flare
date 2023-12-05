@@ -10,6 +10,9 @@ class SFAppTheme{
       //fontFamily: 'Poppins',
       brightness: Brightness.light,
       scaffoldBackgroundColor: SFColors.white,
+      appBarTheme: AppBarTheme(
+        color: Colors.white,
+      ),
   );
 
   static ThemeData darkTheme = ThemeData(
