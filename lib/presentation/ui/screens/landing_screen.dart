@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shareflare/presentation/screens/login_screen.dart';
+import 'package:shareflare/presentation/ui/screens/login_screen.dart';
+
+import 'login_screen.dart';
 
 class LandingScreen extends StatelessWidget {
   const LandingScreen({super.key});
@@ -17,7 +19,7 @@ class LandingScreen extends StatelessWidget {
             child: Column(
               children: [
                 Text(
-                  "Shareware",
+                  "ShareFlare",
                   style: GoogleFonts.lobster(
                       textStyle: const TextStyle(fontSize: 32)),
                 ),
