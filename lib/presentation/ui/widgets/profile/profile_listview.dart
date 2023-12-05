@@ -6,44 +6,46 @@ class ProfileListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.custom(
-      gridDelegate: SliverQuiltedGridDelegate(
-        crossAxisCount: 1, // Set crossAxisCount to 1 for a single column
-        mainAxisSpacing: 10,
-        crossAxisSpacing: 0,
-        repeatPattern: QuiltedGridRepeatPattern.inverted,
-        pattern: const[
-          QuiltedGridTile(1, 1),
-          QuiltedGridTile(2, 1),
-        ],
-      ),
-      childrenDelegate: SliverChildBuilderDelegate(
-            (context, index) => StaggeredTileItem1(index: index),
-        childCount: 12,
-      ),
+    return  MasonryGridView.builder(
+        itemCount: 11,
+      mainAxisSpacing: 10,
+        physics: const NeverScrollableScrollPhysics(),
+        gridDelegate: const SliverSimpleGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 1),
+        itemBuilder: (context, index) =>
+            Container(decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8), // Adjust the radius as needed
+            ),
+    child: ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: Image.asset(
+                    'assets/images/img_${index + 1}.png',fit: BoxFit.cover,),
+              ),
+            ),
+
     );
   }
 }
 
 
-class StaggeredTileItem1 extends StatelessWidget {
-  final int index;
-
-  const StaggeredTileItem1({super.key, required this.index});
-
-  @override
-  Widget build(BuildContext context) {
-    // Adjust the size based on your requirements
-    double tileHeight = index.isEven ? 200.0 : 100.0;
-
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.yellow,
-        borderRadius: BorderRadius.circular(8.0), // Adjust the radius as needed
-      ), // Adjust the color based on your requirements
-      child: Center(
-        child: Text('Item $index'),
-      ),
-    );
-  }
-}
+// class StaggeredTileItem1 extends StatelessWidget {
+//   final int index;
+//
+//   const StaggeredTileItem1({super.key, required this.index});
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     // Adjust the size based on your requirements
+//     double tileHeight = index.isEven ? 200.0 : 100.0;
+//
+//     return Container(
+//       decoration: BoxDecoration(
+//         color: Colors.yellow,
+//         borderRadius: BorderRadius.circular(8.0), // Adjust the radius as needed
+//       ), // Adjust the color based on your requirements
+//       child: Center(
+//         child: Text('Item $index'),
+//       ),
+//     );
+//   }
+// }

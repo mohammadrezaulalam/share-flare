@@ -1,52 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class ProfileGridView extends StatelessWidget {
   const ProfileGridView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return GridView.custom(
-      gridDelegate: SliverQuiltedGridDelegate(
-        crossAxisCount: 3,
+    return  MasonryGridView.builder(
+      itemCount: 11,
         mainAxisSpacing: 10,
         crossAxisSpacing: 10,
-        repeatPattern: QuiltedGridRepeatPattern.inverted,
-        pattern: const [
-          QuiltedGridTile(2, 2),
-          QuiltedGridTile(1, 1),
-          QuiltedGridTile(1, 1),
-        ],
-      ),
-      childrenDelegate: SliverChildBuilderDelegate(
-            (context, index) => StaggeredTileItem(index: index),
-        childCount: 12,
-      ),
+            physics: const NeverScrollableScrollPhysics(),
+            gridDelegate: const SliverSimpleGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2),
+            itemBuilder: (context, index) =>
+                Container(decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8), // Adjust the radius as needed
+                ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Image.asset(
+                      'assets/images/img_${index + 1}.png',fit: BoxFit.cover,),
+                  ),
+                ),
 
     );
   }
-}
-
-class StaggeredTileItem extends StatelessWidget {
-  final int index;
-
-  const StaggeredTileItem({super.key, required this.index});
-
-  @override
-  Widget build(BuildContext context) {
-    // Adjust the size based on your requirements
-    double tileHeight = index.isEven ? 200.0 : 100.0;
-
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.yellow,
-        borderRadius: BorderRadius.circular(8.0), // Adjust the radius as needed
-      ),
-
-      // Adjust the color based on your requirements
-      child: Center(
-        child: Text('Item $index'),
-      ),
-    );
   }
-}
+
+
+

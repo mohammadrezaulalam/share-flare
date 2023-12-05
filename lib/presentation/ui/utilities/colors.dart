@@ -14,6 +14,10 @@ class SFColors{
   static const Color tickBoxBgColor = Color(0xFF8FAEFF);
   static const Color white = Color(0xFFFFFFFF);
   static const Color black = Color(0xFF232323);
+  static const Color mainText = Color(0xFF2E3E5C);
+  static const Color SecondaryText = Color(0xFF9FA5C0);
+  static const Color outline = Color(0xFFD0DBEA);
+  static const Color form = Color(0xFFF4F5F7);
 
 
 }
