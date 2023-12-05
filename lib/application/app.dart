@@ -11,12 +11,15 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+   // Get.changeTheme(Get.isDarkMode? ThemeData.light(): ThemeData.dark());
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Share Flare',
       theme: SFAppTheme.lightTheme,
       darkTheme: SFAppTheme.darkTheme,
+      themeMode: ThemeMode.system,
       home: HomePage(),
     );
   }
+
 }

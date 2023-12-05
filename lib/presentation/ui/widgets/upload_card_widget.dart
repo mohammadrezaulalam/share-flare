@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:share_flare/presentation/ui/utilities/assets_path.dart';
 import 'package:share_flare/presentation/ui/utilities/colors.dart';
+import 'package:share_flare/presentation/ui/utilities/theme/theme.dart';
 import 'package:share_flare/presentation/ui/widgets/comment_list_title_widges.dart';
 import 'package:share_flare/presentation/ui/widgets/comment_text_field.dart';
 
@@ -21,6 +22,7 @@ class _UploadCardWidgetState extends State<UploadCardWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final dark = SFAppTheme.isDarkMode(context);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
@@ -43,13 +45,13 @@ class _UploadCardWidgetState extends State<UploadCardWidget> {
                 ),
               ),
               const SizedBox(width: 10.0,),
-              const Column(
+               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     'Kathryn Annee',
                     style: TextStyle(
-                      color: Color(0xFF1D2939),
+                      color: dark ? SFColors.white : SFColors.darkCardBackgroundColor,
                       fontSize: 16,
                       fontWeight: FontWeight.w700,
                       height: 0.07,
@@ -59,7 +61,7 @@ class _UploadCardWidgetState extends State<UploadCardWidget> {
                   Text(
                     '@anny2002',
                     style: TextStyle(
-                      color: Color(0xFF475467),
+                      color: dark ? SFColors.darkContainerSubtitleColor : Color(0xFF475467),
                       fontSize: 12,
                       fontWeight: FontWeight.w400,
                       height: 0.12,
@@ -72,10 +74,9 @@ class _UploadCardWidgetState extends State<UploadCardWidget> {
                 height: 35,
                 width: 35,
                 decoration: const BoxDecoration(
-                  color: SFColors.bottomNavActiveColor,
                   shape: BoxShape.circle,
                 ),
-                child: const Icon(Iconsax.notification, size: 20,),
+                child: const Icon(Icons.more_vert, size: 20,),
               ),
             ],
           ),
@@ -104,16 +105,16 @@ class _UploadCardWidgetState extends State<UploadCardWidget> {
               const SizedBox(width: 8,),
               GestureDetector(
                 onTap: () {
-                  _showBottomSheet();
+                  _showBottomSheet(context);
                 },
-                child: const Row(
+                child:  Row(
                   children: [
                     Icon(Iconsax.message, size: 20,),
                     SizedBox(width: 8,),
                     Text(
                       '20 comments',
                       style: TextStyle(
-                        color: Color(0xFF101828),
+                        color: dark ? SFColors.white:  Color(0xFF101828),
                         fontSize: 14,
                         fontFamily: 'Satoshi',
                         fontWeight: FontWeight.w500,
@@ -154,7 +155,7 @@ class _UploadCardWidgetState extends State<UploadCardWidget> {
               Expanded(
                   child: GestureDetector(
                     onTap: () {
-                      _showBottomSheet();
+                      _showBottomSheet(context);
                       setState(() {});
                     },
                     child: const SizedBox(
@@ -181,15 +182,14 @@ class _UploadCardWidgetState extends State<UploadCardWidget> {
     );
   }
 
-  _showBottomSheet() {
+  _showBottomSheet(BuildContext context) {
+    final dark = SFAppTheme.isDarkMode(context);
     showModalBottomSheet(
         context: context,
         builder: (context) {
           return Padding(
-            padding: EdgeInsets.only(bottom: MediaQuery
-                .of(context)
-                .viewInsets
-                .bottom + 20),
+            padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom + 20,
+            ),
             child: SizedBox(
               height: 400,
               child: Column(
@@ -200,17 +200,17 @@ class _UploadCardWidgetState extends State<UploadCardWidget> {
                     width: 40,
                     height: 4,
                     decoration: ShapeDecoration(
-                      color: const Color(0xFF1D2939),
+                      color: dark ? SFColors.white : Color(0xFF1D2939),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(3)),
                     ),
                   ),
                   const SizedBox(height: 20.0,),
-                  const Text(
+                   Text(
                     'Comment',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      color: Color(0xFF1D2939),
+                      color: dark ? SFColors.white : Color(0xFF1D2939),
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
                       height: 0.08,

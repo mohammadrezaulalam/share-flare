@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:share_flare/presentation/ui/utilities/assets_path.dart';
 import 'package:share_flare/presentation/ui/utilities/colors.dart';
+import 'package:share_flare/presentation/ui/utilities/theme/theme.dart';
 
 class CommentListTileWidget extends StatefulWidget {
   @override
@@ -13,6 +14,7 @@ class _CommentListTileWidgetState extends State<CommentListTileWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final dark = SFAppTheme.isDarkMode(context);
     return ListTile(
       titleAlignment: ListTileTitleAlignment.top,
       leading: Container(
@@ -38,7 +40,7 @@ class _CommentListTileWidgetState extends State<CommentListTileWidget> {
               Text(
                 'mferdous12',
                 style: TextStyle(
-                  color: Color(0xFF1D2939),
+                  color: dark ? SFColors.white : Color(0xFF1D2939),
                   fontSize: 12,
                   fontWeight: FontWeight.w500,
                   height: 0.14,
@@ -50,7 +52,7 @@ class _CommentListTileWidgetState extends State<CommentListTileWidget> {
                 child: Text(
                   '2 hours ago',
                   style: TextStyle(
-                    color: Color(0xFF98A2B3),
+                    color: dark ? SFColors.white : Color(0xFF98A2B3),
                     fontSize: 12,
                     fontWeight: FontWeight.w500,
                     height: 0.14,
@@ -63,7 +65,7 @@ class _CommentListTileWidgetState extends State<CommentListTileWidget> {
           Text(
             'Nice picture you have captured 🔥 ',
             style: TextStyle(
-              color: Color(0xFF1D2939),
+              color: dark ? SFColors.white :  Color(0xFF1D2939),
               fontSize: 14,
               fontWeight: FontWeight.w400,
               height: 1,
@@ -73,7 +75,7 @@ class _CommentListTileWidgetState extends State<CommentListTileWidget> {
           Text(
             'Replay',
             style: TextStyle(
-              color: Color(0xFF475467),
+              color: dark ? SFColors.white.withOpacity(0.6) : Color(0xFF475467),
               fontSize: 12,
               fontFamily: 'Inter',
               fontWeight: FontWeight.w400,

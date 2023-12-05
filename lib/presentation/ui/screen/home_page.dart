@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:share_flare/presentation/ui/utilities/assets_path.dart';
 import 'package:share_flare/presentation/ui/utilities/colors.dart';
+import 'package:share_flare/presentation/ui/utilities/theme/theme.dart';
 import 'package:share_flare/presentation/ui/widgets/upload_card_widget.dart';
 
 class HomePage extends StatefulWidget {
@@ -27,12 +29,11 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final dark = SFAppTheme.isDarkMode(context);
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      backgroundColor: SFColors.liteBackgroundColor,
+      backgroundColor: dark ? SFColors.darkBackgroundColor : SFColors.liteBackgroundColor,
       appBar: AppBar(
-        backgroundColor: SFColors.white,
-        //elevation: 2,
         leadingWidth: 50,
         leading: Padding(
           padding: const EdgeInsets.only(left: 16.0),
@@ -44,8 +45,8 @@ class _HomePageState extends State<HomePage> {
           Container(
               height: 35,
               width: 35,
-              decoration: const BoxDecoration(
-                color: SFColors.bottomNavActiveColor,
+              decoration:  BoxDecoration(
+                color: dark ? null : SFColors.bottomNavActiveColor,
                 shape: BoxShape.circle,
               ),
 
@@ -53,9 +54,9 @@ class _HomePageState extends State<HomePage> {
           const SizedBox(width: 10.0,),
           Container(
               height: 35,
-              width: 35,
-              decoration: const BoxDecoration(
-                color: SFColors.bottomNavActiveColor,
+              width:  35,
+              decoration: BoxDecoration(
+                color: dark ? null : SFColors.bottomNavActiveColor,
                 shape: BoxShape.circle,
               ),
               child: const Icon(Iconsax.messages_2,size: 20,)),
@@ -66,7 +67,7 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           children: [
             Container(
-              color: SFColors.white,
+              color: Get.isDarkMode ? SFColors.darkCardBackgroundColor : SFColors.white,
               child: Padding(
                 padding: const EdgeInsets.only(left: 16,top: 16,bottom: 16,right: 8),
                 child: SizedBox(
@@ -155,7 +156,7 @@ class _HomePageState extends State<HomePage> {
                     return Container(
                       height: 450,
                       decoration: BoxDecoration(
-                        color: SFColors.white,
+                        color: dark ? SFColors.darkCardBackgroundColor : SFColors.white,
                         borderRadius: BorderRadius.circular(8.0),
                       ),
                       child: UploadCardWidget(),
