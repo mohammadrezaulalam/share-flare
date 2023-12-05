@@ -14,10 +14,19 @@ class SFColors{
   static const Color tickBoxBgColor = Color(0xFF8FAEFF);
   static const Color white = Color(0xFFFFFFFF);
   static const Color black = Color(0xFF232323);
+  static const Color storyCardColor = Color(0xFFFDFDFD);
+  static const Color storyLiveColor = Color(0xFFDAD7D7);
+  static const Color liteBackgroundColor = Color(0xF5F5F5F5);
+  static const Color darkCardBackgroundColor = Color(0xFF1D2939);
+  static const Color darkBackgroundColor = Color(0xFF101828);
+  static const Color heartRedColor = Color(0xF5F60505);
+  static const Color darkContainerSubtitleColor = Color(0xFF98A2B3);
+
   static const Color textInputFieldInactiveBorderColor = Color(0xFFD0D5DD);
   static const Color textInputFieldInactiveBorderColorDark = Color(0xFF6C6C6C);
   static const Color searchIconTextColor = Color(0xFF475467);
   static const Color searchIconTextColorDark = Color(0xFF808080);
+
 
 
 }

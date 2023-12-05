@@ -4,14 +4,17 @@ import '../colors.dart';
 
 class SFAppTheme{
   SFAppTheme._();
-
+  static bool isDarkMode(BuildContext context){
+    return Theme.of(context).brightness == Brightness.dark;
+  }
   static ThemeData lightTheme = ThemeData(
       //useMaterial3: true,
       //fontFamily: 'Poppins',
       brightness: Brightness.light,
       scaffoldBackgroundColor: SFColors.white,
       appBarTheme: const AppBarTheme(
-      backgroundColor: SFColors.white
+        backgroundColor: SFColors.white
+
     ),
   );
 
@@ -21,7 +24,8 @@ class SFAppTheme{
       brightness: Brightness.dark,
       scaffoldBackgroundColor: SFColors.black,
       appBarTheme: const AppBarTheme(
-          backgroundColor: SFColors.black
-      ),
+        backgroundColor: SFColors.black,
+    ),
+
   );
 }
