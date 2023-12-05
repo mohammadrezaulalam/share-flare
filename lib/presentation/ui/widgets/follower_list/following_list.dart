@@ -66,7 +66,7 @@ class _FollowingListTapState extends State<FollowingListTap> {
                         user.isFollowedByMe= ! user.isFollowedByMe;
                       });
                     },
-                    child: AnimatedContainer (duration: Duration(microseconds:  300), height: 35,
+                    child: AnimatedContainer (duration: Duration(microseconds:  300), height: 34,
                       decoration: BoxDecoration(
                           color:  Colors.grey[200] ,
 

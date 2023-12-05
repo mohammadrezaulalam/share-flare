@@ -29,10 +29,10 @@ class FollowerTabBar extends StatelessWidget {
                   indicatorColor: Colors.black,
                   tabs: [
                     Tab(
-                      child:   Text("Following", style: TextStyle(fontSize: 12,),),
+                      child:   Text("Following", style: TextStyle(fontSize: 13,),),
                     ),
                     Tab(
-                      child:   Text("Follower", style: TextStyle(fontSize: 12,),),
+                      child:   Text("Follower", style: TextStyle(fontSize: 13,),),
                     ),
                   ],
                 ),

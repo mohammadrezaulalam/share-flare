@@ -19,7 +19,7 @@ class _FollowerScreenState extends State<FollowerScreen> {
         child: AppBar(
             backgroundColor: Colors.white,
             title: const Text(
-              'My Followers',
+              'My Follower',
               style: TextStyle(color: Colors.black),
             ),
             elevation: 0,
