@@ -86,7 +86,7 @@ class _HomePageState extends State<HomePage> {
                         child: Card(
                           elevation: 0,
                           margin: EdgeInsets.zero,
-                          color: SFColors.storyCardColor,
+                          color: dark ? SFColors.darkCardBackgroundColor : SFColors.storyCardColor,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10.0),
                             side: BorderSide(color: Colors.grey.withOpacity(0.2),width: 1)
@@ -124,10 +124,10 @@ class _HomePageState extends State<HomePage> {
                                   )
                                 ],
                               ),
-                              const SizedBox(height: 12.0,),
+                              const SizedBox(height: 14.0,),
                               Text(storyItems[index]['name']!,
-                                style: const TextStyle(
-                                  color: Color(0xFF1D2939),
+                                style: TextStyle(
+                                  color: dark ? SFColors.white : Color(0xFF1D2939),
                                   fontSize: 12,
                                  // fontFamily: 'Satoshi',
                                   fontWeight: FontWeight.w600,
