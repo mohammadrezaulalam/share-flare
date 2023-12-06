@@ -38,11 +38,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   @override
   Widget build(BuildContext context) {
-       return Scaffold(
-    
+    return Scaffold(
       backgroundColor: SFColors.white,
       appBar: AppBar(
-         flexibleSpace: Container(
+        flexibleSpace: Container(
           color: SFColors.white, // Set the background color explicitly
         ),
         backgroundColor: SFColors.white,
@@ -137,18 +136,28 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   height: 5,
                 ),
                 TextFormField(
-                  controller: emailTE,
-                  onChanged: (value) {
-                    emailCheck = value;
-                    setState(() {});
-                  },
-                  decoration: const InputDecoration(
-                    hintText: 'Input Email',
-                    // prefixIcon: Icon(Icons.email),
+                    controller: emailTE,
+                    onChanged: (value) {
+                      emailCheck = value;
+                      setState(() {});
+                    },
+                    decoration: const InputDecoration(
+                      hintText: 'Input Email',
+                      // prefixIcon: Icon(Icons.email),
 
-                    prefixIcon: Icon(Icons.email),
-                  ),
-                ),
+                      prefixIcon: Icon(Icons.email),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter an email address';
+                      } else if (!RegExp(
+                              r'^[a-zA-Z0-9.+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]+$')
+                          .hasMatch(value)) {
+                        return 'Invalid email address';
+                      } else {
+                        return null;
+                      }
+                    }),
                 const SizedBox(
                   height: 15,
                 ),
@@ -165,24 +174,33 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   },
                   obscureText: isShowPassword,
                   decoration: InputDecoration(
-                      hintText: 'Input Password',
-                      prefixIcon: const Icon(Icons.lock),
-                      suffixIcon: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            isShowPassword = !isShowPassword;
-                          });
-                        },
-                        child: isShowPassword
-                            ? const Icon(
-                                Icons.visibility_off_outlined,
-                                color: Colors.black,
-                              )
-                            : const Icon(
-                                Icons.remove_red_eye_outlined,
-                                color: Colors.black,
-                              ),
-                      )),
+                    hintText: 'Input Password',
+                    prefixIcon: const Icon(Icons.lock),
+                    suffixIcon: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          isShowPassword = !isShowPassword;
+                        });
+                      },
+                      child: isShowPassword
+                          ? const Icon(
+                              Icons.visibility_off_outlined,
+                              color: Colors.black,
+                            )
+                          : const Icon(
+                              Icons.remove_red_eye_outlined,
+                              color: Colors.black,
+                            ),
+                    ),
+                  ),
+                   validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your password';
+                  } else if (value.length < 6) {
+                    return 'Password must be at least 6 characters';
+                  }
+                  return null;
+                },
                 ),
                 const SizedBox(
                   height: 25,
@@ -200,6 +218,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                               colorText: Colors.white,
                             )
                           : null;
+
+                      if (!_formKey.currentState!.validate()) {
+                        return;
+                      }
                     },
                     style: ElevatedButton.styleFrom(
                         backgroundColor: isButtonEnable()
