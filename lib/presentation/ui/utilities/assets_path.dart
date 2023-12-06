@@ -1,3 +1,4 @@
+
 class SFAssetsPath {
   SFAssetsPath._();
   static const String _assetPath = 'assets/images';
@@ -7,4 +8,9 @@ class SFAssetsPath {
   static const String friend2PNG = '$_assetPath/friend2.png';
   static const String uploadImagePNG = '$_assetPath/upload_image.png';
   static const String rectangleImage = "$_assetPath/rectangle.png";
+  
+   
+  static const String cameraImagePNG = '_assetPath/camera.png';
+  static const String galleryImagePNG = '_assetPath/gallery.png';
 }
+
