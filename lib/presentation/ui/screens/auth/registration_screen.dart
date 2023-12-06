@@ -15,20 +15,26 @@ class RegistrationScreen extends StatefulWidget {
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
   bool isShowPassword = false;
+  bool isShowRepeatPassword = false;
   final TextEditingController emailTE = TextEditingController();
   final TextEditingController passwordTE = TextEditingController();
+  final TextEditingController rePasswordTE = TextEditingController();
   final TextEditingController firstNameTE = TextEditingController();
   final TextEditingController lastNameTE = TextEditingController();
   final TextEditingController userNameTE = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  bool _passwordsMatch = false;
   String? emailCheck;
   String? passwordCheck;
+  String? reEnterpasswordCheck;
   String? firstNameCheck;
   String? lastNameCheck;
   String? userNameCheck;
+
   bool isButtonEnable() {
     bool check = (emailCheck?.isNotEmpty ?? false) &&
         (passwordCheck?.isNotEmpty ?? false) &&
+        (reEnterpasswordCheck?.isNotEmpty ?? false) &&
         (firstNameCheck?.isNotEmpty ?? false) &&
         (lastNameCheck?.isNotEmpty ?? false) &&
         (userNameCheck?.isNotEmpty ?? false);
@@ -161,8 +167,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 const SizedBox(
                   height: 15,
                 ),
-                const Text('Password',
-                    style: TextStyle(fontWeight: FontWeight.w500)),
+                const Text(
+                  'Password',
+                  style: TextStyle(fontWeight: FontWeight.w500),
+                ),
                 const SizedBox(
                   height: 5,
                 ),
@@ -193,14 +201,58 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             ),
                     ),
                   ),
-                   validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your password';
-                  } else if (value.length < 6) {
-                    return 'Password must be at least 6 characters';
-                  }
-                  return null;
-                },
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your password';
+                    } else if (value.length < 6) {
+                      return 'Password must be at least 6 characters';
+                    }
+                    return null;
+                  },
+                ),
+
+                //re-enter password
+                const SizedBox(
+                  height: 15,
+                ),
+                const Text(
+                  'Repeat-Password',
+                  style: TextStyle(fontWeight: FontWeight.w500),
+                ),
+
+                const SizedBox(
+                  height: 5,
+                ),
+                TextFormField(
+                  controller: rePasswordTE,
+                  onChanged: (value) {
+                    reEnterpasswordCheck = value;
+                    if (passwordTE.text == value) {
+                      _passwordsMatch = true;
+                    }
+                    if (passwordTE.text != value) {
+                      _passwordsMatch = false;
+                    }
+                    setState(() {});
+                  },
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    hintText: 're-enter your password',
+                    prefixIcon: const Icon(Icons.lock),
+                    suffixIcon: reEnterpasswordCheck?.isNotEmpty ?? false
+                        ? _passwordsMatch
+                            ? Icon(Icons.check, color: Colors.green)
+                            : Icon(Icons.close, color: Colors.red)
+                        : null,
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please re-enter your password';
+                    } else if (value != passwordTE.text) {
+                      return 'Passwords do not match';
+                    }
+                    return null;
+                  },
                 ),
                 const SizedBox(
                   height: 25,
