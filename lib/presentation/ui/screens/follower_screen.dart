@@ -24,7 +24,8 @@ class _FollowerScreenState extends State<FollowerScreen> {
             title: Text(
               'My Follower',
               style: TextStyle(
-                  color: dark ? SFColors.white : const Color(0xFF1D2939)),
+                fontWeight: FontWeight.w600,
+                  color: dark ? SFColors.white : const Color(0xFF1D2939),),
             ),
             elevation: 0,
             leading: IconButton(
