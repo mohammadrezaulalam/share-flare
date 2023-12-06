@@ -10,7 +10,7 @@ class SFAssetsPath {
   static const String rectangleImage = "$_assetPath/rectangle.png";
   
    
-  static const String cameraImagePNG = '_assetPath/camera.png';
-  static const String galleryImagePNG = '_assetPath/gallery.png';
+  static const String cameraImagePNG = '$_assetPath/camera.png';
+  static const String galleryImagePNG = '$_assetPath/gallery.png';
 }
 

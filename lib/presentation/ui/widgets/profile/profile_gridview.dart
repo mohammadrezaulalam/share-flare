@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:transparent_image/transparent_image.dart';
 
 class ProfileGridView extends StatelessWidget {
   const ProfileGridView({super.key});
