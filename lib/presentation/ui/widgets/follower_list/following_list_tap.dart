@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:share_flare/presentation/ui/utilities/colors.dart';
+import 'package:share_flare/presentation/ui/utilities/theme/theme.dart';
 
 
 
@@ -16,6 +18,7 @@ class _FollowingListTapState extends State<FollowingListTap> {
 
   @override
   Widget build(BuildContext context) {
+    final dark = SFAppTheme.isDarkMode(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -34,11 +37,11 @@ class _FollowingListTapState extends State<FollowingListTap> {
               const SizedBox(
                 width: 10,
               ),
-              const Column(
+             Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text("Md Shagor",
-                    style: TextStyle(fontSize: 14, color: Colors.black87, fontWeight: FontWeight.w600),),
+                    style: TextStyle(fontSize: 14,  color: dark ? SFColors.white : const Color(0xFF1D2939), fontWeight: FontWeight.w600),),
                   SizedBox(
                     height: 0,
                   ),
@@ -54,7 +57,7 @@ class _FollowingListTapState extends State<FollowingListTap> {
                 ],
               ),
               const SizedBox(
-                width: 120,
+                width: 125,
               ),
               Expanded(
                 child:

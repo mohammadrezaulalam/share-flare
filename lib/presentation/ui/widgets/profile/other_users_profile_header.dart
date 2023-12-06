@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:share_flare/presentation/ui/utilities/colors.dart';
+import 'package:share_flare/presentation/ui/utilities/theme/theme.dart';
 import 'package:share_flare/presentation/ui/widgets/round_divider.dart';
 
 Widget otherProfilesHeaderWidget(BuildContext context) {
+  final dark = SFAppTheme.isDarkMode(context);
   return Container(
     width: double.infinity,
-    decoration: const BoxDecoration(color: Colors.white),
+    decoration:  BoxDecoration(color: dark ? const Color(0xFF1D2939) : SFColors.white),
     child: Padding(
       padding: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 22),
       child: Column(

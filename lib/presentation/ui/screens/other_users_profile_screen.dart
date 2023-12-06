@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:share_flare/presentation/ui/utilities/colors.dart';
+import 'package:share_flare/presentation/ui/utilities/theme/theme.dart';
 import 'package:share_flare/presentation/ui/widgets/profile/other_users_profile_header.dart';
 import 'package:share_flare/presentation/ui/widgets/profile/profile_gridview.dart';
 import 'package:share_flare/presentation/ui/widgets/profile/profile_listview.dart';
@@ -16,21 +18,23 @@ class OtherUsersProfileScreen extends StatefulWidget {
 class _OtherUsersProfileScreenState extends State<OtherUsersProfileScreen> {
   @override
   Widget build(BuildContext context) {
+    final dark = SFAppTheme.isDarkMode(context);
     return Scaffold(
+      backgroundColor: dark ? SFColors.darkBackgroundColor : SFColors.white,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(60),
         child: AppBar(
-            backgroundColor: Colors.white,
-            title: const Text(
+            backgroundColor: dark ? const Color(0xFF1D2939) : SFColors.white,
+            title:  Text(
               'Ostad_app',
-              style: TextStyle(color: Colors.black),
+              style: TextStyle(color: dark ? SFColors.white : const Color(0xFF1D2939)),
             ),
             elevation: 0,
             leading: IconButton(
               onPressed: () {},
-              icon: const Icon(
+              icon:  Icon(
                 Icons.arrow_back_ios_new_outlined,
-                color: Colors.black54,
+                color: dark ? SFColors.white : const Color(0xFF1D2939),
               ),
             )),
       ),

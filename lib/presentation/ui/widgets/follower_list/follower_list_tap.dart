@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:share_flare/presentation/ui/utilities/colors.dart';
+import 'package:share_flare/presentation/ui/utilities/theme/theme.dart';
 import 'package:share_flare/presentation/ui/widgets/round_divider.dart';
 
 
@@ -16,8 +18,9 @@ class _FollowerListTapState extends State<FollowerListTap> {
 
   @override
   Widget build(BuildContext context) {
+    final dark = SFAppTheme.isDarkMode(context);
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.only(top:8, bottom: 8, left: 8.0, right: 8.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -34,16 +37,16 @@ class _FollowerListTapState extends State<FollowerListTap> {
               const SizedBox(
                 width: 10,
               ),
-              const Row(
+            Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text("Md Shagor",
-                    style: TextStyle(fontSize: 14, color: Colors.black87, fontWeight: FontWeight.w600),),
-                  SizedBox(
+                    style: TextStyle(fontSize: 14,  color: dark ? SFColors.white : const Color(0xFF1D2939), fontWeight: FontWeight.w600),),
+                  const SizedBox(
                     height: 0,
                   ),
-                  RoundDivider(),
-                  Text(
+                  const RoundDivider(),
+                  const Text(
                     "Follow",
                     style: TextStyle(
                       color: Colors.blue,
@@ -66,7 +69,7 @@ class _FollowerListTapState extends State<FollowerListTap> {
                         user.isFollowedByMe= ! user.isFollowedByMe;
                       });
                     },
-                    child: AnimatedContainer (duration: Duration(microseconds:  300), height: 34,
+                    child: AnimatedContainer (duration: const Duration(microseconds:  300), height: 34,
                       decoration: BoxDecoration(
                           color:  Colors.grey[200] ,
 
