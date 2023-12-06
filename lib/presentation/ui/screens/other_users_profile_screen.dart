@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:share_flare/presentation/ui/utilities/colors.dart';
 import 'package:share_flare/presentation/ui/utilities/theme/theme.dart';
 import 'package:share_flare/presentation/ui/widgets/profile/other_users_profile_header.dart';
-import 'package:share_flare/presentation/ui/widgets/profile/profile_gridview.dart';
-import 'package:share_flare/presentation/ui/widgets/profile/profile_listview.dart';
 import 'package:share_flare/presentation/ui/widgets/profile/profile_tab.dart';
 // import 'package:iconsax/iconsax.dart';
 
@@ -24,15 +23,23 @@ class _OtherUsersProfileScreenState extends State<OtherUsersProfileScreen> {
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(60),
         child: AppBar(
+            flexibleSpace: Container(
+              color: dark
+                  ? const Color(0xFF1D2939)
+                  : SFColors.white, // Set the background color explicitly
+            ),
             backgroundColor: dark ? const Color(0xFF1D2939) : SFColors.white,
-            title:  Text(
+            title: Text(
               'Ostad_app',
-              style: TextStyle(color: dark ? SFColors.white : const Color(0xFF1D2939)),
+              style: TextStyle(
+                  color: dark ? SFColors.white : const Color(0xFF1D2939)),
             ),
             elevation: 0,
             leading: IconButton(
-              onPressed: () {},
-              icon:  Icon(
+              onPressed: () {
+                Get.back();
+              },
+              icon: Icon(
                 Icons.arrow_back_ios_new_outlined,
                 color: dark ? SFColors.white : const Color(0xFF1D2939),
               ),

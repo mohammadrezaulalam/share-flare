@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter/services.dart';
 import 'package:share_flare/data/utllity/responsive_helper.dart';
+import 'package:share_flare/presentation/ui/screens/auth/login_screen.dart';
 import 'package:share_flare/presentation/ui/screens/auth/registration_screen.dart';
 import 'package:share_flare/presentation/ui/widgets/app_title.dart';
 import 'package:share_flare/presentation/ui/widgets/bottom_rectangular_image.dart';
@@ -54,7 +55,8 @@ class WelcomeScreen extends StatelessWidget {
                 children: [
                   TextButton(
                     onPressed: () {
-                      // Get.to(()=>const SignInScreen());
+                      Get.to(()=>const LoginScreen());
+                      // Get.to(() => HomePage());
                     },
                     child: const Text("Log In"),
                   ),

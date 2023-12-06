@@ -22,12 +22,17 @@ class _OwnProfileScreenState extends State<OwnProfileScreen> {
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(62),
         child: AppBar(
+          flexibleSpace: Container(
+            // color: SFColors.white,
+            color: dark ? const Color(0xFF1D2939) : SFColors.white,
+          ),
           backgroundColor: dark ? const Color(0xFF1D2939) : SFColors.white,
           title: Center(
             child: Text(
               'My Profile',
-              style:
-                  TextStyle(color: dark ? SFColors.white : const Color(0xFF1D2939), fontWeight: FontWeight.w700),
+              style: TextStyle(
+                  color: dark ? SFColors.white : const Color(0xFF1D2939),
+                  fontWeight: FontWeight.w700),
             ),
           ),
           elevation: 0,
@@ -44,7 +49,11 @@ class _OwnProfileScreenState extends State<OwnProfileScreen> {
                   delegate: SliverChildListDelegate(
                     [
                       ownProfileHeaderWidget(context),
-                      Divider(thickness: 7, color: dark? SFColors.darkBackgroundColor : Colors.grey[100]),
+                      Divider(
+                          thickness: 7,
+                          color: dark
+                              ? SFColors.darkBackgroundColor
+                              : Colors.grey[100]),
                     ],
                   ),
                 ),
