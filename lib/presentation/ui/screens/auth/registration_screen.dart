@@ -15,14 +15,17 @@ class RegistrationScreen extends StatefulWidget {
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
   bool isShowPassword = false;
+
   bool isShowRepeatPassword = false;
   final TextEditingController emailTE = TextEditingController();
   final TextEditingController passwordTE = TextEditingController();
   final TextEditingController rePasswordTE = TextEditingController();
+
   final TextEditingController firstNameTE = TextEditingController();
   final TextEditingController lastNameTE = TextEditingController();
   final TextEditingController userNameTE = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   bool _passwordsMatch = false;
   String? emailCheck;
   String? passwordCheck;
@@ -35,6 +38,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     bool check = (emailCheck?.isNotEmpty ?? false) &&
         (passwordCheck?.isNotEmpty ?? false) &&
         (reEnterpasswordCheck?.isNotEmpty ?? false) &&
+
         (firstNameCheck?.isNotEmpty ?? false) &&
         (lastNameCheck?.isNotEmpty ?? false) &&
         (userNameCheck?.isNotEmpty ?? false);
@@ -44,10 +48,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       backgroundColor: SFColors.white,
       appBar: AppBar(
         flexibleSpace: Container(
+
           color: SFColors.white, // Set the background color explicitly
         ),
         backgroundColor: SFColors.white,
@@ -142,6 +148,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   height: 5,
                 ),
                 TextFormField(
+
                     controller: emailTE,
                     onChanged: (value) {
                       emailCheck = value;
@@ -220,10 +227,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   style: TextStyle(fontWeight: FontWeight.w500),
                 ),
 
+
                 const SizedBox(
                   height: 5,
                 ),
                 TextFormField(
+
                   controller: rePasswordTE,
                   onChanged: (value) {
                     reEnterpasswordCheck = value;
@@ -253,6 +262,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     }
                     return null;
                   },
+
                 ),
                 const SizedBox(
                   height: 25,
@@ -271,9 +281,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             )
                           : null;
 
+
                       if (!_formKey.currentState!.validate()) {
                         return;
                       }
+
                     },
                     style: ElevatedButton.styleFrom(
                         backgroundColor: isButtonEnable()

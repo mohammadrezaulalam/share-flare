@@ -25,14 +25,18 @@ class CustomSearchBar extends StatelessWidget {
               width: 1.1,
               color: Get.isDarkMode ? SFColors.textInputFieldInactiveBorderColorDark : SFColors.textInputFieldInactiveBorderColor,
             ),
+
             borderRadius: BorderRadius.circular(8),
+
           ),
           focusedBorder: OutlineInputBorder(
             borderSide: const BorderSide(
               width: 1.5,
               color: SFColors.chatActiveColor,
             ),
+
             borderRadius: BorderRadius.circular(8),
+
           ),
         ),
       ),
