@@ -5,7 +5,8 @@ import 'package:share_flare/presentation/ui/screens/main_bottom_nav_screen.dart'
 import 'package:share_flare/presentation/ui/utilities/colors.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+   const LoginScreen({super.key, this.isComesFromRegistration=false});
+  final bool isComesFromRegistration;
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
@@ -31,6 +32,13 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        leading: widget.isComesFromRegistration ? null: IconButton(
+            onPressed: () {
+              Get.back();
+            },
+            icon: const Icon(Icons.arrow_back_ios_new_rounded)),
+      ),
       body: SafeArea(
         child: Stack(
           children: [
@@ -171,7 +179,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       SizedBox(
                         width: double.infinity,
                         child: ElevatedButton(
-                        
                           onPressed: () {
                             isButtonEnable()
                                 ? Get.snackbar(
