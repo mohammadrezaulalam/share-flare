@@ -24,7 +24,7 @@ class _FollowingListTapState extends State<FollowingListTap> {
       children: [
 
         Padding(
-          padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+          padding: const EdgeInsets.only(left: 8.0, right: 8.0 , bottom: 8.0, top: 8.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -42,10 +42,10 @@ class _FollowingListTapState extends State<FollowingListTap> {
                 children: [
                   Text("Md Shagor",
                     style: TextStyle(fontSize: 14,  color: dark ? SFColors.white : const Color(0xFF1D2939), fontWeight: FontWeight.w600),),
-                  SizedBox(
+                  const SizedBox(
                     height: 0,
                   ),
-                  Text(
+                  const Text(
                     "@shagor06",
                     style: TextStyle(
                       color: Colors.grey,
@@ -69,13 +69,13 @@ class _FollowingListTapState extends State<FollowingListTap> {
                     },
                     child: AnimatedContainer (duration: Duration(microseconds:  300), height: 34,
                       decoration: BoxDecoration(
-                          color:  user.isFollowedByMe? Colors.grey[200] : Colors.blue,
+                          color:  user.isFollowedByMe? Colors.grey[200] : Color(0xFF6993FF),
 
                           borderRadius: BorderRadius.circular(5),
                           border: Border.all(color: user.isFollowedByMe? Colors.white24 : Colors.transparent,)
                       ),
                       child: Center(
-                        child: Text(user.isFollowedByMe? 'Unfollow' : 'Follow', style: TextStyle(color: user.isFollowedByMe? Colors.black: Colors.white,fontWeight: FontWeight.w500),),
+                        child: Text(user.isFollowedByMe? 'Unfollow' : 'Follow', style: TextStyle(color: user.isFollowedByMe? Colors.black: Colors.white,fontWeight: FontWeight.w600),),
                       ),
                     )
 
@@ -87,8 +87,8 @@ class _FollowingListTapState extends State<FollowingListTap> {
           ),
         ),
         Divider(
-          thickness: 1,
-          color: Colors.grey[200],
+          thickness: 0,
+          color:  dark ?  Colors.grey[200] : Colors.grey[300]
         ),
       ],
     );
