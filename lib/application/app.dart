@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:share_flare/presentation/ui/screens/home_page.dart';
 import 'package:share_flare/application/state_holder_binder.dart';
+import 'package:share_flare/presentation/ui/screens/main_bottom_nav_screen.dart';
 
 
 
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
       theme: SFAppTheme.lightTheme,
       darkTheme: SFAppTheme.darkTheme,
       themeMode: ThemeMode.system,
-      home: HomePage(),
+      home: MainBottomNavScreen(),
     );
   }
 
