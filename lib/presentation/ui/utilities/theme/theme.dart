@@ -42,6 +42,22 @@ class SFAppTheme {
           ),
         ),
       ),
+       //TextFormField style
+        inputDecorationTheme: InputDecorationTheme(
+          contentPadding: EdgeInsets.zero,
+          border: OutlineInputBorder(
+              borderSide:
+                  const BorderSide(color: Color.fromARGB(255, 118, 208, 226)),
+              borderRadius: BorderRadius.circular(4)),
+          enabledBorder: OutlineInputBorder(
+              borderSide:
+                  const BorderSide(color: Color.fromARGB(255, 118, 208, 226)),
+              borderRadius: BorderRadius.circular(4)),
+          focusedBorder: OutlineInputBorder(
+              borderSide:
+                  const BorderSide(color: Color.fromARGB(255, 118, 208, 226)),
+              borderRadius: BorderRadius.circular(4)),
+        ),
       appBarTheme: const AppBarTheme(
         backgroundColor: SFColors.white,
       ),
