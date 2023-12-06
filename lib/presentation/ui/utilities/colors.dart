@@ -22,5 +22,11 @@ class SFColors{
   static const Color heartRedColor = Color(0xF5F60505);
   static const Color darkContainerSubtitleColor = Color(0xFF98A2B3);
 
+  static const Color textInputFieldInactiveBorderColor = Color(0xFFD0D5DD);
+  static const Color textInputFieldInactiveBorderColorDark = Color(0xFF6C6C6C);
+  static const Color searchIconTextColor = Color(0xFF475467);
+  static const Color searchIconTextColorDark = Color(0xFF808080);
+
+
 
 }
