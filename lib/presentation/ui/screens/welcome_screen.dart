@@ -30,7 +30,7 @@ class WelcomeScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Spacer(),
+              const Spacer(),
               const AppTitle(),
               SizedBox(
                 height: ResponsiveHelper.screenHeight * 0.05,
@@ -55,18 +55,12 @@ class WelcomeScreen extends StatelessWidget {
                 children: [
                   TextButton(
                     onPressed: () {
-                      Get.to(()=>const LoginScreen());
+                      Get.to(()=> const LoginScreen());
                       // Get.to(() => HomePage());
                     },
                     child: const Text("Log In"),
                   ),
-                  /*    GestureDetector(
-                    onTap: () {},
-                    child: const Icon(
-                      Icons.keyboard_arrow_down_sharp,
-                      color: Colors.blueAccent,
-                    ),
-                  ) */
+                  
                 ],
               ),
               const BottomRectangularImage(),

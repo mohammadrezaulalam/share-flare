@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:share_flare/data/utllity/responsive_helper.dart';
+import 'package:share_flare/presentation/ui/screens/auth/login_screen.dart';
 import 'package:share_flare/presentation/ui/utilities/colors.dart';
 import 'package:share_flare/presentation/ui/widgets/app_title.dart';
 import 'package:share_flare/presentation/ui/widgets/bottom_rectangular_image.dart';
@@ -38,7 +38,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     bool check = (emailCheck?.isNotEmpty ?? false) &&
         (passwordCheck?.isNotEmpty ?? false) &&
         (reEnterpasswordCheck?.isNotEmpty ?? false) &&
-
         (firstNameCheck?.isNotEmpty ?? false) &&
         (lastNameCheck?.isNotEmpty ?? false) &&
         (userNameCheck?.isNotEmpty ?? false);
@@ -48,12 +47,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       backgroundColor: SFColors.white,
       appBar: AppBar(
         flexibleSpace: Container(
-
           color: SFColors.white, // Set the background color explicitly
         ),
         backgroundColor: SFColors.white,
@@ -148,7 +145,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   height: 5,
                 ),
                 TextFormField(
-
                     controller: emailTE,
                     onChanged: (value) {
                       emailCheck = value;
@@ -227,12 +223,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   style: TextStyle(fontWeight: FontWeight.w500),
                 ),
 
-
                 const SizedBox(
                   height: 5,
                 ),
                 TextFormField(
-
                   controller: rePasswordTE,
                   onChanged: (value) {
                     reEnterpasswordCheck = value;
@@ -250,8 +244,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     prefixIcon: const Icon(Icons.lock),
                     suffixIcon: reEnterpasswordCheck?.isNotEmpty ?? false
                         ? _passwordsMatch
-                            ? Icon(Icons.check, color: Colors.green)
-                            : Icon(Icons.close, color: Colors.red)
+                            ? const Icon(Icons.check, color: Colors.green)
+                            : const Icon(Icons.close, color: Colors.red)
                         : null,
                   ),
                   validator: (value) {
@@ -262,7 +256,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     }
                     return null;
                   },
-
                 ),
                 const SizedBox(
                   height: 25,
@@ -272,26 +265,18 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   child: ElevatedButton(
                     onPressed: () {
                       isButtonEnable()
-                          ? Get.snackbar(
-                              'Success',
-                              'Requesting in server',
-                              snackPosition: SnackPosition.BOTTOM,
-                              backgroundColor: Colors.blue,
-                              colorText: Colors.white,
-                            )
+                          ? Get.offAll(() =>  const LoginScreen(isComesFromRegistration:true),)
                           : null;
-
 
                       if (!_formKey.currentState!.validate()) {
                         return;
                       }
-
                     },
                     style: ElevatedButton.styleFrom(
                         backgroundColor: isButtonEnable()
                             ? SFColors.buttonActiveColor
                             : SFColors.buttonDisableColor),
-                    child: Text("NEXT"),
+                    child: const Text("NEXT"),
                   ),
                 ),
 
