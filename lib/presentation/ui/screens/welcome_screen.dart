@@ -63,7 +63,9 @@ class WelcomeScreen extends StatelessWidget {
                   
                 ],
               ),
+              const Spacer(),
               const BottomRectangularImage(),
+
             ],
           ),
         ),

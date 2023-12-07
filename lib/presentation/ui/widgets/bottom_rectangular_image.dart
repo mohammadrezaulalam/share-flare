@@ -6,12 +6,11 @@ class BottomRectangularImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Align(
-        alignment: Alignment.bottomCenter,
-        child: Image.asset(
-          SFAssetsPath.rectangleImage,
-        ),
+    return Align(
+      alignment: Alignment.bottomCenter,
+      child: Image.asset(
+        SFAssetsPath.rectangleImage,
+          fit: BoxFit.cover,
       ),
     );
   }

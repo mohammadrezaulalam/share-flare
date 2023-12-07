@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:share_flare/presentation/ui/screens/chat_screen.dart';
 import 'package:share_flare/presentation/ui/screens/notification_screen.dart';
 import 'package:share_flare/presentation/ui/screens/other_users_profile_screen.dart';
 import 'package:share_flare/presentation/ui/utilities/assets_path.dart';
 import 'package:share_flare/presentation/ui/utilities/colors.dart';
 import 'package:share_flare/presentation/ui/utilities/theme/theme.dart';
+import 'package:share_flare/presentation/ui/widgets/app_title.dart';
 import 'package:share_flare/presentation/ui/widgets/upload_card_widget.dart';
 
 class HomePage extends StatefulWidget {
@@ -46,6 +48,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         title: const Text("Share Flare"),
+        // title: AppTitle(),
         centerTitle: true,
         actions: [
           Container(
@@ -110,6 +113,11 @@ class _HomePageState extends State<HomePage> {
                           _selectedIndex = index;
                           _selectedColors[_selectedIndex] =
                               SFColors.storyLiveColor;
+                          //chat screen load when click on any friend's profile
+                          if(_selectedIndex!=0){
+                            Get.to(()=>ChatScreen(userName: storyItems[_selectedIndex]['name']!, image: storyItems[_selectedIndex]['img']!,),);
+                          }
+
                           setState(() {});
                         },
                         child: Card(

@@ -12,5 +12,7 @@ class SFAssetsPath {
    
   static const String cameraImagePNG = '$_assetPath/camera.png';
   static const String galleryImagePNG = '$_assetPath/gallery.png';
+  static const String phone = '$_assetPath/phone.png';
+  static const String videoCamera = '$_assetPath/video_camera.png';
 }
 
