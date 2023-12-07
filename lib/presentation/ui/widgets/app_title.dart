@@ -5,7 +5,7 @@ class AppTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      'SociaLive',
+      'ShareFlare',
       style: Theme.of(context).textTheme.titleLarge?.copyWith(
         fontFamily: 'Lobster',
         fontWeight: FontWeight.w500,
