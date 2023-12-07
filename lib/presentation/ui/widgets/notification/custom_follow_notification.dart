@@ -84,15 +84,15 @@ class _CustomFollowNotificationState extends State<CustomFollowNotification> {
                           user.isFollowedByMe= ! user.isFollowedByMe;
                         });
                       },
-                      child: AnimatedContainer (duration: Duration(microseconds:  300), height: 35,
+                      child: AnimatedContainer (duration: const Duration(microseconds:  300), height: 35,
                         decoration: BoxDecoration(
-                            color:  user.isFollowedByMe? Colors.grey[200] : Colors.blue,
+                            color:  user.isFollowedByMe? Colors.grey[200] : const Color(0xFF6993FF),
 
                             borderRadius: BorderRadius.circular(5),
                             border: Border.all(color: user.isFollowedByMe? Colors.white24 : Colors.transparent,)
                         ),
                         child: Center(
-                          child: Text(user.isFollowedByMe? 'unfollow' : 'follow', style: TextStyle(color: user.isFollowedByMe? Colors.black: Colors.white,fontWeight: FontWeight.w500),),
+                          child: Text(user.isFollowedByMe? 'Unfollow' : 'Follow', style: TextStyle(color: user.isFollowedByMe? Colors.black: Colors.white,fontWeight: FontWeight.w500),),
                         ),
                       )
 

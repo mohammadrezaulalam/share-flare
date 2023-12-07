@@ -16,26 +16,26 @@ class FollowerTabBar extends StatelessWidget {
         Material(
         color:   dark ?  const Color(0xFF1D2939): SFColors.white,
           child:  Padding(
-            padding: EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 12),
+            padding: const EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 12),
             child: Stack(
               children: [
                 TabBar(
 
                   labelColor: Colors.black,
-                  unselectedLabelColor: Colors.grey,
+                  unselectedLabelColor: dark ? const Color(0xFF1D2939): const Color(0xFF1D2939),
                   indicatorSize: TabBarIndicatorSize.label,
                   indicator: UnderlineTabIndicator(
-                    borderSide: BorderSide(width: 2.0, color: dark ? SFColors.white : const Color(0xFF1D2939)),
-                    insets: EdgeInsets.symmetric(
+                    borderSide: BorderSide(width: 2.0, color: dark ? SFColors.white : const Color(0xFF667085)),
+                    insets: const EdgeInsets.symmetric(
                         horizontal: 0.0), // Adjust the width of the indicator
                   ),
                   indicatorColor: Colors.black,
                   tabs: [
                     Tab(
-                      child:   Text("Following", style: TextStyle(fontSize: 13, color: dark ? SFColors.white : const Color(0xFF1D2939),),),
+                      child:   Text("Following", style: TextStyle(fontSize: 13, color: dark ? SFColors.white : const Color(0xFF1D2939),fontWeight: FontWeight.w600),),
                     ),
                     Tab(
-                      child:   Text("Follower", style: TextStyle(fontSize: 13, color: dark ? SFColors.white : const Color(0xFF1D2939),),),
+                      child:   Text("Follower", style: TextStyle(fontSize: 13, color: dark ? SFColors.white : const Color(0xFF1D2939),fontWeight: FontWeight.w600),),
                     ),
                   ],
                 ),
@@ -50,7 +50,6 @@ class FollowerTabBar extends StatelessWidget {
               children: [
                 FollowingListView(),
                 FollowerListView(),
-
               ],
             ),
           ),
