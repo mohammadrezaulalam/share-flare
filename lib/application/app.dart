@@ -13,6 +13,7 @@ import 'package:share_flare/presentation/ui/screens/welcome_screen.dart';
 import 'package:share_flare/presentation/ui/utilities/colors.dart';
 //import '../presentation/ui/utilities/colors.dart';
 
+import '../presentation/ui/screens/chat_screen.dart';
 import '../presentation/ui/utilities/theme/theme.dart';
 
 class MyApp extends StatelessWidget {
@@ -37,6 +38,7 @@ class MyApp extends StatelessWidget {
 
       // home: const HomePage(),
       home: const WelcomeScreen(),
+      // home: const ChatScreen(userName: 'Ismail',),
 
     );
   }

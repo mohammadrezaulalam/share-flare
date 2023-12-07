@@ -26,6 +26,8 @@ class SFColors{
   static const Color textInputFieldInactiveBorderColorDark = Color(0xFF6C6C6C);
   static const Color searchIconTextColor = Color(0xFF475467);
   static const Color searchIconTextColorDark = Color(0xFF808080);
+  static const Color chatScreenBackground = Color(0xFFf9f9fa);
+  static const Color chatTextBackground = Color(0xFF6993ff);
 
 
 

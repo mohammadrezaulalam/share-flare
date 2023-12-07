@@ -11,6 +11,7 @@ class BottomRectangularImage extends StatelessWidget {
         alignment: Alignment.bottomCenter,
         child: Image.asset(
           SFAssetsPath.rectangleImage,
+            fit: BoxFit.cover,
         ),
       ),
     );
