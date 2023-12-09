@@ -6,6 +6,9 @@ import 'package:share_flare/presentation/ui/utilities/colors.dart';
 import 'package:share_flare/presentation/ui/widgets/app_title.dart';
 import 'package:share_flare/presentation/ui/widgets/bottom_rectangular_image.dart';
 
+import '../../../state_holders/auth_controller.dart';
+import '../../utilities/auth_constant.dart';
+// AuthController auth = Get.put(AuthController());
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({super.key});
 
@@ -95,7 +98,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             bottom: 3,
                             child: IconButton(
                               onPressed: () {
-                                // authController.pickedImage();
+                                authController.pickedImage();
                                 print('add photo');
                               },
                               icon: const Icon(Icons.add_a_photo),
@@ -293,21 +296,37 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 ),
                 SizedBox(
                   width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      isButtonEnable()
-                          ? Get.offAll(() =>  const LoginScreen(isComesFromRegistration:true),)
-                          : null;
-
-                      if (!_formKey.currentState!.validate()) {
-                        return;
+                  child: GetBuilder<AuthController>(
+                    builder: (controller) {
+                      if(controller.isLoading){
+                        return const Center(child: CircularProgressIndicator());
                       }
-                    },
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: isButtonEnable()
-                            ? SFColors.buttonActiveColor
-                            : SFColors.buttonDisableColor),
-                    child: const Text("NEXT"),
+                      return ElevatedButton(
+                        onPressed: ()  {
+                          if (!_formKey.currentState!.validate()) {
+                            return;
+                          }
+                          controller.registerUser(
+                              firstNameTE.text,
+                              lastNameTE.text,
+                              userNameTE.text,
+                              controller.profilePhoto,
+                              emailTE.text,
+                              passwordTE.text);
+                        /*  isButtonEnable()
+                              ? Get.offAll(() =>  const LoginScreen(isComesFromRegistration:true),)
+                              : null;*/
+
+
+
+                        },
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: isButtonEnable()
+                                ? SFColors.buttonActiveColor
+                                : SFColors.buttonDisableColor),
+                        child: const Text("NEXT"),
+                      );
+                    }
                   ),
                 ),
 
