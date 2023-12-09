@@ -55,6 +55,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         ),
         backgroundColor: SFColors.white,
         elevation: 0,
+        title: const AppTitle(),
         leading: IconButton(
           onPressed: () {
             Get.back();
@@ -76,7 +77,37 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const AppTitle(),
+
+                Center(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Stack(
+                        children: [
+                          const CircleAvatar(
+                            radius: 60,
+                            backgroundImage: NetworkImage(
+                                'https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png'),
+                            backgroundColor: Colors.black,
+                          ),
+                          Positioned(
+                            left: 80,
+                            bottom: 3,
+                            child: IconButton(
+                              onPressed: () {
+                                // authController.pickedImage();
+                                print('add photo');
+                              },
+                              icon: const Icon(Icons.add_a_photo),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 5,),
+                      Text("Profile photo",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w400,color:Colors.redAccent),),
+                    ],
+                  ),
+                ),
                 const SizedBox(
                   height: 25,
                 ),
