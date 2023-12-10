@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:share_flare/data/utllity/responsive_helper.dart';
@@ -8,6 +10,7 @@ import 'package:share_flare/presentation/ui/widgets/bottom_rectangular_image.dar
 
 import '../../../state_holders/auth_controller.dart';
 import '../../utilities/auth_constant.dart';
+
 // AuthController auth = Get.put(AuthController());
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({super.key});
@@ -80,36 +83,50 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-
                 Center(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Stack(
-                        children: [
-                          const CircleAvatar(
-                            radius: 60,
-                            backgroundImage: NetworkImage(
-                                'https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png'),
-                            backgroundColor: Colors.black,
-                          ),
-                          Positioned(
-                            left: 80,
-                            bottom: 3,
-                            child: IconButton(
-                              onPressed: () {
-                                authController.pickedImage();
-                                print('add photo');
-                              },
-                              icon: const Icon(Icons.add_a_photo),
+                  child: Obx(() {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Stack(
+                          children: [
+                            CircleAvatar(
+                              radius: 60,
+                              backgroundImage: authController
+                                      .profilePhoto.isEmpty
+                                  ?  const NetworkImage(
+                                          'https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png')
+                                  : FileImage(File(authController.profilePhoto))
+                                      as ImageProvider<Object>?,
+                              backgroundColor: Colors.black,
                             ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 5,),
-                      Text("Profile photo",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w400,color:Colors.redAccent),),
-                    ],
-                  ),
+
+                            Positioned(
+                              left: 80,
+                              bottom: 3,
+                              child: IconButton(
+                                onPressed: () {
+                                  authController.pickedImage();
+                                  print('add photo');
+                                },
+                                icon: const Icon(Icons.add_a_photo),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          "Profile photo",
+                          style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.redAccent),
+                        ),
+                      ],
+                    );
+                  }),
                 ),
                 const SizedBox(
                   height: 25,
@@ -296,38 +313,33 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 ),
                 SizedBox(
                   width: double.infinity,
-                  child: GetBuilder<AuthController>(
-                    builder: (controller) {
-                      if(controller.isLoading){
-                        return const Center(child: CircularProgressIndicator());
-                      }
-                      return ElevatedButton(
-                        onPressed: ()  {
-                          if (!_formKey.currentState!.validate()) {
-                            return;
-                          }
-                          controller.registerUser(
-                              firstNameTE.text,
-                              lastNameTE.text,
-                              userNameTE.text,
-                              controller.profilePhoto,
-                              emailTE.text,
-                              passwordTE.text);
+                  child: GetBuilder<AuthController>(builder: (controller) {
+                    if (controller.isLoading) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+                    return ElevatedButton(
+                      onPressed: () {
+                        if (!_formKey.currentState!.validate()) {
+                          return;
+                        }
+                        controller.registerUser(
+                            firstNameTE.text,
+                            lastNameTE.text,
+                            userNameTE.text,
+                            controller.profilePhoto,
+                            emailTE.text,
+                            passwordTE.text);
                         /*  isButtonEnable()
                               ? Get.offAll(() =>  const LoginScreen(isComesFromRegistration:true),)
                               : null;*/
-
-
-
-                        },
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: isButtonEnable()
-                                ? SFColors.buttonActiveColor
-                                : SFColors.buttonDisableColor),
-                        child: const Text("NEXT"),
-                      );
-                    }
-                  ),
+                      },
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: isButtonEnable()
+                              ? SFColors.buttonActiveColor
+                              : SFColors.buttonDisableColor),
+                      child: const Text("NEXT"),
+                    );
+                  }),
                 ),
 
                 const SizedBox(

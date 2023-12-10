@@ -9,23 +9,26 @@ class AuthController extends GetxController{
   static AuthController instance = Get.find();
 
   bool _isLoading = false;
-  late Rx<File?> _pickImage;
+  RxString _imagePath = ''.obs;
   bool get isLoading => _isLoading;
   //picked Image
-File? get profilePhoto => _pickImage.value;
+String get profilePhoto => _imagePath.value;
 
 void pickedImage()async{
   final pickedImage = await ImagePicker().pickImage(source: ImageSource.gallery);
   if(pickedImage != null){
+    //put image path
+    _imagePath.value=pickedImage.path.toString();
     Get.snackbar('Profile Picture',
         'You have successfully selected your profile picture!');
   }
-  //put image path
-  _pickImage = Rx<File?>(File(pickedImage!.path));
+
+
 }
 
 //method for upload the firebase storage(image upload)
-Future<String> _uploadToStorage(File image) async{
+Future<String> _uploadToStorage(String imagepath) async{
+  File image = File(imagepath); // string to File convert
   Reference ref = firebaseStorage
       .ref()
       .child('profilePics')
@@ -41,7 +44,7 @@ Future<String> _uploadToStorage(File image) async{
   String firstName,
   String lastName,
   String userName,
-  File? image, // we are saving photo url not photo that's why string
+  String image, // we are saving photo url not photo that's why string
   String email,
   String password )async{
   _isLoading = true;
@@ -53,7 +56,8 @@ Future<String> _uploadToStorage(File image) async{
      lastName.isNotEmpty &&
      userName.isNotEmpty &&
      email.isNotEmpty &&
-     image !=null &&
+     // image !=null &&
+     image.isNotEmpty &&
      password.isNotEmpty
     ){
      UserCredential cred = await firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
@@ -61,6 +65,7 @@ Future<String> _uploadToStorage(File image) async{
 
      //add model class
       UserModelRegistration user = UserModelRegistration(firstName: firstName, lastName: lastName, userName: userName, profilePhoto: downloadUrl, email: email, uid: cred.user!.uid);
+
       //add data to firestore database
       await fireStore
      .collection('users')
