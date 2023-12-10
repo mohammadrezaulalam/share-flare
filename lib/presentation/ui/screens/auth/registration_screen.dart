@@ -21,9 +21,9 @@ class RegistrationScreen extends StatefulWidget {
 }
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
-  bool isShowPassword = false;
+  bool isShowPassword = true;
 
-  bool isShowRepeatPassword = false;
+  // bool isShowRepeatPassword = false;
   final TextEditingController emailTE = TextEditingController();
   final TextEditingController passwordTE = TextEditingController();
   final TextEditingController rePasswordTE = TextEditingController();
