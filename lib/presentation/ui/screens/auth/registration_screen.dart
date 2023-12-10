@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:share_flare/data/utllity/responsive_helper.dart';
 import 'package:share_flare/presentation/ui/screens/auth/login_screen.dart';
+import 'package:share_flare/presentation/ui/utilities/assets_path.dart';
 import 'package:share_flare/presentation/ui/utilities/colors.dart';
 import 'package:share_flare/presentation/ui/widgets/app_title.dart';
 import 'package:share_flare/presentation/ui/widgets/bottom_rectangular_image.dart';
@@ -94,11 +95,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                               radius: 60,
                               backgroundImage: authController
                                       .profilePhoto.isEmpty
-                                  ?  const NetworkImage(
-                                          'https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png')
+                                  ?  const AssetImage(SFAssetsPath.profilePhotoUpload)
                                   : FileImage(File(authController.profilePhoto))
                                       as ImageProvider<Object>?,
-                              backgroundColor: Colors.black,
+                              backgroundColor: SFColors.white,
                             ),
 
                             Positioned(
@@ -114,10 +114,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 5,
                         ),
-                        Text(
+                        const Text(
                           "Profile photo",
                           style: TextStyle(
                               fontSize: 18,
