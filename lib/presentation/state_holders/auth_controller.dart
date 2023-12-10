@@ -1,3 +1,4 @@
+import 'dart:ffi';
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -39,8 +40,8 @@ Future<String> _uploadToStorage(String imagepath) async{
   return downloadUrl;
 }
 
-//registering the user
-  void registerUser(
+//registering the user, make this method for Future<bool> only for use await and .then() method in signup screen
+  Future<bool> registerUser(
   String firstName,
   String lastName,
   String userName,
@@ -75,6 +76,7 @@ Future<String> _uploadToStorage(String imagepath) async{
         _isLoading = false;
         update();
         Get.snackbar("Success", 'Success');
+        return true; //
       });
     }else{
       Get.snackbar("Error Creating Account", 'Please enter all the fields');
@@ -84,5 +86,6 @@ Future<String> _uploadToStorage(String imagepath) async{
   }
   _isLoading = false;
   update();
+  return false;
   }
 }

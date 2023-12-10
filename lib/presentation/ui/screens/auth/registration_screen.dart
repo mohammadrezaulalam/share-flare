@@ -95,12 +95,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                               radius: 60,
                               backgroundImage: authController
                                       .profilePhoto.isEmpty
-                                  ?  const AssetImage(SFAssetsPath.profilePhotoUpload)
+                                  ? const AssetImage(
+                                      SFAssetsPath.profilePhotoUpload)
                                   : FileImage(File(authController.profilePhoto))
                                       as ImageProvider<Object>?,
                               backgroundColor: SFColors.white,
                             ),
-
                             Positioned(
                               left: 80,
                               bottom: 3,
@@ -148,6 +148,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
                     prefixIcon: Icon(Icons.person),
                   ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your first name';
+                    }
+                    return null;
+                  },
                 ),
                 const SizedBox(
                   height: 15,
@@ -167,6 +173,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     hintText: 'Input your last name',
                     prefixIcon: Icon(Icons.person),
                   ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your last name';
+                    }
+                    return null;
+                  },
                 ),
                 const SizedBox(
                   height: 15,
@@ -186,6 +198,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     hintText: 'Input your user name',
                     prefixIcon: Icon(Icons.person),
                   ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your first name';
+                    }
+                    return null;
+                  },
                 ),
                 const SizedBox(
                   height: 15,
@@ -318,20 +336,22 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       return const Center(child: CircularProgressIndicator());
                     }
                     return ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
                         if (!_formKey.currentState!.validate()) {
                           return;
                         }
-                        controller.registerUser(
-                            firstNameTE.text,
-                            lastNameTE.text,
-                            userNameTE.text,
-                            controller.profilePhoto,
-                            emailTE.text,
-                            passwordTE.text);
-                        /*  isButtonEnable()
-                              ? Get.offAll(() =>  const LoginScreen(isComesFromRegistration:true),)
-                              : null;*/
+                        await controller
+                            .registerUser(
+                                firstNameTE.text,
+                                lastNameTE.text,
+                                userNameTE.text,
+                                controller.profilePhoto,
+                                emailTE.text,
+                                passwordTE.text)
+                            .then((value) {
+                          Get.offAll(() =>
+                              const LoginScreen(isComesFromRegistration: true));
+                        });
                       },
                       style: ElevatedButton.styleFrom(
                           backgroundColor: isButtonEnable()
