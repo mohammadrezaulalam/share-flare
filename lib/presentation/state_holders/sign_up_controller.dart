@@ -5,17 +5,28 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:share_flare/data/models/user_model_registration.dart';
+import 'package:share_flare/presentation/ui/screens/auth/login_screen.dart';
+import 'package:share_flare/presentation/ui/screens/home_page.dart';
+import 'package:share_flare/presentation/ui/screens/welcome_screen.dart';
 import 'package:share_flare/presentation/ui/utilities/auth_constant.dart';
-class AuthController extends GetxController{
-  static AuthController instance = Get.find();
+
+import '../ui/screens/main_bottom_nav_screen.dart';
+class SignUpController extends GetxController{
+  static SignUpController instance = Get.find();
 
   bool _isLoading = false;
+
   RxString _imagePath = ''.obs;
+
+  //getter method
   bool get isLoading => _isLoading;
+
+
   //picked Image
 String get profilePhoto => _imagePath.value;
 
-void pickedImage()async{
+
+  void pickedImage()async{
   final pickedImage = await ImagePicker().pickImage(source: ImageSource.gallery);
   if(pickedImage != null){
     //put image path
@@ -76,17 +87,22 @@ Future<String> _uploadToStorage(String imagepath) async{
         _isLoading = false;
         update();
         Get.snackbar("Success", 'Success');
+        Get.offAll(()=>const LoginScreen(isComesFromRegistration:true));
         return true; //
       });
     }else{
       Get.snackbar("Error Creating Account", 'Please enter all the fields');
+      return false;
     }
   }catch (e){
     Get.snackbar('Error Creating Account', e.toString());
+    return false;
   }
   _isLoading = false;
-  return false;
+
   update();
   return false;
   }
+  
+
 }

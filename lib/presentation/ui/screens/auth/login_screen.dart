@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:share_flare/presentation/ui/screens/main_bottom_nav_screen.dart';
+import 'package:share_flare/presentation/ui/utilities/auth_constant.dart';
 import 'package:share_flare/presentation/ui/utilities/colors.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -178,54 +179,58 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       SizedBox(
                         width: double.infinity,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            isButtonEnable()
-                                ? Get.snackbar(
-                                    'Success',
-                                    'Requesting in server',
-                                    snackPosition: SnackPosition.BOTTOM,
-                                    backgroundColor: Colors.blue,
-                                    colorText: Colors.white,
-                                  )
-                                : null;
+                        child: Obx(() {
+                          if(signInController.isSignInLoading.value){
+                            return const Center(child: CircularProgressIndicator(),);
+                          }
+                          return ElevatedButton(
+                            onPressed: () {
+                              isButtonEnable()
+                                  ? Get.snackbar(
+                                'Success',
+                                'Requesting in server',
+                                snackPosition: SnackPosition.BOTTOM,
+                                backgroundColor: Colors.blue,
+                                colorText: Colors.white,
+                              ) : null;
 
-                            if (_formKey.currentState!.validate()) {
-                              isLoading = true;
-                              setState(() {});
-                            }
+                              if (_formKey.currentState!.validate()) {
+                                isLoading = true;
+                                setState(() {});
+                              }
+                              signInController.userLogin(_emailTEController.text.trim(), _passTEController.text);
 
-                            Get.offAll(() => const MainBottomNavScreen());
 
-                            //}
-                          },
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: isButtonEnable()
-                                  ? SFColors.buttonActiveColor
-                                  : SFColors.buttonDisableColor),
-                          child: const Text(
-                            "Log in",
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ),
+                            },
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: isButtonEnable()
+                                    ? SFColors.buttonActiveColor
+                                    : SFColors.buttonDisableColor),
+                            child: const Text(
+                              "Log in",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          );
+                        }),
                       ),
                     ],
                   ),
                 ),
               ),
             ),
-            if (isLoading)
+
+           /* if (authController.isSignInLoading.value)
               const Opacity(
                 opacity: 0.8,
                 child: ModalBarrier(dismissible: true, color: Colors.white),
               ),
-            if (isLoading)
+            if (authController.isSignInLoading.value)
               const Center(
                   child: CupertinoActivityIndicator(
                 radius: 40.0, // Customize the size
                 animating: true, // Control animation
                 color: Colors.grey,
-              )),
+              )),*/
           ],
         ),
       ),

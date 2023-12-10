@@ -9,7 +9,7 @@ import 'package:share_flare/presentation/ui/utilities/colors.dart';
 import 'package:share_flare/presentation/ui/widgets/app_title.dart';
 import 'package:share_flare/presentation/ui/widgets/bottom_rectangular_image.dart';
 
-import '../../../state_holders/auth_controller.dart';
+import '../../../state_holders/sign_up_controller.dart';
 import '../../utilities/auth_constant.dart';
 
 // AuthController auth = Get.put(AuthController());
@@ -93,20 +93,20 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           children: [
                             CircleAvatar(
                               radius: 60,
-                              backgroundImage: authController
+                              backgroundImage: signUpController
                                       .profilePhoto.isEmpty
-                                  ? const AssetImage(
-                                      SFAssetsPath.profilePhotoUpload)
-                                  : FileImage(File(authController.profilePhoto))
+                                  ?  const AssetImage(SFAssetsPath.profilePhotoUpload)
+                                  : FileImage(File(signUpController.profilePhoto))
                                       as ImageProvider<Object>?,
                               backgroundColor: SFColors.white,
                             ),
+
                             Positioned(
                               left: 80,
                               bottom: 3,
                               child: IconButton(
                                 onPressed: () {
-                                  authController.pickedImage();
+                                  signUpController.pickedImage();
                                   print('add photo');
                                 },
                                 icon: const Icon(Icons.add_a_photo),
@@ -331,27 +331,30 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 ),
                 SizedBox(
                   width: double.infinity,
-                  child: GetBuilder<AuthController>(builder: (controller) {
+                  child: GetBuilder<SignUpController>(builder: (controller) {
                     if (controller.isLoading) {
                       return const Center(child: CircularProgressIndicator());
                     }
                     return ElevatedButton(
-                      onPressed: () async {
+                      onPressed: ()  async{
                         if (!_formKey.currentState!.validate()) {
                           return;
                         }
-                        await controller
-                            .registerUser(
-                                firstNameTE.text,
-                                lastNameTE.text,
-                                userNameTE.text,
-                                controller.profilePhoto,
-                                emailTE.text,
-                                passwordTE.text)
-                            .then((value) {
-                          Get.offAll(() =>
-                              const LoginScreen(isComesFromRegistration: true));
-                        });
+                      await  controller.registerUser(
+                            firstNameTE.text,
+                            lastNameTE.text,
+                            userNameTE.text,
+                            controller.profilePhoto,
+                            emailTE.text,
+                            passwordTE.text);
+                        /*.then((value) {
+                        Get.offAll(()=>const LoginScreen(isComesFromRegistration:true));
+                      });*/
+                        /*//navigate to login page when registration is successful
+                        if(controller.isRegistrationSuccessful){
+                          Get.offAll(()=>const LoginScreen(isComesFromRegistration:true));
+                        }*/
+
                       },
                       style: ElevatedButton.styleFrom(
                           backgroundColor: isButtonEnable()
