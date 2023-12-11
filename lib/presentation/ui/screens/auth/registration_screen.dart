@@ -35,6 +35,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         title: const AppTitle(),
         leading: IconButton(
           onPressed: () {
+            signUpController.isLoadingCallInAppBar(false);
             Get.back();
           },
           icon: const Icon(
@@ -367,7 +368,10 @@ class _UserInputFieldState extends State<UserInputField> {
                   if (!_formKey.currentState!.validate()) {
                     return;
                   }
-                  await  controller.registerUser();
+                  //apply firebase registration
+                  if(mounted){
+                    await  controller.registerUser();
+                  }
 
                 },
                 style: ElevatedButton.styleFrom(

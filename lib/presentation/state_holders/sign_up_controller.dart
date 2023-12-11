@@ -6,8 +6,6 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:share_flare/data/models/user_model_registration.dart';
 import 'package:share_flare/presentation/ui/screens/auth/login_screen.dart';
-import 'package:share_flare/presentation/ui/screens/home_page.dart';
-import 'package:share_flare/presentation/ui/screens/welcome_screen.dart';
 import 'package:share_flare/presentation/ui/utilities/auth_constant.dart';
 import 'package:flutter/material.dart';
 
@@ -31,6 +29,22 @@ class SignUpController extends GetxController{
   //getter method
   bool get isLoading => _isLoading;
 
+  //setter method
+   void isLoadingCallInAppBar(bool value){
+    _isLoading=value;
+    clearTheControllers();
+    update();
+  }
+  //clear the controller
+  void clearTheControllers(){
+    emailTE.clear();
+    passwordTE.clear();
+    rePasswordTE.clear();
+    firstNameTE.clear();
+    lastNameTE.clear();
+    userNameTE.clear();
+    _imagePath.value='';
+  }
 
   //picked Image
 String get profilePhoto => _imagePath.value;
@@ -93,14 +107,19 @@ Future<String> _uploadToStorage(String imagepath) async{
         update();
         Get.snackbar("Success", 'Success');
         Get.offAll(()=>const LoginScreen(isComesFromRegistration:true));
+        clearTheControllers();
         return true; //
       });
     }else{
       Get.snackbar("Error Creating Account", 'Please enter all the fields');
+      _isLoading = false;
+      update();
       return false;
     }
   }catch (e){
     Get.snackbar('Error Creating Account', e.toString());
+    _isLoading = false;
+    update();
     return false;
   }
   _isLoading = false;
