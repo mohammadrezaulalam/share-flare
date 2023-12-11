@@ -9,10 +9,20 @@ import 'package:share_flare/presentation/ui/screens/auth/login_screen.dart';
 import 'package:share_flare/presentation/ui/screens/home_page.dart';
 import 'package:share_flare/presentation/ui/screens/welcome_screen.dart';
 import 'package:share_flare/presentation/ui/utilities/auth_constant.dart';
+import 'package:flutter/material.dart';
 
 import '../ui/screens/main_bottom_nav_screen.dart';
 class SignUpController extends GetxController{
   static SignUpController instance = Get.find();
+
+  //text controller
+  final TextEditingController emailTE = TextEditingController();
+  final TextEditingController passwordTE = TextEditingController();
+  final TextEditingController rePasswordTE = TextEditingController();
+
+  final TextEditingController firstNameTE = TextEditingController();
+  final TextEditingController lastNameTE = TextEditingController();
+  final TextEditingController userNameTE = TextEditingController();
 
   bool _isLoading = false;
 
@@ -52,31 +62,25 @@ Future<String> _uploadToStorage(String imagepath) async{
 }
 
 //registering the user, make this method for Future<bool> only for use await and .then() method in signup screen
-  Future<bool> registerUser(
-  String firstName,
-  String lastName,
-  String userName,
-  String image, // we are saving photo url not photo that's why string
-  String email,
-  String password )async{
+  Future<bool> registerUser()async{
   _isLoading = true;
   update();
   //make sure every parameter has data
   try{
     if(
-    firstName.isNotEmpty &&
-     lastName.isNotEmpty &&
-     userName.isNotEmpty &&
-     email.isNotEmpty &&
+    firstNameTE.text.isNotEmpty &&
+     lastNameTE.text.isNotEmpty &&
+     userNameTE.text.isNotEmpty &&
+     emailTE.text.isNotEmpty &&
      // image !=null &&
-     image.isNotEmpty &&
-     password.isNotEmpty
+     profilePhoto.isNotEmpty &&
+     passwordTE.text.isNotEmpty
     ){
-     UserCredential cred = await firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
-     String downloadUrl = await _uploadToStorage(image);
+     UserCredential cred = await firebaseAuth.createUserWithEmailAndPassword(email:  emailTE.text.trim(), password:  passwordTE.text);
+     String downloadUrl = await _uploadToStorage(profilePhoto);
 
      //add model class
-      UserModelRegistration user = UserModelRegistration(firstName: firstName, lastName: lastName, userName: userName, profilePhoto: downloadUrl, email: email, uid: cred.user!.uid);
+      UserModelRegistration user = UserModelRegistration(firstName: firstNameTE.text, lastName: lastNameTE.text, userName: userNameTE.text, profilePhoto: downloadUrl, email: emailTE.text, uid: cred.user!.uid);
 
       //add data to firestore database
       await fireStore
