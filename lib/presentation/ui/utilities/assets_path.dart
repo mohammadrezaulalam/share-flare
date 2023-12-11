@@ -8,7 +8,9 @@ class SFAssetsPath {
   static const String friend2PNG = '$_assetPath/friend2.png';
   static const String uploadImagePNG = '$_assetPath/upload_image.png';
   static const String rectangleImage = "$_assetPath/rectangle.png";
-  
+  static const String profilePhotoUpload = "$_assetPath/profile_photo.png";
+
+
    
   static const String cameraImagePNG = '$_assetPath/camera.png';
   static const String galleryImagePNG = '$_assetPath/gallery.png';

@@ -1,11 +1,18 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:share_flare/data/utllity/responsive_helper.dart';
 import 'package:share_flare/presentation/ui/screens/auth/login_screen.dart';
+import 'package:share_flare/presentation/ui/utilities/assets_path.dart';
 import 'package:share_flare/presentation/ui/utilities/colors.dart';
 import 'package:share_flare/presentation/ui/widgets/app_title.dart';
 import 'package:share_flare/presentation/ui/widgets/bottom_rectangular_image.dart';
 
+import '../../../state_holders/auth_controller.dart';
+import '../../utilities/auth_constant.dart';
+
+// AuthController auth = Get.put(AuthController());
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({super.key});
 
@@ -14,9 +21,9 @@ class RegistrationScreen extends StatefulWidget {
 }
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
-  bool isShowPassword = false;
+  bool isShowPassword = true;
 
-  bool isShowRepeatPassword = false;
+  // bool isShowRepeatPassword = false;
   final TextEditingController emailTE = TextEditingController();
   final TextEditingController passwordTE = TextEditingController();
   final TextEditingController rePasswordTE = TextEditingController();
@@ -55,6 +62,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         ),
         backgroundColor: SFColors.white,
         elevation: 0,
+        title: const AppTitle(),
         leading: IconButton(
           onPressed: () {
             Get.back();
@@ -76,7 +84,50 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const AppTitle(),
+                Center(
+                  child: Obx(() {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Stack(
+                          children: [
+                            CircleAvatar(
+                              radius: 60,
+                              backgroundImage: authController
+                                      .profilePhoto.isEmpty
+                                  ? const AssetImage(
+                                      SFAssetsPath.profilePhotoUpload)
+                                  : FileImage(File(authController.profilePhoto))
+                                      as ImageProvider<Object>?,
+                              backgroundColor: SFColors.white,
+                            ),
+                            Positioned(
+                              left: 80,
+                              bottom: 3,
+                              child: IconButton(
+                                onPressed: () {
+                                  authController.pickedImage();
+                                  print('add photo');
+                                },
+                                icon: const Icon(Icons.add_a_photo),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        const Text(
+                          "Profile photo",
+                          style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.redAccent),
+                        ),
+                      ],
+                    );
+                  }),
+                ),
                 const SizedBox(
                   height: 25,
                 ),
@@ -97,6 +148,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
                     prefixIcon: Icon(Icons.person),
                   ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your first name';
+                    }
+                    return null;
+                  },
                 ),
                 const SizedBox(
                   height: 15,
@@ -116,6 +173,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     hintText: 'Input your last name',
                     prefixIcon: Icon(Icons.person),
                   ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your last name';
+                    }
+                    return null;
+                  },
                 ),
                 const SizedBox(
                   height: 15,
@@ -135,6 +198,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     hintText: 'Input your user name',
                     prefixIcon: Icon(Icons.person),
                   ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your first name';
+                    }
+                    return null;
+                  },
                 ),
                 const SizedBox(
                   height: 15,
@@ -262,22 +331,35 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 ),
                 SizedBox(
                   width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      isButtonEnable()
-                          ? Get.offAll(() =>  const LoginScreen(isComesFromRegistration:true),)
-                          : null;
-
-                      if (!_formKey.currentState!.validate()) {
-                        return;
-                      }
-                    },
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: isButtonEnable()
-                            ? SFColors.buttonActiveColor
-                            : SFColors.buttonDisableColor),
-                    child: const Text("NEXT"),
-                  ),
+                  child: GetBuilder<AuthController>(builder: (controller) {
+                    if (controller.isLoading) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+                    return ElevatedButton(
+                      onPressed: () async {
+                        if (!_formKey.currentState!.validate()) {
+                          return;
+                        }
+                        await controller
+                            .registerUser(
+                                firstNameTE.text,
+                                lastNameTE.text,
+                                userNameTE.text,
+                                controller.profilePhoto,
+                                emailTE.text,
+                                passwordTE.text)
+                            .then((value) {
+                          Get.offAll(() =>
+                              const LoginScreen(isComesFromRegistration: true));
+                        });
+                      },
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: isButtonEnable()
+                              ? SFColors.buttonActiveColor
+                              : SFColors.buttonDisableColor),
+                      child: const Text("NEXT"),
+                    );
+                  }),
                 ),
 
                 const SizedBox(
