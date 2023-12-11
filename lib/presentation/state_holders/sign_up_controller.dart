@@ -63,8 +63,7 @@ Future<String> _uploadToStorage(String imagepath) async{
 
 //registering the user, make this method for Future<bool> only for use await and .then() method in signup screen
   Future<bool> registerUser()async{
-  _isLoading = true;
-  update();
+
   //make sure every parameter has data
   try{
     if(
@@ -76,6 +75,8 @@ Future<String> _uploadToStorage(String imagepath) async{
      profilePhoto.isNotEmpty &&
      passwordTE.text.isNotEmpty
     ){
+      _isLoading = true;
+      update();
      UserCredential cred = await firebaseAuth.createUserWithEmailAndPassword(email:  emailTE.text.trim(), password:  passwordTE.text);
      String downloadUrl = await _uploadToStorage(profilePhoto);
 
