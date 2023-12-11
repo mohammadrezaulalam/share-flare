@@ -24,8 +24,13 @@ class FollowerTabBar extends StatelessWidget {
                   labelColor: Colors.black,
                   unselectedLabelColor: dark ? const Color(0xFF1D2939): const Color(0xFF1D2939),
                   indicatorSize: TabBarIndicatorSize.label,
+                  isScrollable: true,
+                  tabAlignment: TabAlignment.start,
+                  labelPadding: const EdgeInsets.only(right: 15),
+                  splashFactory: NoSplash.splashFactory,
+                  indicatorWeight: 1,
                   indicator: UnderlineTabIndicator(
-                    borderSide: BorderSide(width: 2.0, color: dark ? SFColors.white : const Color(0xFF667085)),
+                    borderSide: BorderSide(width: 1.0, color: dark ? SFColors.white : const Color(0xFF667085)),
                     insets: const EdgeInsets.symmetric(
                         horizontal: 0.0), // Adjust the width of the indicator
                   ),

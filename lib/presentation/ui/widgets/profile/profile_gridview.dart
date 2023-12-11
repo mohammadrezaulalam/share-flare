@@ -6,27 +6,25 @@ class ProfileGridView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  MasonryGridView.builder(
+    return MasonryGridView.builder(
       itemCount: 11,
-        mainAxisSpacing: 10,
-        crossAxisSpacing: 10,
-            physics: const NeverScrollableScrollPhysics(),
-            gridDelegate: const SliverSimpleGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2),
-            itemBuilder: (context, index) =>
-                Container(decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8), // Adjust the radius as needed
-                ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: Image.asset(
-                      'assets/images/img_${index + 1}.png',fit: BoxFit.cover,),
-                  ),
-                ),
-
+      mainAxisSpacing: 10,
+      crossAxisSpacing: 10,
+      physics: const NeverScrollableScrollPhysics(),
+      gridDelegate: const SliverSimpleGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2),
+      itemBuilder: (context, index) => Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8), // Adjust the radius as needed
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(8),
+          child: Image.asset(
+            'assets/images/img_${index + 1}.png',
+            fit: BoxFit.cover,
+          ),
+        ),
+      ),
     );
   }
-  }
-
-
-
+}

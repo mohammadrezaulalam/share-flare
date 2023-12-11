@@ -100,7 +100,7 @@ Widget ownProfileHeaderWidget(BuildContext context) {
                           ),
                           GestureDetector(
                             onTap: () {
-                              Get.to(() => const FollowerScreen());
+                              Get.to(() => const FollowerScreen(isFollowerTab: false,));
                             },
                             child: Text(
                               "Following",
@@ -135,7 +135,7 @@ Widget ownProfileHeaderWidget(BuildContext context) {
                           GestureDetector(
                             onTap: () {
                               Get.to(
-                                () => const FollowerScreen(),
+                                () => const FollowerScreen(isFollowerTab: true,),
                               );
                             },
                             child: Text(
