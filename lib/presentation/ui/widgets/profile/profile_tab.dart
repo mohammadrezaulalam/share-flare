@@ -19,61 +19,70 @@ class ProfileTabBar extends StatelessWidget {
             child: Stack(
               children: [
                 TabBar(
-                  labelColor: Colors.black,
-                  unselectedLabelColor: Colors.grey,
-                  indicatorSize: TabBarIndicatorSize.label,
-                  indicator:  UnderlineTabIndicator(
-                    borderSide: BorderSide(width: 2.0, color: dark ? SFColors.white : const Color(0xFF1D2939)),
-                    insets: const EdgeInsets.symmetric(
-                        horizontal: 29.0), // Adjust the width of the indicator
-                  ),
-                  indicatorColor: Colors.black,
-                  tabs: [
-                    Tab(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.grid_view_outlined,
-                            color: dark ? SFColors.white : const Color(0xFF1D2939),
+
+                      labelColor: Colors.black,
+                      unselectedLabelColor: Colors.grey,
+                      indicatorSize: TabBarIndicatorSize.label,
+                      isScrollable: true,
+                      tabAlignment: TabAlignment.center,
+                      splashFactory: NoSplash.splashFactory,
+                      labelPadding: const EdgeInsets.only(right: 10, left: 10),
+                        indicatorWeight: 1,
+                      indicator:  UnderlineTabIndicator(
+                        borderSide: BorderSide(width: 1.0, color: dark ? SFColors.white : const Color(0xFF1D2939)),
+                        insets: const EdgeInsets.symmetric(
+                            horizontal: 0.0), // Adjust the width of the indicator
+                      ),
+                      indicatorColor: Colors.black,
+                      tabs: [
+                        Tab(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.grid_view_outlined,
+                                color: dark ? SFColors.white : const Color(0xFF1D2939),
+                                size: 16,
+                              ),
+                              const SizedBox(width: 8),
+                              // Add some spacing between icon and text
+                              Text("Grid view", style: TextStyle(fontSize: 12,color: dark ? SFColors.white : const Color(0xFF1D2939),fontWeight: FontWeight.w600),),
+                            ],
+                          ),
+                        ),
+                        Tab(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.list,
+                                color: dark ? SFColors.white : const Color(0xFF1D2939),
                             size: 16,
+                              ),
+                              const SizedBox(width: 8),
+                              // Add some spacing between icon and text
+                              Text("List view", style: TextStyle(fontSize: 12,color: dark ? SFColors.white : const Color(0xFF1D2939),fontWeight: FontWeight.w600)),
+                            ],
                           ),
-                          const SizedBox(width: 8),
-                          // Add some spacing between icon and text
-                          Text("Grid view", style: TextStyle(fontSize: 12,color: dark ? SFColors.white : const Color(0xFF1D2939)),),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                    Tab(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.list,
-                            color: dark ? SFColors.white : const Color(0xFF1D2939),
-                        size: 16,
-                          ),
-                          const SizedBox(width: 8),
-                          // Add some spacing between icon and text
-                          Text("List view", style: TextStyle(fontSize: 12,color: dark ? SFColors.white : const Color(0xFF1D2939))),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
               ],
             ),
           ),
         ),
         Expanded(
           child: Padding(
-            padding: EdgeInsets.all(16.0),
-            child: TabBarView(
-              children: [
-                ProfileGridView(),
-                ProfileListView(),
-              ],
+            padding: const EdgeInsets.all(16.0),
+            child: GestureDetector(
+              onTap: (){},
+              child: const TabBarView(
+                children: [
+                  ProfileGridView(),
+                  ProfileListView(),
+                ],
+              ),
             ),
           ),
         ),

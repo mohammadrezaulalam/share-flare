@@ -5,8 +5,9 @@ import 'package:share_flare/presentation/ui/utilities/theme/theme.dart';
 import 'package:share_flare/presentation/ui/widgets/follower_list/follower_tab.dart';
 
 class FollowerScreen extends StatefulWidget {
-  const FollowerScreen({super.key});
+  const FollowerScreen({super.key, required this.isFollowerTab});
 
+  final bool isFollowerTab;
   @override
   State<FollowerScreen> createState() => _FollowerScreenState();
 }
@@ -39,6 +40,7 @@ class _FollowerScreenState extends State<FollowerScreen> {
             )),
       ),
       body: DefaultTabController(
+        initialIndex: widget.isFollowerTab? 1 :0 ,
         length: 2,
         child: NestedScrollView(
           headerSliverBuilder: (context, _) {
