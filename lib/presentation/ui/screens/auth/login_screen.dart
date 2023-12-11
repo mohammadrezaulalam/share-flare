@@ -185,20 +185,15 @@ class _LoginScreenState extends State<LoginScreen> {
                           }
                           return ElevatedButton(
                             onPressed: () {
-                              isButtonEnable()
-                                  ? Get.snackbar(
-                                'Success',
-                                'Requesting in server',
-                                snackPosition: SnackPosition.BOTTOM,
-                                backgroundColor: Colors.blue,
-                                colorText: Colors.white,
-                              ) : null;
 
                               if (_formKey.currentState!.validate()) {
                                 isLoading = true;
                                 setState(() {});
                               }
-                              signInController.userLogin(_emailTEController.text.trim(), _passTEController.text);
+                              if(isButtonEnable() && mounted){
+                                signInController.userLogin(_emailTEController.text.trim(), _passTEController.text);
+                              }
+
 
 
                             },
