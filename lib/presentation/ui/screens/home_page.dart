@@ -47,8 +47,8 @@ class _HomePageState extends State<HomePage> {
             SFAssetsPath.personPNG,
           ),
         ),
-        title: const Text("Share Flare"),
-        // title: AppTitle(),
+        //title: const Text("Share Flare"),
+         title: AppTitle(),
         centerTitle: true,
         actions: [
           Container(
