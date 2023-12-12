@@ -8,6 +8,9 @@ class UserModelRegistration {
   String profilePhoto; // we are saving photo url not photo that's why string
   String email;
   String uid;
+  List follower;
+  List following;
+
 
   UserModelRegistration(
       {required this.firstName,
@@ -15,7 +18,10 @@ class UserModelRegistration {
       required this.userName,
       required this.profilePhoto,
       required this.email,
-      required this.uid});
+      required this.uid,
+      required this.follower,
+        required this.following
+      });
 
   //convert to map for json
   Map<String, dynamic> toJson() {
@@ -26,6 +32,8 @@ class UserModelRegistration {
       'profilePhoto': profilePhoto,
       'email': email,
       'uid': uid,
+      'follower':follower,
+      'following':following
     };
   }
 
@@ -39,6 +47,9 @@ class UserModelRegistration {
       profilePhoto: snapshot['profilePhoto'],
       email: snapshot['email'],
       uid: snapshot['uid'],
+        follower:snapshot['follower'],
+        following:snapshot['following']
+
     );
   }
 }

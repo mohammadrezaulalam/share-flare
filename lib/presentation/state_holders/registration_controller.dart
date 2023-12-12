@@ -99,7 +99,9 @@ class SignUpController extends GetxController {
             userName: userNameTE.text,
             profilePhoto: downloadUrl,
             email: emailTE.text,
-            uid: cred.user!.uid);
+            uid: cred.user!.uid,
+            follower: [],
+            following: []);
 
         //add data to firestore database
         await fireStore
@@ -117,6 +119,16 @@ class SignUpController extends GetxController {
           clearTheControllers();
           return true; //
         });
+
+/*        // Add user information to the 'users' collection
+        await fireStore.collection('users').doc(cred.user!.uid).set(user.toJson());
+
+        // Add user information to the 'follower' subcollection
+        await fireStore.collection('users').doc(cred.user!.uid).collection("followers").doc('list of followers people').set(user.toJson());
+
+        // Add user information to the 'following' subcollection
+        await fireStore.collection('users').doc(cred.user!.uid).collection("following").doc('List of following people').set(user.toJson());*/
+
       } else {
         Get.snackbar(
           "Error Creating Account",
