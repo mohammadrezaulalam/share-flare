@@ -9,7 +9,7 @@ import 'package:share_flare/presentation/ui/utilities/colors.dart';
 import 'package:share_flare/presentation/ui/widgets/app_title.dart';
 import 'package:share_flare/presentation/ui/widgets/bottom_rectangular_image.dart';
 
-import '../../../state_holders/sign_up_controller.dart';
+import '../../../state_holders/registration_controller.dart';
 import '../../utilities/auth_constant.dart';
 
 class RegistrationScreen extends StatefulWidget {
