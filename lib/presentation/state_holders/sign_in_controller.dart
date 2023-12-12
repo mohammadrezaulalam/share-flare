@@ -35,23 +35,27 @@ class SignInController extends GetxController {
     try{
       if(email.isNotEmpty && password.isNotEmpty){
         await  firebaseAuth.signInWithEmailAndPassword(email: email, password: password).then((value) {
-          Get.snackbar('Success', 'Login successful');
+          Get.snackbar('Success', 'Login successful', backgroundColor: Colors.green,
+            colorText: Colors.white,snackPosition: SnackPosition.BOTTOM);
           print("Login Success");
           _isSignInLoading.value = false;
           Get.offAll(() => const MainBottomNavScreen());
           return true;
         }).catchError((error){
-          Get.snackbar('Error to Login', 'Invalid email or password');
+          Get.snackbar('Error to Login', 'Invalid email or password',backgroundColor: Colors.red,
+              colorText: Colors.white,snackPosition: SnackPosition.BOTTOM);
           print('Firebase Authentication Error: $error');
           return false;
 
         });
       }else{
-        Get.snackbar('Incomplete Field', 'Please insert email and password');
+        Get.snackbar('Incomplete Field', 'Please insert email and password',backgroundColor: Colors.red,
+            colorText: Colors.white,snackPosition: SnackPosition.BOTTOM);
         return false;
       }
     }catch(e){
-      Get.snackbar('Unexpected Error', 'An unexpected error occurred');
+      Get.snackbar('Unexpected Error', 'An unexpected error occurred',backgroundColor: Colors.red,
+          colorText: Colors.white,snackPosition: SnackPosition.BOTTOM);
       print('Unexpected Error: $e');
       return false;
     }finally{
