@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:share_flare/presentation/state_holders/login_controller.dart';
 import 'package:share_flare/presentation/state_holders/registration_controller.dart';
 
+import '../../state_holders/auth_controller.dart';
+
 //FIREBASE
 var firebaseAuth = FirebaseAuth.instance;
 var firebaseStorage = FirebaseStorage.instance;
@@ -13,3 +15,4 @@ var fireStore = FirebaseFirestore.instance;
 //CONTROLLER
 var signUpController = SignUpController.instance;
 var signInController = SignInController.instance;
+var authController = AuthController.instance;

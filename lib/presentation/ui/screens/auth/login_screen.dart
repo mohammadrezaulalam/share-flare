@@ -166,6 +166,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                   setState(() {
                                     check1 = value;
                                   });
+                                  print("Form Login page : $value");
+                                  signInController.saveUserAuth(value!);
                                 }),
                           ),
                           const SizedBox(

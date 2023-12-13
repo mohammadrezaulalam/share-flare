@@ -10,6 +10,9 @@ import '../ui/utilities/auth_constant.dart';
 class SignInController extends GetxController {
   static SignInController instance = Get.find();
   RxBool _isSignInLoading = false.obs;
+  RxBool _isLoggedInSuccessful = false.obs;
+  RxBool _saveUserToAutoLogin=false.obs;
+
   late Rx<User?> _user;
   RxBool get isSignInLoading => _isSignInLoading;
   //onReady() override,It is called automatically when the controller is initialized and ready to be used.
@@ -24,8 +27,6 @@ class SignInController extends GetxController {
   _setInitialScreen(User? user){
     if(user==null){
       Get.offAll(()=>const WelcomeScreen());
-    }else{
-      Get.offAll(()=>const LoginScreen(isComesFromRegistration: true));
     }
   }
 
@@ -39,9 +40,15 @@ class SignInController extends GetxController {
             colorText: Colors.white,snackPosition: SnackPosition.BOTTOM);
           print("Login Success");
           _isSignInLoading.value = false;
+          _isLoggedInSuccessful.value=true;
+          if(_isLoggedInSuccessful.value && _saveUserToAutoLogin.value){
+            authController.setAuthStatus(true);
+          }
           Get.offAll(() => const MainBottomNavScreen());
           return true;
-        }).catchError((error){
+        }
+
+        ).catchError((error){
           Get.snackbar('Error to Login', 'Invalid email or password',backgroundColor: Colors.red,
               colorText: Colors.white,snackPosition: SnackPosition.BOTTOM);
           print('Firebase Authentication Error: $error');
@@ -64,4 +71,18 @@ class SignInController extends GetxController {
 
     return false;
   }
+
+  //save user login auth
+  void saveUserAuth(bool save){
+    save=!save;
+    _saveUserToAutoLogin.value=!save;
+    print("Auto Login value change : ${_saveUserToAutoLogin.value}");
+  }
+
+  //signOut
+  void signOut(){
+    firebaseAuth.signOut();
+    authController.logOut();
+  }
+
 }
