@@ -42,7 +42,7 @@ dependencies:
   flutter_svg: ^2.0.9
   iconsax: ^0.0.8
   image_picker: ^1.0.4
-
+  shared_preferences: ^2.2.2
 
 
   #Firebase

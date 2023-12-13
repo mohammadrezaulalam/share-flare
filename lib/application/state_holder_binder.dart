@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:share_flare/presentation/state_holders/auth_controller.dart';
 import 'package:share_flare/presentation/state_holders/profile_search_controller.dart';
 import 'package:share_flare/presentation/state_holders/login_controller.dart';
 import 'package:share_flare/presentation/state_holders/user_controller.dart';
@@ -12,5 +13,6 @@ class StateHolderBinder extends Bindings {
     Get.put(SignUpController());
     Get.put(SignInController());
     Get.put(UserProfileController());
+     Get.put(AuthController());
   }
 }
