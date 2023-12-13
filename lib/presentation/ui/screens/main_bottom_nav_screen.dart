@@ -6,6 +6,7 @@ import 'package:share_flare/presentation/ui/screens/home_page.dart';
 import 'package:share_flare/presentation/ui/screens/own_profile_screen.dart';
 import 'package:share_flare/presentation/ui/screens/search_screen.dart';
 import 'package:share_flare/presentation/ui/utilities/assets_path.dart';
+import 'package:share_flare/presentation/ui/utilities/auth_constant.dart';
 import 'package:share_flare/presentation/ui/utilities/colors.dart';
 import 'package:share_flare/presentation/ui/utilities/theme/theme.dart';
 
