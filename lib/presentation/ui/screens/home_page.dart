@@ -99,7 +99,7 @@ class _HomePageState extends State<HomePage> {
               ),
               child: GestureDetector(
                 onTap: () {
-                 signInController.signOut();
+                 loginController.signOut();
                 },
                 child: const Icon(
                   Iconsax.logout,

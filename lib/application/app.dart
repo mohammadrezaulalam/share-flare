@@ -9,6 +9,7 @@ import 'package:share_flare/presentation/ui/utilities/colors.dart';
 //import '../presentation/ui/utilities/colors.dart';
 
 import '../presentation/ui/screens/chat_screen.dart';
+import '../presentation/ui/screens/main_bottom_nav_screen.dart';
 import '../presentation/ui/utilities/auth_constant.dart';
 
 import '../presentation/ui/utilities/theme/theme.dart';

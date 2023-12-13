@@ -35,7 +35,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         title: const AppTitle(),
         leading: IconButton(
           onPressed: () {
-            signUpController.isLoadingCallInAppBar(false);
+            registrationController.isLoadingCallInAppBar(false);
             Get.back();
           },
           icon: const Icon(
@@ -80,10 +80,10 @@ class profilePhoto extends StatelessWidget {
               children: [
                 CircleAvatar(
                   radius: 60,
-                  backgroundImage: signUpController
+                  backgroundImage: registrationController
                           .profilePhoto.isEmpty
                       ?  const AssetImage(SFAssetsPath.profilePhotoUpload)
-                      : FileImage(File(signUpController.profilePhoto))
+                      : FileImage(File(registrationController.profilePhoto))
                           as ImageProvider<Object>?,
                   backgroundColor: SFColors.white,
                 ),
@@ -93,7 +93,7 @@ class profilePhoto extends StatelessWidget {
                   bottom: 3,
                   child: IconButton(
                     onPressed: () {
-                      signUpController.pickedImage();
+                      registrationController.pickedImage();
                       print('add photo');
                     },
                     icon: const Icon(Icons.add_a_photo),
@@ -169,7 +169,7 @@ class _UserInputFieldState extends State<UserInputField> {
               firstNameCheck = value;
               setState(() {});
             },
-            controller: signUpController.firstNameTE,
+            controller: registrationController.firstNameTE,
             decoration: const InputDecoration(
               hintText: 'Input your first name',
               // prefixIcon: Icon(Icons.email),
@@ -192,7 +192,7 @@ class _UserInputFieldState extends State<UserInputField> {
             height: 5,
           ),
           TextFormField(
-            controller: signUpController.lastNameTE,
+            controller: registrationController.lastNameTE,
             onChanged: (value) {
               lastNameCheck = value;
               setState(() {});
@@ -217,7 +217,7 @@ class _UserInputFieldState extends State<UserInputField> {
             height: 5,
           ),
           TextFormField(
-            controller: signUpController.userNameTE,
+            controller: registrationController.userNameTE,
             onChanged: (value) {
               userNameCheck = value;
               setState(() {});
@@ -242,7 +242,7 @@ class _UserInputFieldState extends State<UserInputField> {
             height: 5,
           ),
           TextFormField(
-              controller: signUpController.emailTE,
+              controller: registrationController.emailTE,
               onChanged: (value) {
                 emailCheck = value;
                 setState(() {});
@@ -275,7 +275,7 @@ class _UserInputFieldState extends State<UserInputField> {
             height: 5,
           ),
           TextFormField(
-            controller: signUpController.passwordTE,
+            controller: registrationController.passwordTE,
             onChanged: (value) {
               passwordCheck = value;
               setState(() {});
@@ -324,13 +324,13 @@ class _UserInputFieldState extends State<UserInputField> {
             height: 5,
           ),
           TextFormField(
-            controller: signUpController.rePasswordTE,
+            controller: registrationController.rePasswordTE,
             onChanged: (value) {
               reEnterpasswordCheck = value;
-              if (signUpController.passwordTE.text == value) {
+              if (registrationController.passwordTE.text == value) {
                 _passwordsMatch = true;
               }
-              if (signUpController.passwordTE.text != value) {
+              if (registrationController.passwordTE.text != value) {
                 _passwordsMatch = false;
               }
               setState(() {});
@@ -348,7 +348,7 @@ class _UserInputFieldState extends State<UserInputField> {
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Please re-enter your password';
-              } else if (value != signUpController.passwordTE.text) {
+              } else if (value != registrationController.passwordTE.text) {
                 return 'Passwords do not match';
               }
               return null;
@@ -359,7 +359,7 @@ class _UserInputFieldState extends State<UserInputField> {
           ),
           SizedBox(
             width: double.infinity,
-            child: GetBuilder<SignUpController>(builder: (controller) {
+            child: GetBuilder<RegistrationController>(builder: (controller) {
               if (controller.isLoading) {
                 return const Center(child: CircularProgressIndicator());
               }

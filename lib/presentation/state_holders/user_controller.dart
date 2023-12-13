@@ -5,11 +5,12 @@ import 'package:share_flare/data/models/fetch_user_model.dart';
 
 class UserProfileController extends GetxController {
   static UserProfileController instance = Get.find();
-  final RxBool _isLoading = false.obs;
 
-  RxBool isData = false.obs;
 
-  bool get isLoading => _isLoading.value;
+  RxBool _isData = false.obs;
+
+
+  bool get isData => _isData.value;
 
   FetchUserModel _fetchUserModel = FetchUserModel();
 
@@ -19,7 +20,6 @@ class UserProfileController extends GetxController {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   Future<void> listenToUserInfo() async {
-    _isLoading.value = true;
 
     try {
       User currentUser = _auth.currentUser!;
@@ -29,13 +29,11 @@ class UserProfileController extends GetxController {
 
       _fetchUserModel = FetchUserModel.fromSnap(snap);
       if (_fetchUserModel.email?.isNotEmpty ?? false) {
-        isData.value = true;
-        _isLoading.value = false;
+        _isData.value = true;
+
       }
     } catch (error) {
-      //print('Error fetching user information: $error');
-    } finally {
-      _isLoading.value = false;
+      print('Error fetching user information: $error');
     }
   }
 }

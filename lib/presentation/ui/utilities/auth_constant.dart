@@ -14,8 +14,8 @@ var firebaseStorage = FirebaseStorage.instance;
 var fireStore = FirebaseFirestore.instance;
 
 //CONTROLLER
-var signUpController = SignUpController.instance;
-var signInController = SignInController.instance;
+var registrationController = RegistrationController.instance;
+var loginController = LoginController.instance;
 var userProfileController = UserProfileController.instance;
 var authController = AuthController.instance;
 

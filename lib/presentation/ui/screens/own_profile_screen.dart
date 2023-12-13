@@ -31,86 +31,78 @@ class _OwnProfileScreenState extends State<OwnProfileScreen> {
     final dark = SFAppTheme.isDarkMode(context);
     return Obx(() {
       return Visibility(
-        visible: userProfileController.isData.value,
+        visible: userProfileController.isData,
         replacement: const Center(
           child: CircularProgressIndicator(),
         ),
         child: Scaffold(
-            backgroundColor:
-                dark ? SFColors.darkBackgroundColor : SFColors.white,
-            appBar: PreferredSize(
-              preferredSize: const Size.fromHeight(62),
-              child: AppBar(
-                flexibleSpace: Container(
-                  // color: SFColors.white,
-                  color: dark ? const Color(0xFF1D2939) : SFColors.white,
-                ),
-                backgroundColor:
-                    dark ? const Color(0xFF1D2939) : SFColors.white,
-                title: Center(
-                  child: Text(
-                    'My Profile',
-                    style: TextStyle(
-                        color: dark ? SFColors.white : const Color(0xFF1D2939),
-                        fontWeight: FontWeight.w700),
-                  ),
-                ),
-                elevation: 0,
+          backgroundColor: dark ? SFColors.darkBackgroundColor : SFColors.white,
+          appBar: PreferredSize(
+            preferredSize: const Size.fromHeight(62),
+            child: AppBar(
+              flexibleSpace: Container(
+                // color: SFColors.white,
+                color: dark ? const Color(0xFF1D2939) : SFColors.white,
               ),
+              backgroundColor: dark ? const Color(0xFF1D2939) : SFColors.white,
+              title: Center(
+                child: Text(
+                  'My Profile',
+                  style: TextStyle(
+                      color: dark ? SFColors.white : const Color(0xFF1D2939),
+                      fontWeight: FontWeight.w700),
+                ),
+              ),
+              elevation: 0,
             ),
-            body: Obx(() {
-              if (userProfileController.isLoading) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              } else {
-                return Container(
-                  color: dark ? SFColors.darkBackgroundColor : SFColors.white,
-                  child: DefaultTabController(
-                    length: 2,
-                    child: NestedScrollView(
-                      headerSliverBuilder: (context, _) {
-                        return [
-                          SliverList(
-                            delegate: SliverChildListDelegate(
-                              [
-                                //ownProfileHeaderWidget(context),
-                                OwnProfileHeaderWidget(
-                                  firstName: userProfileController
-                                      .fetchUserModel.firstName
-                                      .toString(),
-                                  lastName: userProfileController
-                                      .fetchUserModel.lastName
-                                      .toString(),
-                                  userName: userProfileController
-                                      .fetchUserModel.userName
-                                      .toString(),
-                                  profilePhoto: userProfileController
-                                      .fetchUserModel.profilePhoto
-                                      .toString(),
-                                  follower: userProfileController
-                                          .fetchUserModel.follower ??
-                                      [],
-                                  following: userProfileController
-                                          .fetchUserModel.following ??
-                                      [],
-                                ),
-                                Divider(
-                                    thickness: 7,
-                                    color: dark
-                                        ? SFColors.darkBackgroundColor
-                                        : Colors.grey[100]),
-                              ],
-                            ),
+          ),
+          body: Container(
+                color: dark ? SFColors.darkBackgroundColor : SFColors.white,
+                child: DefaultTabController(
+                  length: 2,
+                  child: NestedScrollView(
+                    headerSliverBuilder: (context, _) {
+                      return [
+                        SliverList(
+                          delegate: SliverChildListDelegate(
+                            [
+                              //ownProfileHeaderWidget(context),
+                              OwnProfileHeaderWidget(
+                                firstName: userProfileController
+                                    .fetchUserModel.firstName
+                                    .toString(),
+                                lastName: userProfileController
+                                    .fetchUserModel.lastName
+                                    .toString(),
+                                userName: userProfileController
+                                    .fetchUserModel.userName
+                                    .toString(),
+                                profilePhoto: userProfileController
+                                    .fetchUserModel.profilePhoto
+                                    .toString(),
+                                follower: userProfileController
+                                        .fetchUserModel.follower ??
+                                    [],
+                                following: userProfileController
+                                        .fetchUserModel.following ??
+                                    [],
+                              ),
+                              Divider(
+                                  thickness: 7,
+                                  color: dark
+                                      ? SFColors.darkBackgroundColor
+                                      : Colors.grey[100]),
+                            ],
                           ),
-                        ];
-                      },
-                      body: const ProfileTabBar(),
-                    ),
+                        ),
+                      ];
+                    },
+                    body: const ProfileTabBar(),
                   ),
-                );
-              }
-            })),
+                ),
+              ),
+
+        ),
       );
     });
   }
