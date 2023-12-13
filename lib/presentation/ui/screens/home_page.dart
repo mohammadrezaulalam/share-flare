@@ -5,6 +5,7 @@ import 'package:share_flare/presentation/ui/screens/chat_screen.dart';
 import 'package:share_flare/presentation/ui/screens/notification_screen.dart';
 import 'package:share_flare/presentation/ui/screens/other_users_profile_screen.dart';
 import 'package:share_flare/presentation/ui/utilities/assets_path.dart';
+import 'package:share_flare/presentation/ui/utilities/auth_constant.dart';
 import 'package:share_flare/presentation/ui/utilities/colors.dart';
 import 'package:share_flare/presentation/ui/utilities/theme/theme.dart';
 import 'package:share_flare/presentation/ui/widgets/app_title.dart';
@@ -87,8 +88,28 @@ class _HomePageState extends State<HomePage> {
                 ),
               )),
           const SizedBox(
+            width: 10.0,
+          ),
+          Container(
+              height: 35,
+              width: 35,
+              decoration: BoxDecoration(
+                color: dark ? null : SFColors.bottomNavActiveColor,
+                shape: BoxShape.circle,
+              ),
+              child: GestureDetector(
+                onTap: () {
+                 signInController.signOut();
+                },
+                child: const Icon(
+                  Iconsax.logout,
+                  size: 20,
+                ),
+              )),
+          const SizedBox(
             width: 16.0,
           ),
+
         ],
       ),
       body: SingleChildScrollView(

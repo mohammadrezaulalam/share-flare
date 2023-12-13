@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:share_flare/presentation/state_holders/auth_controller.dart';
 
 import 'package:share_flare/presentation/ui/screens/home_page.dart';
 import 'package:share_flare/application/state_holder_binder.dart';
@@ -14,12 +15,30 @@ import 'package:share_flare/presentation/ui/utilities/colors.dart';
 //import '../presentation/ui/utilities/colors.dart';
 
 import '../presentation/ui/screens/chat_screen.dart';
+import '../presentation/ui/utilities/auth_constant.dart';
 import '../presentation/ui/utilities/theme/theme.dart';
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  AuthController auth = Get.put(AuthController());
   // This widget is the root of your application.
+  void isLoggedIn() async{
+    print("before condition in welcome screen");
+    await auth.getAuthStatus()?Get.offAll(()=>const MainBottomNavScreen()):null;
+    print("After condition in welcome screen");
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    isLoggedIn();
+  }
   @override
   Widget build(BuildContext context) {
 
