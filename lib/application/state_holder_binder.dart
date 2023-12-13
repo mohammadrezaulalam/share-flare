@@ -10,8 +10,8 @@ class StateHolderBinder extends Bindings {
   @override
   void dependencies() {
     Get.put(ProfileSearchController());
-    Get.put(SignUpController());
-    Get.put(SignInController());
+    Get.put(RegistrationController());
+    Get.put(LoginController());
     Get.put(UserProfileController());
      Get.put(AuthController());
   }

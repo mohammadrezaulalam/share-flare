@@ -7,8 +7,8 @@ import '../ui/screens/main_bottom_nav_screen.dart';
 import '../ui/screens/welcome_screen.dart';
 import '../ui/utilities/auth_constant.dart';
 
-class SignInController extends GetxController {
-  static SignInController instance = Get.find();
+class LoginController extends GetxController {
+  static LoginController instance = Get.find();
   RxBool _isSignInLoading = false.obs;
   RxBool _isLoggedInSuccessful = false.obs;
   RxBool _saveUserToAutoLogin=false.obs;
@@ -58,7 +58,7 @@ class SignInController extends GetxController {
               colorText: Colors.white,
               snackPosition: SnackPosition.BOTTOM);
 
-        }
+
 
           print('Firebase Authentication Error: $error');
           return false;
@@ -98,3 +98,4 @@ class SignInController extends GetxController {
   }
 
 }
+
