@@ -1,15 +1,113 @@
+import 'dart:typed_data';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:share_flare/presentation/state_holders/post_screen_controller.dart';
+import 'package:share_flare/presentation/state_holders/registration_controller.dart';
 import 'package:share_flare/presentation/ui/utilities/colors.dart';
 import 'package:share_flare/presentation/ui/utilities/theme/theme.dart';
+import 'package:share_flare/presentation/ui/utilities/utiles.dart';
 import 'package:share_flare/presentation/ui/widgets/post/post_location_button_listview.dart';
 import 'package:share_flare/presentation/ui/widgets/post/post_music_button_listview.dart';
 
-class PostScreen extends StatelessWidget {
+class PostScreen extends StatefulWidget {
   const PostScreen({super.key});
 
   @override
+  State<PostScreen> createState() => _PostScreenState();
+}
+
+bool isLoading = false;
+
+class _PostScreenState extends State<PostScreen> {
+  final _postController = Get.find<PostScreenController>();
+  final _signupController = Get.find<SignUpController>();
+
+  void postImage(
+    String uid,
+    String username,
+    String profImage,
+  ) async {
+
+    try {
+
+      String res = await PostScreenController().uploadPost(
+        _postController.descriptionTE.text,
+        _postController.imageList as Uint8List,
+        uid,
+        username,
+        profImage,
+      );
+      if (res == "success") {
+        showSnackBar(
+            context,
+            'Posted!',
+          );
+
+      } else {
+
+          showSnackBar(context, res);
+
+      }
+    } catch (err) {
+      showSnackBar(
+        context,
+        err.toString()
+      );
+    }}
+
+  // void postImage(String uid, String username, String profImage) async {
+  //   try {
+  //     List<String> photoUrls = [];
+  //
+  //     for (Uint8List image in _postController.imageList) {
+  //       String res = await SignUpController.instance.uploadImgToStorage('posts', image, true);
+  //       photoUrls.add(res);
+  //     }
+  //
+  //     String description = _postController.descriptionTE.text;
+  //
+  //     // Create the post with multiple images
+  //     String res = await PostScreenController().uploadPost(
+  //       description,
+  //       photoUrls as Uint8List,
+  //       uid,
+  //       username,
+  //       profImage,
+  //     );
+  //
+  //     if (res == "success") {
+  //       showSnackBar(
+  //         context,
+  //         'Posted!',
+  //       );
+  //     } else {
+  //       showSnackBar(context, res);
+  //     }
+  //   } catch (err) {
+  //     showSnackBar(
+  //       context,
+  //       err.toString(),
+  //     );
+  //   }
+  // }
+
+  @override
+  void initState() {
+    super.initState();
+    _postController.loadGalleryImages();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _postController.descriptionTE.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+
     final dark = SFAppTheme.isDarkMode(context);
     return Scaffold(
       appBar: PreferredSize(
@@ -38,20 +136,34 @@ class PostScreen extends StatelessWidget {
               size: 25,
             ),
           ),
-          actions: const [
+          actions: [
             Padding(
               padding: EdgeInsets.only(right: 16),
               child: Row(
                 children: [
-                  Text(
-                    'Post',
-                    style: TextStyle(
-                        color: Color(0xFF4478FF), fontWeight: FontWeight.w600),
-                  ),
-                  SizedBox(
+                 //  GestureDetector(
+                 //    onTap: () =>
+                 //        postImage(
+                 //          FirebaseAuth.instance.currentUser!.uid
+                 //          // _signupController.user!.uid??'',
+                 //
+                 //          // _signupController.user!.userName,
+                 //          // _signupController.user!.profilePhoto
+                 //
+                 //        )
+                 //
+                 // ,
+                 //    child: const Text(
+                 //      'Post',
+                 //      style: TextStyle(
+                 //          color: Color(0xFF4478FF),
+                 //          fontWeight: FontWeight.w600),
+                 //    ),
+                 //  ),
+                  const SizedBox(
                     width: 4,
                   ),
-                  Icon(
+                  const Icon(
                     Icons.arrow_forward_ios,
                     size: 18,
                     color: Color(0xFF4478FF),
@@ -75,13 +187,27 @@ class PostScreen extends StatelessWidget {
                   Container(
                     width: 80,
                     height: 80,
-                    decoration: const BoxDecoration(
-                      color: Colors.amber,
-                      image: DecorationImage(
-                        image: NetworkImage(
-                            'https://tse1.mm.bing.net/th?id=OIP.4g9-yIBm-G56rSlQAEFp6AHaE9&pid=Api&rs=1&c=1&qlt=95&w=156&h=104'),
-                        fit: BoxFit.cover,
-                      ),
+                    child: Column(
+                      children: [
+                        Expanded(
+                          child: GridView.builder(
+                            itemCount: _postController.imageList.length,
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 1,
+                              mainAxisSpacing: 1,
+                              crossAxisSpacing: 1,
+                            ),
+                            itemBuilder: (context, index) {
+                              return Image.memory(
+                                _postController.imageList[index],
+                                // Display the image from the list
+                                fit: BoxFit.cover,
+                              );
+                            },
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   const SizedBox(width: 10),
@@ -95,6 +221,7 @@ class PostScreen extends StatelessWidget {
                           ),
                       child: TextFormField(
                         maxLines: 3,
+                        controller: _postController.descriptionTE,
                         decoration: const InputDecoration(
                           contentPadding: EdgeInsets.all(1.0),
                           hintText: 'Write a caption...',

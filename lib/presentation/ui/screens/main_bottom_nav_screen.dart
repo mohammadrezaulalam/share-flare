@@ -1,5 +1,8 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:share_flare/presentation/state_holders/main_bottom_nav_controller.dart';
 import 'package:share_flare/presentation/ui/screens/add_post.dart';
 import 'package:share_flare/presentation/ui/screens/home_page.dart';
@@ -8,6 +11,7 @@ import 'package:share_flare/presentation/ui/screens/search_screen.dart';
 import 'package:share_flare/presentation/ui/utilities/assets_path.dart';
 import 'package:share_flare/presentation/ui/utilities/colors.dart';
 import 'package:share_flare/presentation/ui/utilities/theme/theme.dart';
+import 'package:share_flare/presentation/ui/utilities/utiles.dart';
 
 import 'post_screen.dart';
 
@@ -19,9 +23,10 @@ class MainBottomNavScreen extends StatefulWidget {
 }
 
 class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
+
+  Uint8List? _file;
   MainBottomNavController mainBottomNavController =
       Get.put(MainBottomNavController());
-
   /// int _selectedIndex = 0;
   final List<Widget> _pages = [
     HomePage(),
@@ -92,8 +97,12 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               GestureDetector(
-                onTap: () {
+                onTap: () async {
                   Navigator.pop(context);
+                  Uint8List file = await pickImage(ImageSource.camera);
+                  setState(() {
+                    _file  = file;
+                  });
                 },
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -107,7 +116,7 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
               ),
               GestureDetector(
                 onTap: () {
-                  Get.to(() => const AddPostScreen());
+                  Get.to(() => const PostScreen());
                 },
                 child: Column(
                   mainAxisSize: MainAxisSize.min,

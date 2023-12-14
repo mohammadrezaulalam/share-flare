@@ -1,22 +1,56 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:share_flare/presentation/ui/utilities/colors.dart';
 import 'package:share_flare/presentation/ui/utilities/theme/theme.dart';
+import 'package:share_flare/presentation/ui/utilities/utiles.dart';
 
 import 'post_screen.dart';
 
 class AddPostScreen extends StatefulWidget {
-  const AddPostScreen({super.key});
+  const AddPostScreen({Key? key}) : super(key: key);
 
   @override
   State<AddPostScreen> createState() => _AddPostScreenState();
 }
 
 class _AddPostScreenState extends State<AddPostScreen> {
-  final List<Widget> _mediaList = [];
+  final List<Uint8List> _imageList = [];
 
-  int currentPage = 0;
-  int? lastPage;
+  @override
+  void initState() {
+    super.initState();
+    _loadGalleryImages();
+  }
+
+  _loadGalleryImages() async {
+    // Open the gallery and get the list of selected images
+    List<Uint8List> galleryImages = await _pickMultipleImagesFromGallery();
+
+    setState(() {
+      _imageList.addAll(galleryImages); // Add the selected images to the list
+    });
+  }
+
+  Future<List<Uint8List>> _pickMultipleImagesFromGallery() async {
+    List<Uint8List> selectedImages = [];
+
+    // Use ImagePicker to pick multiple images from the gallery
+    List<XFile>? galleryFiles = await ImagePicker().pickMultiImage();
+
+    if (galleryFiles != null) {
+      for (XFile file in galleryFiles) {
+        // Read the image file and add it to the list
+        List<int> bytes = await file.readAsBytes();
+        selectedImages.add(Uint8List.fromList(bytes));
+      }
+    }
+
+    return selectedImages;
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +84,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
           ),
           actions: [
             Padding(
-              padding: EdgeInsets.only(right: 16),
+              padding: const EdgeInsets.only(right: 16),
               child: GestureDetector(
                 onTap: () {
                   Get.to(() => const PostScreen());
@@ -85,22 +119,16 @@ class _AddPostScreenState extends State<AddPostScreen> {
               SizedBox(
                 height: 370,
                 child: GridView.builder(
-                  itemCount: 1,
+                  itemCount:  _imageList.length,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 1,
                     mainAxisSpacing: 1,
                     crossAxisSpacing: 1,
                   ),
                   itemBuilder: (context, index) {
-                    return Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(
-                            0), // Adjust the radius as needed
-                      ),
-                      child: Image.asset(
-                        'assets/images/img_11.png',
-                        fit: BoxFit.cover,
-                      ),
+                    return Image.memory(
+                      _imageList[index], // Display the image from the list
+                      fit: BoxFit.cover,
                     );
                   },
                 ),
@@ -162,24 +190,63 @@ class _AddPostScreenState extends State<AddPostScreen> {
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 8.0),
-                child: GridView.builder(
-                    shrinkWrap: true,
-                    itemCount: 5,
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3,
-                      mainAxisSpacing: 0,
-                      crossAxisSpacing: 0,
-                    ),
-                    itemBuilder: (context, index) {
-                      return Image.asset(
-                      'assets/images/img_11.png',
-                      fit: BoxFit.cover,
-                                              );
-                    }),
-              )
+              // SingleChildScrollView(
+              //   child: Padding(
+              //     padding: const EdgeInsets.only(top: 8.0),
+              //     child:Container(
+              //       child: Row(
+              //         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              //         children:
+              //
+              //         List.generate(
+              //           _imageList.length,
+              //               (index) =>
+              //             Container(
+              //               width: 100,
+              //               height: 100,// Set width as needed
+              //               // Set height as needed
+              //               color: Colors.blue, // Set color or decoration as needed
+              //               alignment: Alignment.center,
+              //               child:Image.asset(
+              //                 'assets/images/img_11.png',
+              //                 fit: BoxFit.cover,
+              //               ),
+              //             ),
+              //           ),
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+
+
+              // SingleChildScrollView(
+              //   child: Padding(
+              //     padding: const EdgeInsets.only(top: 8.0),
+              //     child:
+              //     Container(
+              //       child: GridView.builder(
+              //           shrinkWrap: true,
+              //           itemCount: 9,
+              //           gridDelegate:
+              //               const SliverGridDelegateWithFixedCrossAxisCount(
+              //             crossAxisCount: 3,
+              //             mainAxisSpacing: 0,
+              //             crossAxisSpacing: 0,
+              //           ),
+              //           itemBuilder: (context, index) {
+              //             return GestureDetector(
+              //                 onTap:  () async {
+              //                   Navigator.of(context).pop();
+              //                   Uint8List file = await pickImage(ImageSource.gallery);
+              //                   setState(() {
+              //
+              //                   });}
+              //
+              //             );
+              //           }),
+              //     ),
+              //   ),
+              // )
             ],
           ),
         ),
@@ -187,3 +254,19 @@ class _AddPostScreenState extends State<AddPostScreen> {
     );
   }
 }
+
+// GridView.builder(
+//     shrinkWrap: true,
+//     itemCount: 9,
+//     gridDelegate:
+//         const SliverGridDelegateWithFixedCrossAxisCount(
+//       crossAxisCount: 3,
+//       mainAxisSpacing: 0,
+//       crossAxisSpacing: 0,
+//     ),
+//     itemBuilder: (context, index) {
+//       return Image.asset(
+//         'assets/images/img_11.png',
+//         fit: BoxFit.cover,
+//       );
+//     }),
