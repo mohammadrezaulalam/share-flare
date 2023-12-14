@@ -21,8 +21,8 @@ class OwnProfileHeaderWidget extends StatefulWidget {
   String lastName;
   String userName;
   String profilePhoto;
-  List following;
-  List follower;
+  int following;
+  int follower;
 
   @override
   State<OwnProfileHeaderWidget> createState() => _OwnProfileHeaderWidgetState();
@@ -48,7 +48,7 @@ class _OwnProfileHeaderWidgetState extends State<OwnProfileHeaderWidget> {
               height: 5,
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 CircleAvatar(
@@ -56,7 +56,7 @@ class _OwnProfileHeaderWidgetState extends State<OwnProfileHeaderWidget> {
                   backgroundImage: NetworkImage(widget.profilePhoto),
                 ),
                 const SizedBox(
-                  width: 6,
+                  width: 20,
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -114,7 +114,7 @@ class _OwnProfileHeaderWidgetState extends State<OwnProfileHeaderWidget> {
                         Row(
                           children: [
                             Text(
-                              widget.following.length.toString(),
+                              widget.following.toString(),
                               style: TextStyle(
                                 color: dark
                                     ? SFColors.white
@@ -149,7 +149,7 @@ class _OwnProfileHeaderWidgetState extends State<OwnProfileHeaderWidget> {
                         Row(
                           children: [
                             Text(
-                              widget.follower.length.toString(),
+                              widget.follower.toString(),
                               style: TextStyle(
                                 color: dark
                                     ? SFColors.white
