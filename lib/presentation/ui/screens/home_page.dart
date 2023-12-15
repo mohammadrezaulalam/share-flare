@@ -284,74 +284,23 @@ class _HomePageState extends State<HomePage> {
 
 }
 
-class ListOfUser extends StatefulWidget {
+class ListOfUser extends StatelessWidget {
   const ListOfUser({super.key});
 
   @override
-  State<ListOfUser> createState() => _ListOfUserState();
-}
-
-class _ListOfUserState extends State<ListOfUser> {
-
-
-  Future<List<String>> fetchUserIds() async {
-    try {
-      QuerySnapshot querySnapshot =
-          await FirebaseFirestore.instance.collection('users').get();
-
-      List<String> userIds = querySnapshot.docs.map((doc) => doc.id).toList();
-      print("value from get all user ids where use map :${userIds[2]}");
-      // userIds = userIds;
-
-      return userIds;
-    } catch (e) {
-      print("Error fetching user IDs: $e");
-      return [];
-    }
-  }
-
-
-
-  Future<UserModelRegistration?> fetchUserData(String userId) async {
-    try {
-      DocumentSnapshot userSnapshot = await FirebaseFirestore.instance
-          .collection('users')
-          .doc(userId)
-          .get();
-
-      if (userSnapshot.exists) {
-        // Convert the document snapshot data to your UserModelRegistration object
-        UserModelRegistration user =
-            UserModelRegistration.fromSnap(userSnapshot);
-        print(user.email);
-
-        print(user.lastName);
-        print(user.follower[0]);
-        print(user.userName);
-        print(user.firstName);
-
-        return user;
-      } else {
-        return null; // User does not exist
-      }
-    } catch (e) {
-      print("Error fetching user data: $e");
-      return null;
-    }
-  }
-
-
-
-  @override
   Widget build(BuildContext context) {
-    // String userData= 'Czz3UJxvMIV9XUezKNPx09FwVqe2';
-    String userData = 'rUMSvEsQkScSq6BOmyiZZsCt0H22';
 
     return Scaffold(
-      body: FutureBuilder<List<String>>(future: fetchUserIds(), builder: (context, userIdsSnapshot){
+      appBar: AppBar(title: Text("User list to start messaging"),leading: GestureDetector(
+          onTap: (){
+            Get.back();
+          },
+          child: Icon(Icons.arrow_back_ios)),),
+
+      body: FutureBuilder<List<String>>(future:chatController.fetchUserIds(), builder: (context, userIdsSnapshot){
         if (userIdsSnapshot.connectionState == ConnectionState.waiting) {
           // Show a loading indicator while the Future is in progress
-          return const Center(child: CircularProgressIndicator());
+          return Scaffold(body: const Center(child: CircularProgressIndicator()));
         } else if (userIdsSnapshot.hasError) {
           // Show an error message if the Future fails
           return Text('Error: ${userIdsSnapshot.error}');
@@ -364,11 +313,13 @@ class _ListOfUserState extends State<ListOfUser> {
               itemCount: userIds.length,
               itemBuilder: (context,index){
                 return FutureBuilder<UserModelRegistration?>(
-                    future: fetchUserData(userIds[index]),
+                    future: chatController.fetchUserData(userIds[index]),
                     builder: (context,userDataSnapshot){
                       if (userDataSnapshot.connectionState ==
                           ConnectionState.waiting) {
-                        return Center(child: CircularProgressIndicator());
+                        // return Center(child: CircularProgressIndicator());
+                        return Center(child: SizedBox());
+                        // return Scaffold(body: const Center(child: CircularProgressIndicator()));
                       } else if (userDataSnapshot.hasError) {
                         return ListTile(
                           title: Text('Error loading user data'),
@@ -377,18 +328,19 @@ class _ListOfUserState extends State<ListOfUser> {
                         UserModelRegistration? user = userDataSnapshot.data;
                         if(user!=null){
                           return ListTile(
-                            leading: CircleAvatar(
-                              backgroundImage: NetworkImage(user.profilePhoto),
-                              radius: 30,),
-                            title: Text(user.userName),
-                            subtitle: Text(user.email),
-                            trailing: TextButton.icon(onPressed: (){
+                            onTap: (){
                               Get.to(() => ChatPage(
                                   reciverUserEmail:
                                   user.email,
                                   receiverUserId: user.uid));
                               print("Selected User ID: ${userIds[index]}");
-                            }, icon: Icon(Icons.chat), label: Text('Chtting'),),
+                            },
+                            leading: CircleAvatar(
+                              backgroundImage: NetworkImage(user.profilePhoto),
+                              radius: 30,),
+                            title: Text(user.userName),
+                            subtitle: Text(user.email),
+                            trailing: Icon(Icons.chat),
                             /*onTap: (){
                               // Handle the onTap event here
                               print("Selected User ID: ${userIds[index]}");
@@ -402,12 +354,12 @@ class _ListOfUserState extends State<ListOfUser> {
                       }
 
                     });
-            
+
           });
 
         }
       }),
-    
+
     );
   }
 }

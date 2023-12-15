@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:share_flare/data/models/message_model.dart';
 import 'package:share_flare/data/models/message_test.dart';
 
-class ChatService extends ChangeNotifier {
+/*class ChatService extends ChangeNotifier {
   //get instance of auth and firestore
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -52,4 +52,4 @@ class ChatService extends ChangeNotifier {
         .orderBy('timestamp', descending: false)
         .snapshots();
   }
-}
+}*/
