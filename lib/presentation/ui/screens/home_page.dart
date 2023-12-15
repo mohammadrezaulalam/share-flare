@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:share_flare/presentation/ui/screens/chat_page_test.dart';
 import 'package:share_flare/presentation/ui/screens/chat_screen.dart';
 import 'package:share_flare/presentation/ui/screens/notification_screen.dart';
 import 'package:share_flare/presentation/ui/screens/other_users_profile_screen.dart';
@@ -10,6 +12,8 @@ import 'package:share_flare/presentation/ui/utilities/colors.dart';
 import 'package:share_flare/presentation/ui/utilities/theme/theme.dart';
 import 'package:share_flare/presentation/ui/widgets/app_title.dart';
 import 'package:share_flare/presentation/ui/widgets/upload_card_widget.dart';
+
+import '../../../data/models/user_model_registration.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -39,7 +43,9 @@ class _HomePageState extends State<HomePage> {
           dark ? SFColors.darkBackgroundColor : SFColors.liteBackgroundColor,
       appBar: AppBar(
         flexibleSpace: Container(
-          color: dark ? const Color(0xFF1D2939) : SFColors.white,// Set the background color explicitly
+          color: dark
+              ? const Color(0xFF1D2939)
+              : SFColors.white, // Set the background color explicitly
         ),
         leadingWidth: 50,
         leading: Padding(
@@ -48,7 +54,6 @@ class _HomePageState extends State<HomePage> {
             SFAssetsPath.personPNG,
           ),
         ),
-
         title: AppTitle(),
         centerTitle: true,
         actions: [
@@ -99,7 +104,7 @@ class _HomePageState extends State<HomePage> {
               ),
               child: GestureDetector(
                 onTap: () {
-                 loginController.signOut();
+                  loginController.signOut();
                 },
                 child: const Icon(
                   Iconsax.logout,
@@ -107,9 +112,29 @@ class _HomePageState extends State<HomePage> {
                 ),
               )),
           const SizedBox(
+            width: 10.0,
+          ),
+          //list of user
+          Container(
+              height: 35,
+              width: 35,
+              decoration: BoxDecoration(
+                color: dark ? null : SFColors.bottomNavActiveColor,
+                shape: BoxShape.circle,
+              ),
+              child: GestureDetector(
+                onTap: () {
+                  // _listOfUser(context);
+                  Get.to(() => const ListOfUser());
+                },
+                child: const Icon(
+                  Iconsax.message,
+                  size: 20,
+                ),
+              )),
+          const SizedBox(
             width: 16.0,
           ),
-
         ],
       ),
       body: SingleChildScrollView(
@@ -135,8 +160,12 @@ class _HomePageState extends State<HomePage> {
                           _selectedColors[_selectedIndex] =
                               SFColors.storyLiveColor;
                           //chat screen load when click on any friend's profile
-                          if(_selectedIndex!=0){
-                            Get.to(()=>ChatScreen(userName: storyItems[_selectedIndex]['name']!, image: storyItems[_selectedIndex]['img']!,),);
+                          if (_selectedIndex != 0) {
+                            // Get.to(()=>ChatScreen(userName: storyItems[_selectedIndex]['name']!, image: storyItems[_selectedIndex]['img']!,),);
+                            Get.to(() => ChatPage(
+                                reciverUserEmail:
+                                    firebaseAuth.currentUser!.email!,
+                                receiverUserId: firebaseAuth.currentUser!.uid));
                           }
 
                           setState(() {});
@@ -249,6 +278,136 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
+    );
+  }
+
+
+}
+
+class ListOfUser extends StatefulWidget {
+  const ListOfUser({super.key});
+
+  @override
+  State<ListOfUser> createState() => _ListOfUserState();
+}
+
+class _ListOfUserState extends State<ListOfUser> {
+
+
+  Future<List<String>> fetchUserIds() async {
+    try {
+      QuerySnapshot querySnapshot =
+          await FirebaseFirestore.instance.collection('users').get();
+
+      List<String> userIds = querySnapshot.docs.map((doc) => doc.id).toList();
+      print("value from get all user ids where use map :${userIds[2]}");
+      // userIds = userIds;
+
+      return userIds;
+    } catch (e) {
+      print("Error fetching user IDs: $e");
+      return [];
+    }
+  }
+
+
+
+  Future<UserModelRegistration?> fetchUserData(String userId) async {
+    try {
+      DocumentSnapshot userSnapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userId)
+          .get();
+
+      if (userSnapshot.exists) {
+        // Convert the document snapshot data to your UserModelRegistration object
+        UserModelRegistration user =
+            UserModelRegistration.fromSnap(userSnapshot);
+        print(user.email);
+
+        print(user.lastName);
+        print(user.follower[0]);
+        print(user.userName);
+        print(user.firstName);
+
+        return user;
+      } else {
+        return null; // User does not exist
+      }
+    } catch (e) {
+      print("Error fetching user data: $e");
+      return null;
+    }
+  }
+
+
+
+  @override
+  Widget build(BuildContext context) {
+    // String userData= 'Czz3UJxvMIV9XUezKNPx09FwVqe2';
+    String userData = 'rUMSvEsQkScSq6BOmyiZZsCt0H22';
+
+    return Scaffold(
+      body: FutureBuilder<List<String>>(future: fetchUserIds(), builder: (context, userIdsSnapshot){
+        if (userIdsSnapshot.connectionState == ConnectionState.waiting) {
+          // Show a loading indicator while the Future is in progress
+          return const Center(child: CircularProgressIndicator());
+        } else if (userIdsSnapshot.hasError) {
+          // Show an error message if the Future fails
+          return Text('Error: ${userIdsSnapshot.error}');
+        } else {
+          // Use the data from the Future to build the UI
+
+          // List<String> userIds = userIdsSnapshot.data as List<String>;
+          List<String> userIds = userIdsSnapshot.data ?? [];
+          return ListView.builder(
+              itemCount: userIds.length,
+              itemBuilder: (context,index){
+                return FutureBuilder<UserModelRegistration?>(
+                    future: fetchUserData(userIds[index]),
+                    builder: (context,userDataSnapshot){
+                      if (userDataSnapshot.connectionState ==
+                          ConnectionState.waiting) {
+                        return Center(child: CircularProgressIndicator());
+                      } else if (userDataSnapshot.hasError) {
+                        return ListTile(
+                          title: Text('Error loading user data'),
+                        );
+                      }else{
+                        UserModelRegistration? user = userDataSnapshot.data;
+                        if(user!=null){
+                          return ListTile(
+                            leading: CircleAvatar(
+                              backgroundImage: NetworkImage(user.profilePhoto),
+                              radius: 30,),
+                            title: Text(user.userName),
+                            subtitle: Text(user.email),
+                            trailing: TextButton.icon(onPressed: (){
+                              Get.to(() => ChatPage(
+                                  reciverUserEmail:
+                                  user.email,
+                                  receiverUserId: user.uid));
+                              print("Selected User ID: ${userIds[index]}");
+                            }, icon: Icon(Icons.chat), label: Text('Chtting'),),
+                            /*onTap: (){
+                              // Handle the onTap event here
+                              print("Selected User ID: ${userIds[index]}");
+                            },*/
+                          );
+                        }else{
+                          return ListTile(
+                              title: Text('User not found'),);
+                        }
+
+                      }
+
+                    });
+            
+          });
+
+        }
+      }),
+    
     );
   }
 }
