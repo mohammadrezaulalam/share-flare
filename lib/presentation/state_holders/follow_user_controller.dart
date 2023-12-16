@@ -1,36 +1,45 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:share_flare/data/models/fetch_followers_model.dart';
 
 class FollowUserController extends GetxController {
-  //final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  static FollowUserController instance = Get.find();
+  final RxBool _isDataLoading = false.obs;
+  bool get isDataLoading => _isDataLoading.value;
 
-  Future<void> followUser(String uid, String followId) async {
+  final RxList<FetchFollowerModel> userList = <FetchFollowerModel>[].obs;
+
+  Future<void> getUsers() async {
     try {
-      DocumentSnapshot snap =
-          await _firestore.collection('users').doc(uid).get();
-      List following = (snap.data() as dynamic)['following'];
+      _isDataLoading.value = true;
+      userList.clear();
+      QuerySnapshot<Map<String, dynamic>> querySnapshot =
+          await FirebaseFirestore.instance.collection('users').get();
 
-      if (following.contains(followId)) {
-        await _firestore.collection('users').doc(followId).update({
-          'followers': FieldValue.arrayRemove([uid])
-        });
-
-        await _firestore.collection('users').doc(uid).update({
-          'following': FieldValue.arrayRemove([uid])
-        });
-      } else {
-        await _firestore.collection('users').doc(followId).update({
-          'followers': FieldValue.arrayUnion([uid])
-        });
-
-        await _firestore.collection('users').doc(uid).update({
-          'following': FieldValue.arrayUnion([uid])
-        });
-      }
+      userList.value = querySnapshot.docs
+          .map((doc) => FetchFollowerModel.fromJson(doc.data()))
+          .toList();
+      _isDataLoading.value = false;
     } catch (e) {
-      print(e.toString());
+      print("Error fetching users: $e");
+    }
+  }
+
+  Future<void> getUsersByIds(List<String> userIds) async {
+    try {
+      QuerySnapshot<Map<String, dynamic>> querySnapshot =
+          await FirebaseFirestore.instance
+              .collection('users')
+              .where('uid', whereIn: userIds)
+              .get();
+
+      userList.value = querySnapshot.docs
+          .map((doc) => FetchFollowerModel.fromJson(doc.data()))
+          .toList();
+      print('Printed From Controller');
+      print(userList[1].email);
+    } catch (e) {
+      print("Error fetching users by IDs: $e");
     }
   }
 }

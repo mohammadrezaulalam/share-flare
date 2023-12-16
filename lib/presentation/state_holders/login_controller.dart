@@ -50,6 +50,7 @@ class LoginController extends GetxController {
             authController.setAuthStatus(true);
           }
           Get.offAll(() => const MainBottomNavScreen(camera: true,));
+
           return true;
 
         }).catchError((error) {

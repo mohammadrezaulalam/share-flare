@@ -26,6 +26,8 @@ class UserProfileController extends GetxController {
   int following = 0;
   String fullName = '';
   bool isFollowing = false;
+  String currentProfileId = '';
+
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -34,6 +36,7 @@ class UserProfileController extends GetxController {
 
   Future<void> listenToUserInfo() async {
     try {
+      _isData.value = true;
       User currentUser = _auth.currentUser!;
 
       DocumentSnapshot snap =
@@ -43,6 +46,8 @@ class UserProfileController extends GetxController {
       if (_fetchUserModel.email?.isNotEmpty ?? false) {
         _isData.value = true;
       }
+      _isData.value = false;
+      update();
     } catch (error) {
       print('Error fetching user information: $error');
     }
@@ -66,6 +71,12 @@ class UserProfileController extends GetxController {
       fullName = userSnap.data()!['firstName'] + userSnap.data()!['lastName'];
       isFollowing =
           userSnap.data()!['follower'].contains(_auth.currentUser!.uid);
+      currentProfileId = userSnap.data()!['uid'];
+      //print(currentProfileId);
+      print(userData);
+      isFollowing =
+          userSnap.data()!['follower'].contains(_auth.currentUser!.uid);
+      _isDataLoading.value = false;
       update();
     } catch (e) {
       _isDataLoading.value = false;

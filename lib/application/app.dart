@@ -27,7 +27,7 @@ class _MyAppState extends State<MyApp> {
   void isLoggedIn() async{
     print("before condition in welcome screen");
     await auth.getAuthStatus()?Get.offAll(()=>const MainBottomNavScreen(camera: true,)):null;
-    print("After condition in welcome screen");
+
   }
   @override
   void initState() {

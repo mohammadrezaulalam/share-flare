@@ -44,9 +44,6 @@ dependencies:
   image_picker: ^1.0.4
   shared_preferences: ^2.2.2
 
-
-
-
   #Firebase
   firebase_core: ^2.24.0
   firebase_auth: ^4.15.0

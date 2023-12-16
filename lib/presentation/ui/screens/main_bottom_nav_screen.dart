@@ -1,9 +1,7 @@
+
 import 'dart:typed_data';
-
-
 import 'package:firebase_auth/firebase_auth.dart';
-
-
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -14,6 +12,7 @@ import 'package:share_flare/presentation/ui/screens/home_page.dart';
 import 'package:share_flare/presentation/ui/screens/own_profile_screen.dart';
 import 'package:share_flare/presentation/ui/screens/search_screen.dart';
 import 'package:share_flare/presentation/ui/utilities/assets_path.dart';
+import 'package:share_flare/presentation/ui/utilities/auth_constant.dart';
 import 'package:share_flare/presentation/ui/utilities/colors.dart';
 import 'package:share_flare/presentation/ui/utilities/theme/theme.dart';
 import 'package:share_flare/presentation/ui/utilities/utiles.dart';
@@ -30,6 +29,9 @@ class MainBottomNavScreen extends StatefulWidget {
 
 class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
 
+  MainBottomNavController mainBottomNavController =
+      Get.put(MainBottomNavController());
+
   Uint8List? _imageList ;
   MainBottomNavController mainBottomNavController =
   Get.put(MainBottomNavController());
@@ -43,11 +45,6 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
     )
   ];
 
-  @override
-  void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {});
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
