@@ -161,11 +161,11 @@ class _HomePageState extends State<HomePage> {
                               SFColors.storyLiveColor;
                           //chat screen load when click on any friend's profile
                           if (_selectedIndex != 0) {
-                            // Get.to(()=>ChatScreen(userName: storyItems[_selectedIndex]['name']!, image: storyItems[_selectedIndex]['img']!,),);
-                            Get.to(() => ChatPage(
+                            Get.to(()=>ChatScreen(userName: storyItems[_selectedIndex]['name']!, image: storyItems[_selectedIndex]['img']!,),);
+                           /* Get.to(() => ChatPage(
                                 reciverUserEmail:
                                     firebaseAuth.currentUser!.email!,
-                                receiverUserId: firebaseAuth.currentUser!.uid));
+                                receiverUserId: firebaseAuth.currentUser!.uid,));*/
                           }
 
                           setState(() {});
@@ -327,12 +327,13 @@ class ListOfUser extends StatelessWidget {
                       }else{
                         UserModelRegistration? user = userDataSnapshot.data;
                         if(user!=null){
+                          
                           return ListTile(
                             onTap: (){
                               Get.to(() => ChatPage(
                                   reciverUserEmail:
                                   user.email,
-                                  receiverUserId: user.uid));
+                                  receiverUserId: user.uid, firstName: user.firstName, lastName: user.lastName, image: user.profilePhoto,));
                               print("Selected User ID: ${userIds[index]}");
                             },
                             leading: CircleAvatar(
