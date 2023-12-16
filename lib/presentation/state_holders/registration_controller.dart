@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
@@ -7,6 +8,7 @@ import 'package:share_flare/data/models/user_model_registration.dart';
 import 'package:share_flare/presentation/ui/screens/auth/login_screen.dart';
 import 'package:share_flare/presentation/ui/utilities/auth_constant.dart';
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 
 import '../ui/screens/main_bottom_nav_screen.dart';
 
@@ -21,6 +23,11 @@ class RegistrationController extends GetxController {
   final TextEditingController firstNameTE = TextEditingController();
   final TextEditingController lastNameTE = TextEditingController();
   final TextEditingController userNameTE = TextEditingController();
+  //
+  // final UserModelRegistration _user = UserModelRegistration().obs;
+  // UserModelRegistration? get user => _user.value;
+  //
+  // set user(UserModelRegistration? value) => _user.value = value;
 
   bool _isLoading = false;
 
@@ -69,8 +76,26 @@ class RegistrationController extends GetxController {
         .child('profilePics')
         .child(firebaseAuth.currentUser!.uid);
     UploadTask uploadTask = ref.putFile(image);
+
     TaskSnapshot snap = await uploadTask;
     String downloadUrl = await snap.ref.getDownloadURL();
+    return downloadUrl;
+  }
+  Future<String> uploadImgToStorage(String childName, Uint8List file, bool isPost) async {
+    // creating location to our firebase storage
+
+    Reference ref =
+    firebaseStorage.ref().child(childName).child(firebaseAuth.currentUser!.uid);
+    if(isPost) {
+      String id = const Uuid().v1();
+      ref = ref.child(id);
+    }
+    UploadTask uploadTask = ref.putData(
+        file
+    );
+
+    TaskSnapshot snapshot = await uploadTask;
+    String downloadUrl = await snapshot.ref.getDownloadURL();
     return downloadUrl;
   }
 

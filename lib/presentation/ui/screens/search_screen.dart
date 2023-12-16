@@ -19,18 +19,6 @@ class _SearchScreenState extends State<SearchScreen> {
 
   final searchController = Get.find<ProfileSearchController>().userProfile;
 
-  // getUserData() async {
-  //   try {
-  //     var snap = await FirebaseFirestore.instance
-  //         .collection('users')
-  //         .doc(widget.uid)
-  //         .get();
-  //     userData = snap.data()!;
-  //     setState(() {});
-  //   } catch (e) {
-  //     Get.snackbar('Error', e.toString());
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {

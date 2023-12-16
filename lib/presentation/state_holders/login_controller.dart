@@ -49,7 +49,8 @@ class LoginController extends GetxController {
           if(_isLoggedInSuccessful.value && _saveUserToAutoLogin.value){
             authController.setAuthStatus(true);
           }
-          Get.offAll(() => const MainBottomNavScreen());
+          Get.offAll(() => const MainBottomNavScreen(camera: true,));
+
           return true;
 
         }).catchError((error) {

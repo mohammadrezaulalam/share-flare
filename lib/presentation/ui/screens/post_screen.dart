@@ -1,12 +1,74 @@
+import 'dart:io';
+import 'dart:typed_data';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:share_flare/presentation/state_holders/post_screen_controller.dart';
+import 'package:share_flare/presentation/ui/screens/main_bottom_nav_screen.dart';
+import 'package:share_flare/presentation/ui/utilities/auth_constant.dart';
 import 'package:share_flare/presentation/ui/utilities/colors.dart';
 import 'package:share_flare/presentation/ui/utilities/theme/theme.dart';
 import 'package:share_flare/presentation/ui/widgets/post/post_location_button_listview.dart';
 import 'package:share_flare/presentation/ui/widgets/post/post_music_button_listview.dart';
 
-class PostScreen extends StatelessWidget {
-  const PostScreen({super.key});
+class PostScreen extends StatefulWidget {
+  const PostScreen({super.key, required bool camera});
+
+  @override
+  State<PostScreen> createState() => _PostScreenState();
+}
+
+bool isLoading = false;
+
+
+class _PostScreenState extends State<PostScreen> {
+  final _postController = Get.find<PostScreenController>();
+
+  void postImage(String uid,
+      String username,
+      String profImage,) async {
+    try {
+      BuildContext? currentContext = Get.context;
+
+      // Create a copy of the imageList to avoid concurrent modification
+      List<Uint8List> copyImageList = List.from(_postController.imageList);
+
+      String res = await PostScreenController().uploadPost(
+        _postController.descriptionTE.text,
+        copyImageList,
+        uid,
+        username,
+        profImage,
+      );
+
+      if (res == "success") {
+        Get.snackbar('Successfully Posted!', '',
+            backgroundColor: Colors.green, colorText: Colors.white, snackPosition: SnackPosition.BOTTOM);
+
+      } else {
+        Get.snackbar('Error', res,
+            backgroundColor: Colors.red, colorText: Colors.white,  snackPosition: SnackPosition.BOTTOM);
+      }
+    } catch (err) {
+      Get.snackbar('Error', err.toString(),
+          backgroundColor: Colors.red, colorText: Colors.white,  snackPosition: SnackPosition.BOTTOM);
+    }
+  }
+
+
+
+  @override
+  void initState() {
+    super.initState();
+    _postController.loadGalleryImages();
+    _postController.pickImageFromCamera();
+    userProfileController.userData;
+    userProfileController.listenToUserInfo();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _postController.clearTheControllers();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,20 +100,38 @@ class PostScreen extends StatelessWidget {
               size: 25,
             ),
           ),
-          actions: const [
+          actions: [
             Padding(
-              padding: EdgeInsets.only(right: 16),
+              padding: const EdgeInsets.only(right: 16),
               child: Row(
                 children: [
-                  Text(
-                    'Post',
-                    style: TextStyle(
-                        color: Color(0xFF4478FF), fontWeight: FontWeight.w600),
+                  GestureDetector(
+                    onTap: () async {
+                      // Call postImage without await, and immediately create a Future that completes
+                      postImage(
+                          FirebaseAuth.instance.currentUser!.uid,
+                          userProfileController.fetchUserModel.userName!,
+                          userProfileController.fetchUserModel.profilePhoto!
+                      );
+
+                      _postController.imageList.clear();
+                      _postController.descriptionTE.clear();
+
+                      // Navigate to another screen (replace 'PostScreen' with your actual screen)
+                      Get.to(() => const MainBottomNavScreen(camera: true,));
+                    },
+                    child: const Text(
+                      'Post',
+                      style: TextStyle(
+                        color: Color(0xFF4478FF),
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 4,
                   ),
-                  Icon(
+                  const Icon(
                     Icons.arrow_forward_ios,
                     size: 18,
                     color: Color(0xFF4478FF),
@@ -62,7 +142,8 @@ class PostScreen extends StatelessWidget {
           ],
         ),
       ),
-      body: Padding(
+      body:
+      Padding(
         padding: const EdgeInsets.only(top: 10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -72,16 +153,50 @@ class PostScreen extends StatelessWidget {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
+                  SizedBox(
                     width: 80,
                     height: 80,
-                    decoration: const BoxDecoration(
-                      color: Colors.amber,
-                      image: DecorationImage(
-                        image: NetworkImage(
-                            'https://tse1.mm.bing.net/th?id=OIP.4g9-yIBm-G56rSlQAEFp6AHaE9&pid=Api&rs=1&c=1&qlt=95&w=156&h=104'),
-                        fit: BoxFit.cover,
-                      ),
+                    child: Column(
+                      children: [
+                        Expanded(
+                          child: GridView.builder(
+                            itemCount: _postController.imageList.length,
+                            gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 1,
+                              mainAxisSpacing: 1,
+                              crossAxisSpacing: 1,
+                            ),
+                            itemBuilder: (context, index) {
+                              final dynamic image = _postController.imageList[index];
+
+                              if (image is Uint8List) {
+                                // Display images from camera using Image.memory
+                                return Image.memory(
+                                  image,
+                                  fit: BoxFit.cover,
+                                );
+                              } else if (image is File) {
+                                // Display images from gallery using Image.file
+                                return Image.file(
+                                  image,
+                                  fit: BoxFit.cover,
+                                );
+                              } else {
+                                // Handle other types accordingly
+                                return Container();
+                              }
+                            },
+
+                            // itemBuilder: (context, index) {
+                            //   return Image.memory(
+                            //     _postController.imageList[index],
+                            //     fit: BoxFit.cover,
+                            //   );
+                            // },
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   const SizedBox(width: 10),
@@ -90,11 +205,12 @@ class PostScreen extends StatelessWidget {
                     height: 90,
                     child: Container(
                       decoration: const BoxDecoration(color: Colors.transparent
-                          // border: Border.all(color: Colors.white),
-                          // borderRadius: BorderRadius.circular(8.0),
-                          ),
+                        // border: Border.all(color: Colors.white),
+                        // borderRadius: BorderRadius.circular(8.0),
+                      ),
                       child: TextFormField(
                         maxLines: 3,
+                        controller: _postController.descriptionTE,
                         decoration: const InputDecoration(
                           contentPadding: EdgeInsets.all(1.0),
                           hintText: 'Write a caption...',
@@ -141,9 +257,12 @@ class PostScreen extends StatelessWidget {
             Divider(
               color: Colors.grey.withOpacity(0.2),
             ),
+
           ],
         ),
       ),
     );
   }
+
+
 }

@@ -26,8 +26,8 @@ class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
   void isLoggedIn() async{
     print("before condition in welcome screen");
-    await auth.getAuthStatus()?Get.offAll(()=>const MainBottomNavScreen()):null;
-    print("After condition in welcome screen");
+    await auth.getAuthStatus()?Get.offAll(()=>const MainBottomNavScreen(camera: true,)):null;
+
   }
   @override
   void initState() {

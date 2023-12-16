@@ -5,7 +5,6 @@ import 'package:iconsax/iconsax.dart';
 import 'package:share_flare/presentation/ui/screens/chat_page_test.dart';
 import 'package:share_flare/presentation/ui/screens/chat_screen.dart';
 import 'package:share_flare/presentation/ui/screens/notification_screen.dart';
-//import 'package:share_flare/presentation/ui/screens/other_users_profile_screen.dart';
 import 'package:share_flare/presentation/ui/utilities/assets_path.dart';
 import 'package:share_flare/presentation/ui/utilities/auth_constant.dart';
 import 'package:share_flare/presentation/ui/utilities/colors.dart';
@@ -160,12 +159,21 @@ class _HomePageState extends State<HomePage> {
                           _selectedColors[_selectedIndex] =
                               SFColors.storyLiveColor;
                           //chat screen load when click on any friend's profile
-                          if (_selectedIndex != 0) {
-                            Get.to(()=>ChatScreen(userName: storyItems[_selectedIndex]['name']!, image: storyItems[_selectedIndex]['img']!,),);
+//                           if (_selectedIndex != 0) {
+// <<<<<<< feature/Epic-14-JIRA-38-Firebase-Preparation
+//                             Get.to(
+//                               () => ChatScreen(
+//                                 userName: storyItems[_selectedIndex]['name']!,
+//                                 image: storyItems[_selectedIndex]['img']!,
+//                               ),
+//                             );
+// =======
+//                             Get.to(()=>ChatScreen(userName: storyItems[_selectedIndex]['name']!, image: storyItems[_selectedIndex]['img']!,),);
 
-                          }
+// >>>>>>> developer
+//                           }
 
-                          setState(() {});
+//                           setState(() {});
                         },
                         child: Card(
                           elevation: 0,

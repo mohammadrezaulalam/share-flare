@@ -44,12 +44,13 @@ dependencies:
   image_picker: ^1.0.4
   shared_preferences: ^2.2.2
 
-
   #Firebase
   firebase_core: ^2.24.0
   firebase_auth: ^4.15.0
   cloud_firestore: ^4.13.5
   firebase_storage: ^11.5.5
+  multiple_images_picker: ^1.0.1
+  uuid: ^4.2.2
 
 
 dev_dependencies:

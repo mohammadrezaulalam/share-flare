@@ -23,3 +23,4 @@ var authController = AuthController.instance;
 var chatController = ChatController.instance;
 var followUserController = FollowUserController.instance;
 
+

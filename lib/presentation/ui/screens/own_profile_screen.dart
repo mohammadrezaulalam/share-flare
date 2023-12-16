@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:share_flare/presentation/state_holders/user_controller.dart';
 import 'package:share_flare/presentation/ui/utilities/auth_constant.dart';
 import 'package:share_flare/presentation/ui/utilities/theme/theme.dart';
 import 'package:share_flare/presentation/ui/widgets/profile/other_users_profile_header.dart';
@@ -18,8 +19,7 @@ class OwnProfileScreen extends StatefulWidget {
 }
 
 class _OwnProfileScreenState extends State<OwnProfileScreen> {
-  // final UserProfileController userProfileController =
-  //     Get.put(UserProfileController());
+
 
   @override
   void initState() {
@@ -28,7 +28,6 @@ class _OwnProfileScreenState extends State<OwnProfileScreen> {
       userProfileController.userData;
       userProfileController.listenToUserInfo();
       userProfileController.getUserData(widget.uid);
-      print(userProfileController.fetchUserModel.email);
     });
   }
 

@@ -1,9 +1,13 @@
+
+import 'dart:typed_data';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:share_flare/presentation/state_holders/main_bottom_nav_controller.dart';
-import 'package:share_flare/presentation/ui/screens/add_post.dart';
+import 'package:share_flare/presentation/state_holders/post_screen_controller.dart';
+
 import 'package:share_flare/presentation/ui/screens/home_page.dart';
 import 'package:share_flare/presentation/ui/screens/own_profile_screen.dart';
 import 'package:share_flare/presentation/ui/screens/search_screen.dart';
@@ -11,28 +15,26 @@ import 'package:share_flare/presentation/ui/utilities/assets_path.dart';
 import 'package:share_flare/presentation/ui/utilities/auth_constant.dart';
 import 'package:share_flare/presentation/ui/utilities/colors.dart';
 import 'package:share_flare/presentation/ui/utilities/theme/theme.dart';
+import 'package:share_flare/presentation/ui/utilities/utiles.dart';
 
 import 'post_screen.dart';
 
 class MainBottomNavScreen extends StatefulWidget {
-  const MainBottomNavScreen({Key? key}) : super(key: key);
+  final bool camera;
+  const MainBottomNavScreen({Key? key, required this.camera}) : super(key: key);
 
   @override
   State<MainBottomNavScreen> createState() => _MainBottomNavScreenState();
 }
 
 class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   WidgetsBinding.instance.addPostFrameCallback((_) async {
-  //     userProfileController.listenToUserInfo();
-  //   });
-  // }
 
   MainBottomNavController mainBottomNavController =
       Get.put(MainBottomNavController());
 
+  Uint8List? _imageList ;
+  MainBottomNavController mainBottomNavController =
+  Get.put(MainBottomNavController());
   /// int _selectedIndex = 0;
   final List<Widget> _pages = [
     HomePage(),
@@ -43,11 +45,6 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
     )
   ];
 
-  // @override
-  // void initState() {
-  //   WidgetsBinding.instance.addPostFrameCallback((_) {});
-  //   super.initState();
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -105,8 +102,12 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               GestureDetector(
-                onTap: () {
-                  Navigator.pop(context);
+                onTap: () async {
+                  if (widget.camera) {
+                    await PostScreenController().pickImageFromCamera();
+                  } else {
+                    Get.to(() => const PostScreen(camera: false));
+                  }
                 },
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -120,7 +121,7 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
               ),
               GestureDetector(
                 onTap: () {
-                  Get.to(() => const AddPostScreen());
+                  Get.to(() => const PostScreen(camera: false));
                 },
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
