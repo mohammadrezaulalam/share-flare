@@ -1,10 +1,15 @@
 import 'dart:typed_data';
 
+
+import 'package:firebase_auth/firebase_auth.dart';
+
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:share_flare/presentation/state_holders/main_bottom_nav_controller.dart';
-import 'package:share_flare/presentation/ui/screens/add_post.dart';
+import 'package:share_flare/presentation/state_holders/post_screen_controller.dart';
+
 import 'package:share_flare/presentation/ui/screens/home_page.dart';
 import 'package:share_flare/presentation/ui/screens/own_profile_screen.dart';
 import 'package:share_flare/presentation/ui/screens/search_screen.dart';
@@ -16,7 +21,8 @@ import 'package:share_flare/presentation/ui/utilities/utiles.dart';
 import 'post_screen.dart';
 
 class MainBottomNavScreen extends StatefulWidget {
-  const MainBottomNavScreen({Key? key}) : super(key: key);
+  final bool camera;
+  const MainBottomNavScreen({Key? key, required this.camera}) : super(key: key);
 
   @override
   State<MainBottomNavScreen> createState() => _MainBottomNavScreenState();
@@ -24,15 +30,17 @@ class MainBottomNavScreen extends StatefulWidget {
 
 class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
 
-  Uint8List? _file;
+  Uint8List? _imageList ;
   MainBottomNavController mainBottomNavController =
-      Get.put(MainBottomNavController());
+  Get.put(MainBottomNavController());
   /// int _selectedIndex = 0;
   final List<Widget> _pages = [
     HomePage(),
     SearchScreen(),
     HomePage(),
-    OwnProfileScreen()
+    OwnProfileScreen(
+      uid: FirebaseAuth.instance.currentUser!.uid,
+    )
   ];
 
   @override
@@ -98,11 +106,11 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
             children: [
               GestureDetector(
                 onTap: () async {
-                  Navigator.pop(context);
-                  Uint8List file = await pickImage(ImageSource.camera);
-                  setState(() {
-                    _file  = file;
-                  });
+                  if (widget.camera) {
+                    await PostScreenController().pickImageFromCamera();
+                  } else {
+                    Get.to(() => const PostScreen(camera: false));
+                  }
                 },
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -116,7 +124,7 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
               ),
               GestureDetector(
                 onTap: () {
-                  Get.to(() => const PostScreen());
+                  Get.to(() => const PostScreen(camera: false));
                 },
                 child: Column(
                   mainAxisSize: MainAxisSize.min,

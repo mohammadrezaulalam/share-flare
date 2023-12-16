@@ -1,4 +1,4 @@
-
+import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
@@ -7,23 +7,22 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:share_flare/data/models/post_model.dart';
 import 'package:share_flare/presentation/state_holders/registration_controller.dart';
+import 'package:share_flare/presentation/ui/screens/post_screen.dart';
+import 'package:share_flare/presentation/ui/utilities/utiles.dart';
 import 'package:uuid/uuid.dart';
 
-class PostScreenController extends GetxController{
-
-  final RxList<Uint8List> imageList = <Uint8List>[].obs;
+class PostScreenController extends GetxController {
+  final List<Uint8List> imageList = <Uint8List>[];
   final TextEditingController descriptionTE = TextEditingController();
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-
-
-
 
 
   Future<void> loadGalleryImages() async {
     // Open the gallery and get the list of selected images
     List<Uint8List> galleryImages = await _pickMultipleImagesFromGallery();
 
-    imageList.addAll(galleryImages); // Add the selected images to the list
+    imageList.addAll(galleryImages);
+
   }
 
   // Example method for picking multiple images from the gallery
@@ -43,15 +42,40 @@ class PostScreenController extends GetxController{
 
     return selectedImages;
   }
+  Future<void> pickImageFromCamera() async {
+    Uint8List? file = await pickImage(ImageSource.camera);
+    if (file != null) {
+      // Add the picked image to the imageList
+      imageList.add(file);
 
-  Future<String> uploadPost(String description, Uint8List file, String uid, String username, String profImage) async {
-    // asking uid here because we don't want to make extra calls to firebase auth when we can just get it from our state management
+      // Update the UI to reflect the changes
+      update();
+    }
+  }
+
+  void clearTheControllers() {
+    descriptionTE.clear();
+    imageList.clear();
+
+  }
+
+
+
+
+  Future<String> uploadPost(String description, List<Uint8List> files,
+      String uid, String username, String profImage) async {
     String res = "Error occurred";
     try {
-      String photoUrl = await SignUpController.instance.uploadImgToStorage('posts', file, true);
+      List<String> photoUrls = [];
 
-      print('Download URL: $photoUrl'); // Add this line for debugging
+      // Upload each image separately and collect their download URLs
+      for (Uint8List file in files) {
+        String photoUrl = await RegistrationController.instance
+            .uploadImgToStorage('posts', file, true);
+        photoUrls.add(photoUrl);
+      }
 
+      // Create a post object with the list of download URLs
       String postId = const Uuid().v1();
       Post post = Post(
         description: description,
@@ -60,12 +84,12 @@ class PostScreenController extends GetxController{
         likes: [],
         postId: postId,
         datePublished: DateTime.now(),
-        postUrl: photoUrl,
         profImage: profImage,
+        // Assuming 'postUrls' is a List<String> in your 'Post' class
+        postUrl: 'photoUrls',
       );
 
-      print('Post Object: $post'); // Add this line for debugging
-
+      // Save the post to Firestore
       _firestore.collection('posts').doc(postId).set(post.toJson());
       res = "success";
     } catch (err) {
@@ -73,7 +97,4 @@ class PostScreenController extends GetxController{
     }
     return res;
   }
-
-
 }
-

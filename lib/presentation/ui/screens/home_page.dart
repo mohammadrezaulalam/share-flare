@@ -3,8 +3,9 @@ import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:share_flare/presentation/ui/screens/chat_screen.dart';
 import 'package:share_flare/presentation/ui/screens/notification_screen.dart';
-import 'package:share_flare/presentation/ui/screens/other_users_profile_screen.dart';
+//import 'package:share_flare/presentation/ui/screens/other_users_profile_screen.dart';
 import 'package:share_flare/presentation/ui/utilities/assets_path.dart';
+import 'package:share_flare/presentation/ui/utilities/auth_constant.dart';
 import 'package:share_flare/presentation/ui/utilities/colors.dart';
 import 'package:share_flare/presentation/ui/utilities/theme/theme.dart';
 import 'package:share_flare/presentation/ui/widgets/app_title.dart';
@@ -38,7 +39,9 @@ class _HomePageState extends State<HomePage> {
           dark ? SFColors.darkBackgroundColor : SFColors.liteBackgroundColor,
       appBar: AppBar(
         flexibleSpace: Container(
-          color: dark ? const Color(0xFF1D2939) : SFColors.white,// Set the background color explicitly
+          color: dark
+              ? const Color(0xFF1D2939)
+              : SFColors.white, // Set the background color explicitly
         ),
         leadingWidth: 50,
         leading: Padding(
@@ -47,7 +50,6 @@ class _HomePageState extends State<HomePage> {
             SFAssetsPath.personPNG,
           ),
         ),
-
         title: AppTitle(),
         centerTitle: true,
         actions: [
@@ -79,10 +81,29 @@ class _HomePageState extends State<HomePage> {
               ),
               child: GestureDetector(
                 onTap: () {
-                  Get.to(() => const OtherUsersProfileScreen());
+                  //Get.to(() => const OtherUsersProfileScreen());
                 },
                 child: const Icon(
                   Iconsax.messages_2,
+                  size: 20,
+                ),
+              )),
+          const SizedBox(
+            width: 10.0,
+          ),
+          Container(
+              height: 35,
+              width: 35,
+              decoration: BoxDecoration(
+                color: dark ? null : SFColors.bottomNavActiveColor,
+                shape: BoxShape.circle,
+              ),
+              child: GestureDetector(
+                onTap: () {
+                  loginController.signOut();
+                },
+                child: const Icon(
+                  Iconsax.logout,
                   size: 20,
                 ),
               )),
@@ -114,8 +135,13 @@ class _HomePageState extends State<HomePage> {
                           _selectedColors[_selectedIndex] =
                               SFColors.storyLiveColor;
                           //chat screen load when click on any friend's profile
-                          if(_selectedIndex!=0){
-                            Get.to(()=>ChatScreen(userName: storyItems[_selectedIndex]['name']!, image: storyItems[_selectedIndex]['img']!,),);
+                          if (_selectedIndex != 0) {
+                            Get.to(
+                              () => ChatScreen(
+                                userName: storyItems[_selectedIndex]['name']!,
+                                image: storyItems[_selectedIndex]['img']!,
+                              ),
+                            );
                           }
 
                           setState(() {});

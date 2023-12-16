@@ -166,6 +166,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                   setState(() {
                                     check1 = value;
                                   });
+                                  print("Form Login page : $value");
+                                  loginController.saveUserAuth(value!);
                                 }),
                           ),
                           const SizedBox(
@@ -180,7 +182,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       SizedBox(
                         width: double.infinity,
                         child: Obx(() {
-                          if(signInController.isSignInLoading.value){
+                          if(loginController.isSignInLoading.value){
                             return const Center(child: CircularProgressIndicator(),);
                           }
                           return ElevatedButton(
@@ -191,7 +193,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 setState(() {});
                               }
                               if(isButtonEnable() && mounted){
-                                signInController.userLogin(_emailTEController.text.trim(), _passTEController.text);
+                                loginController.userLogin(_emailTEController.text.trim(), _passTEController.text);
                               }
 
 

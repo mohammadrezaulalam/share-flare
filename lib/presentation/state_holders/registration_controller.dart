@@ -13,8 +13,8 @@ import 'package:uuid/uuid.dart';
 
 import '../ui/screens/main_bottom_nav_screen.dart';
 
-class SignUpController extends GetxController {
-  static SignUpController instance = Get.find();
+class RegistrationController extends GetxController {
+  static RegistrationController instance = Get.find();
 
   //text controller
   final TextEditingController emailTE = TextEditingController();

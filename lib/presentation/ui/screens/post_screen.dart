@@ -1,18 +1,19 @@
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:share_flare/presentation/state_holders/post_screen_controller.dart';
-import 'package:share_flare/presentation/state_holders/registration_controller.dart';
+import 'package:share_flare/presentation/ui/screens/main_bottom_nav_screen.dart';
+import 'package:share_flare/presentation/ui/utilities/auth_constant.dart';
 import 'package:share_flare/presentation/ui/utilities/colors.dart';
 import 'package:share_flare/presentation/ui/utilities/theme/theme.dart';
-import 'package:share_flare/presentation/ui/utilities/utiles.dart';
 import 'package:share_flare/presentation/ui/widgets/post/post_location_button_listview.dart';
 import 'package:share_flare/presentation/ui/widgets/post/post_music_button_listview.dart';
 
 class PostScreen extends StatefulWidget {
-  const PostScreen({super.key});
+  const PostScreen({super.key, required bool camera});
 
   @override
   State<PostScreen> createState() => _PostScreenState();
@@ -20,94 +21,57 @@ class PostScreen extends StatefulWidget {
 
 bool isLoading = false;
 
+
 class _PostScreenState extends State<PostScreen> {
   final _postController = Get.find<PostScreenController>();
-  final _signupController = Get.find<SignUpController>();
 
-  void postImage(
-    String uid,
-    String username,
-    String profImage,
-  ) async {
-
+  void postImage(String uid,
+      String username,
+      String profImage,) async {
     try {
+      BuildContext? currentContext = Get.context;
+
+      // Create a copy of the imageList to avoid concurrent modification
+      List<Uint8List> copyImageList = List.from(_postController.imageList);
 
       String res = await PostScreenController().uploadPost(
         _postController.descriptionTE.text,
-        _postController.imageList as Uint8List,
+        copyImageList,
         uid,
         username,
         profImage,
       );
+
       if (res == "success") {
-        showSnackBar(
-            context,
-            'Posted!',
-          );
+        Get.snackbar('Successfully Posted!', '',
+            backgroundColor: Colors.green, colorText: Colors.white, snackPosition: SnackPosition.BOTTOM);
 
       } else {
-
-          showSnackBar(context, res);
-
+        Get.snackbar('Error', res,
+            backgroundColor: Colors.red, colorText: Colors.white,  snackPosition: SnackPosition.BOTTOM);
       }
     } catch (err) {
-      showSnackBar(
-        context,
-        err.toString()
-      );
-    }}
+      Get.snackbar('Error', err.toString(),
+          backgroundColor: Colors.red, colorText: Colors.white,  snackPosition: SnackPosition.BOTTOM);
+    }
+  }
 
-  // void postImage(String uid, String username, String profImage) async {
-  //   try {
-  //     List<String> photoUrls = [];
-  //
-  //     for (Uint8List image in _postController.imageList) {
-  //       String res = await SignUpController.instance.uploadImgToStorage('posts', image, true);
-  //       photoUrls.add(res);
-  //     }
-  //
-  //     String description = _postController.descriptionTE.text;
-  //
-  //     // Create the post with multiple images
-  //     String res = await PostScreenController().uploadPost(
-  //       description,
-  //       photoUrls as Uint8List,
-  //       uid,
-  //       username,
-  //       profImage,
-  //     );
-  //
-  //     if (res == "success") {
-  //       showSnackBar(
-  //         context,
-  //         'Posted!',
-  //       );
-  //     } else {
-  //       showSnackBar(context, res);
-  //     }
-  //   } catch (err) {
-  //     showSnackBar(
-  //       context,
-  //       err.toString(),
-  //     );
-  //   }
-  // }
+
 
   @override
   void initState() {
     super.initState();
     _postController.loadGalleryImages();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _postController.descriptionTE.dispose();
+    _postController.pickImageFromCamera();
+    userProfileController.userData;
+    userProfileController.listenToUserInfo();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _postController.clearTheControllers();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-
     final dark = SFAppTheme.isDarkMode(context);
     return Scaffold(
       appBar: PreferredSize(
@@ -138,28 +102,32 @@ class _PostScreenState extends State<PostScreen> {
           ),
           actions: [
             Padding(
-              padding: EdgeInsets.only(right: 16),
+              padding: const EdgeInsets.only(right: 16),
               child: Row(
                 children: [
-                 //  GestureDetector(
-                 //    onTap: () =>
-                 //        postImage(
-                 //          FirebaseAuth.instance.currentUser!.uid
-                 //          // _signupController.user!.uid??'',
-                 //
-                 //          // _signupController.user!.userName,
-                 //          // _signupController.user!.profilePhoto
-                 //
-                 //        )
-                 //
-                 // ,
-                 //    child: const Text(
-                 //      'Post',
-                 //      style: TextStyle(
-                 //          color: Color(0xFF4478FF),
-                 //          fontWeight: FontWeight.w600),
-                 //    ),
-                 //  ),
+                  GestureDetector(
+                    onTap: () async {
+                      // Call postImage without await, and immediately create a Future that completes
+                      postImage(
+                          FirebaseAuth.instance.currentUser!.uid,
+                          userProfileController.fetchUserModel.userName!,
+                          userProfileController.fetchUserModel.profilePhoto!
+                      );
+
+                      _postController.imageList.clear();
+                      _postController.descriptionTE.clear();
+
+                      // Navigate to another screen (replace 'PostScreen' with your actual screen)
+                      Get.to(() => const MainBottomNavScreen(camera: true,));
+                    },
+                    child: const Text(
+                      'Post',
+                      style: TextStyle(
+                        color: Color(0xFF4478FF),
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
                   const SizedBox(
                     width: 4,
                   ),
@@ -174,7 +142,8 @@ class _PostScreenState extends State<PostScreen> {
           ],
         ),
       ),
-      body: Padding(
+      body:
+      Padding(
         padding: const EdgeInsets.only(top: 10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -184,7 +153,7 @@ class _PostScreenState extends State<PostScreen> {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
+                  SizedBox(
                     width: 80,
                     height: 80,
                     child: Column(
@@ -193,18 +162,38 @@ class _PostScreenState extends State<PostScreen> {
                           child: GridView.builder(
                             itemCount: _postController.imageList.length,
                             gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
+                            const SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 1,
                               mainAxisSpacing: 1,
                               crossAxisSpacing: 1,
                             ),
                             itemBuilder: (context, index) {
-                              return Image.memory(
-                                _postController.imageList[index],
-                                // Display the image from the list
-                                fit: BoxFit.cover,
-                              );
+                              final dynamic image = _postController.imageList[index];
+
+                              if (image is Uint8List) {
+                                // Display images from camera using Image.memory
+                                return Image.memory(
+                                  image,
+                                  fit: BoxFit.cover,
+                                );
+                              } else if (image is File) {
+                                // Display images from gallery using Image.file
+                                return Image.file(
+                                  image,
+                                  fit: BoxFit.cover,
+                                );
+                              } else {
+                                // Handle other types accordingly
+                                return Container();
+                              }
                             },
+
+                            // itemBuilder: (context, index) {
+                            //   return Image.memory(
+                            //     _postController.imageList[index],
+                            //     fit: BoxFit.cover,
+                            //   );
+                            // },
                           ),
                         ),
                       ],
@@ -216,9 +205,9 @@ class _PostScreenState extends State<PostScreen> {
                     height: 90,
                     child: Container(
                       decoration: const BoxDecoration(color: Colors.transparent
-                          // border: Border.all(color: Colors.white),
-                          // borderRadius: BorderRadius.circular(8.0),
-                          ),
+                        // border: Border.all(color: Colors.white),
+                        // borderRadius: BorderRadius.circular(8.0),
+                      ),
                       child: TextFormField(
                         maxLines: 3,
                         controller: _postController.descriptionTE,
@@ -268,9 +257,12 @@ class _PostScreenState extends State<PostScreen> {
             Divider(
               color: Colors.grey.withOpacity(0.2),
             ),
+
           ],
         ),
       ),
     );
   }
+
+
 }

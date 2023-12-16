@@ -1,7 +1,7 @@
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 
-class ProfileSearchController extends GetxController{
+class ProfileSearchController extends GetxController {
   final RxList userProfile = [
     'https://thumbs2.imgbox.com/bb/73/PVN0JFqQ_t.jpg',
     'https://thumbs2.imgbox.com/48/c6/JnXOWPiH_t.jpg',
@@ -29,8 +29,14 @@ class ProfileSearchController extends GetxController{
     'https://thumbs2.imgbox.com/8a/05/54YUYAWg_t.jpg',
   ].obs;
 
-
-
-
-
+  getSearchResult(String searchQuery) {
+    var snap = FirebaseFirestore.instance
+        .collection('users')
+        .where(
+          'userName',
+          isGreaterThanOrEqualTo: searchQuery,
+        )
+        .get();
+    print(snap);
+  }
 }
