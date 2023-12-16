@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:share_flare/presentation/state_holders/user_controller.dart';
 import 'package:share_flare/presentation/ui/screens/follower_screen.dart';
+import 'package:share_flare/presentation/ui/utilities/auth_constant.dart';
 import 'package:share_flare/presentation/ui/utilities/colors.dart';
 import 'package:share_flare/presentation/ui/utilities/theme/theme.dart';
 import 'package:share_flare/presentation/ui/widgets/round_divider.dart';
@@ -99,7 +100,7 @@ class _OwnProfileHeaderWidgetState extends State<OwnProfileHeaderWidget> {
                               width: 3,
                             ),
                             Text(
-                              "Posts",
+                              "Postsss",
                               style: TextStyle(
                                 color: dark
                                     ? SFColors.white
@@ -127,7 +128,13 @@ class _OwnProfileHeaderWidgetState extends State<OwnProfileHeaderWidget> {
                               width: 3,
                             ),
                             GestureDetector(
-                              onTap: () {
+                              onTap: () async {
+                                List<String> userIds = userProfileController
+                                    .fetchUserModel.following!
+                                    .cast<String>()
+                                    .toList();
+                                await followUserController
+                                    .getUsersByIds(userIds);
                                 Get.to(() => const FollowerScreen(
                                       isFollowerTab: false,
                                     ));
@@ -146,31 +153,36 @@ class _OwnProfileHeaderWidgetState extends State<OwnProfileHeaderWidget> {
                           ],
                         ),
                         const RoundDivider(),
-                        Row(
-                          children: [
-                            Text(
-                              widget.follower.toString(),
-                              style: TextStyle(
-                                color: dark
-                                    ? SFColors.white
-                                    : const Color(0xFF1D2939),
-                                letterSpacing: 0.4,
-                                fontSize: 12,
-                                fontWeight: FontWeight.w700,
+                        GestureDetector(
+                          onTap: () async {
+                            List<String> userIds = userProfileController
+                                .userData['follower']
+                                .cast<String>()
+                                .toList();
+                            print('Follower List is :::::: $userIds');
+                            print('Follower List is ::::::');
+                            await followUserController.getUsersByIds(userIds);
+                            Get.to(() => const FollowerScreen(
+                                  isFollowerTab: false,
+                                ));
+                          },
+                          child: Row(
+                            children: [
+                              Text(
+                                widget.follower.toString(),
+                                style: TextStyle(
+                                  color: dark
+                                      ? SFColors.white
+                                      : const Color(0xFF1D2939),
+                                  letterSpacing: 0.4,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w700,
+                                ),
                               ),
-                            ),
-                            const SizedBox(
-                              width: 3,
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                Get.to(
-                                  () => const FollowerScreen(
-                                    isFollowerTab: true,
-                                  ),
-                                );
-                              },
-                              child: Text(
+                              const SizedBox(
+                                width: 3,
+                              ),
+                              Text(
                                 "Follower",
                                 style: TextStyle(
                                   color: dark
@@ -179,9 +191,9 @@ class _OwnProfileHeaderWidgetState extends State<OwnProfileHeaderWidget> {
                                   letterSpacing: 0.4,
                                   fontSize: 10,
                                 ),
-                              ),
-                            )
-                          ],
+                              )
+                            ],
+                          ),
                         ),
                         const SizedBox(
                           width: 15,

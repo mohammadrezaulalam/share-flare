@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:share_flare/presentation/state_holders/user_controller.dart';
+import 'package:share_flare/presentation/ui/utilities/auth_constant.dart';
 import 'package:share_flare/presentation/ui/utilities/theme/theme.dart';
 import 'package:share_flare/presentation/ui/widgets/profile/other_users_profile_header.dart';
 import 'package:share_flare/presentation/ui/widgets/profile/own_profile_header.dart';
@@ -18,16 +18,17 @@ class OwnProfileScreen extends StatefulWidget {
 }
 
 class _OwnProfileScreenState extends State<OwnProfileScreen> {
-  final UserProfileController userProfileController =
-      Get.put(UserProfileController());
+  // final UserProfileController userProfileController =
+  //     Get.put(UserProfileController());
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await Get.find<UserProfileController>().listenToUserInfo();
-      await Get.find<UserProfileController>().getUserData(widget.uid);
       userProfileController.userData;
+      userProfileController.listenToUserInfo();
+      userProfileController.getUserData(widget.uid);
+      print(userProfileController.fetchUserModel.email);
     });
   }
 
@@ -36,9 +37,17 @@ class _OwnProfileScreenState extends State<OwnProfileScreen> {
     final dark = SFAppTheme.isDarkMode(context);
     return Obx(() {
       return Visibility(
-        visible: userProfileController.isData,
+        visible: userProfileController.fetchUserModel.profilePhoto != null &&
+            !userProfileController.isDataLoading,
         replacement: const Center(
-          child: CircularProgressIndicator(),
+          child: Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(
+                  // color: Colors.red,
+                  ),
+            ),
+            backgroundColor: Colors.white,
+          ),
         ),
         child: Scaffold(
           backgroundColor: dark ? SFColors.darkBackgroundColor : SFColors.white,
@@ -90,28 +99,21 @@ class _OwnProfileScreenState extends State<OwnProfileScreen> {
                                   follower: userProfileController.followers,
                                   following: userProfileController.following,
                                 )
-                              : Obx(() {
-                                  return Visibility(
-                                    visible:
-                                        userProfileController.isDataLoading,
-                                    replacement: const Center(
-                                      child: CircularProgressIndicator(),
-                                    ),
-                                    child: OtherUserProfielHeader(
-                                      fullName: userProfileController.fullName
-                                          .toString(),
-                                      userName: userProfileController
-                                          .userData['userName']
-                                          .toString(),
-                                      profilePhoto: userProfileController
-                                          .userData['profilePhoto']
-                                          .toString(),
-                                      follower: userProfileController.followers,
-                                      following:
-                                          userProfileController.following,
-                                    ),
-                                  );
-                                }),
+                              : OtherUserProfielHeader(
+                                  selectedProfileId: userProfileController
+                                      .currentProfileId
+                                      .toString(),
+                                  fullName:
+                                      userProfileController.fullName.toString(),
+                                  userName: userProfileController
+                                      .userData['userName']
+                                      .toString(),
+                                  profilePhoto: userProfileController
+                                      .userData['profilePhoto']
+                                      .toString(),
+                                  follower: userProfileController.followers,
+                                  following: userProfileController.following,
+                                ),
                           Divider(
                               thickness: 7,
                               color: dark

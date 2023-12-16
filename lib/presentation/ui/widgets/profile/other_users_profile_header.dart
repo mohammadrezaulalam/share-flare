@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:share_flare/presentation/ui/screens/follower_screen.dart';
 import 'package:share_flare/presentation/ui/utilities/auth_constant.dart';
 import 'package:share_flare/presentation/ui/utilities/colors.dart';
 import 'package:share_flare/presentation/ui/utilities/theme/theme.dart';
@@ -8,6 +10,7 @@ import 'package:share_flare/presentation/ui/widgets/round_divider.dart';
 class OtherUserProfielHeader extends StatefulWidget {
   OtherUserProfielHeader({
     super.key,
+    required this.selectedProfileId,
     required this.fullName,
     required this.userName,
     required this.profilePhoto,
@@ -15,6 +18,7 @@ class OtherUserProfielHeader extends StatefulWidget {
     required this.following,
   });
 
+  String selectedProfileId;
   String fullName;
   String userName;
   String profilePhoto;
@@ -80,49 +84,80 @@ class _OtherUserProfielHeaderState extends State<OtherUserProfielHeader> {
                           ],
                         ),
                         const RoundDivider(),
-                        Row(
-                          children: [
-                            Text(
-                              widget.following.toString(),
-                              style: const TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w700,
+                        GestureDetector(
+                          onTap: () async {
+                            List<String> userIds = userProfileController
+                                .userData['following']
+                                .cast<String>()
+                                .toList();
+                            if (userIds.isNotEmpty) {
+                              await followUserController.getUsersByIds(userIds);
+                              Get.to(
+                                () => const FollowerScreen(
+                                  isFollowerTab: false,
+                                ),
+                              );
+                            }
+                          },
+                          child: Row(
+                            children: [
+                              Text(
+                                widget.following.toString(),
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w700,
+                                ),
                               ),
-                            ),
-                            const SizedBox(
-                              width: 3,
-                            ),
-                            const Text(
-                              "Following",
-                              style: TextStyle(
-                                letterSpacing: 0.4,
-                                fontSize: 10,
+                              const SizedBox(
+                                width: 3,
                               ),
-                            )
-                          ],
+                              const Text(
+                                "Following",
+                                style: TextStyle(
+                                  letterSpacing: 0.4,
+                                  fontSize: 10,
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                         const RoundDivider(),
-                        Row(
-                          children: [
-                            Text(
-                              widget.follower.toString(),
-                              style: const TextStyle(
-                                letterSpacing: 0.4,
-                                fontSize: 12,
-                                fontWeight: FontWeight.w700,
+                        GestureDetector(
+                          onTap: () async {
+                            List<String> userIds = userProfileController
+                                .userData['follower']
+                                .cast<String>()
+                                .toList();
+                            if (userIds.isNotEmpty) {
+                              Get.to(
+                                () => const FollowerScreen(
+                                  isFollowerTab: true,
+                                ),
+                              );
+                            }
+                          },
+                          child: Row(
+                            children: [
+                              Text(
+                                widget.follower.toString(),
+                                style: const TextStyle(
+                                  letterSpacing: 0.4,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w700,
+                                ),
                               ),
-                            ),
-                            const SizedBox(
-                              width: 3,
-                            ),
-                            const Text(
-                              "Follower",
-                              style: TextStyle(
-                                letterSpacing: 0.4,
-                                fontSize: 10,
+                              const SizedBox(
+                                width: 3,
                               ),
-                            )
-                          ],
+                              const Text(
+                                "Follower",
+                                style: TextStyle(
+                                  letterSpacing: 0.4,
+                                  fontSize: 10,
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                         const SizedBox(
                           width: 15,
