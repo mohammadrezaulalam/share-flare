@@ -300,7 +300,7 @@ class ListOfUser extends StatelessWidget {
       body: FutureBuilder<List<String>>(future:chatController.fetchUserIds(), builder: (context, userIdsSnapshot){
         if (userIdsSnapshot.connectionState == ConnectionState.waiting) {
           // Show a loading indicator while the Future is in progress
-          return Scaffold(body: const Center(child: CircularProgressIndicator()));
+          return const Scaffold(body: Center(child: CircularProgressIndicator()));
         } else if (userIdsSnapshot.hasError) {
           // Show an error message if the Future fails
           return Text('Error: ${userIdsSnapshot.error}');
@@ -318,6 +318,7 @@ class ListOfUser extends StatelessWidget {
                       if (userDataSnapshot.connectionState ==
                           ConnectionState.waiting) {
                         // return Center(child: CircularProgressIndicator());
+
                         return Center(child: SizedBox());
                         // return Scaffold(body: const Center(child: CircularProgressIndicator()));
                       } else if (userDataSnapshot.hasError) {
@@ -327,7 +328,11 @@ class ListOfUser extends StatelessWidget {
                       }else{
                         UserModelRegistration? user = userDataSnapshot.data;
                         if(user!=null){
-                          
+                          //current user omit from list, because its a chatting app so Current user can't chat with himself
+                          if(firebaseAuth.currentUser!.uid==user.uid){
+                            return  SizedBox();
+                          }
+
                           return ListTile(
                             onTap: (){
                               Get.to(() => ChatPage(
