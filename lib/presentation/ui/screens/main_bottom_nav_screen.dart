@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:share_flare/presentation/state_holders/main_bottom_nav_controller.dart';
@@ -20,6 +22,14 @@ class MainBottomNavScreen extends StatefulWidget {
 }
 
 class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   WidgetsBinding.instance.addPostFrameCallback((_) async {
+  //     userProfileController.listenToUserInfo();
+  //   });
+  // }
+
   MainBottomNavController mainBottomNavController =
       Get.put(MainBottomNavController());
 
@@ -28,14 +38,16 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
     HomePage(),
     SearchScreen(),
     HomePage(),
-    OwnProfileScreen()
+    OwnProfileScreen(
+      uid: FirebaseAuth.instance.currentUser!.uid,
+    )
   ];
 
-  @override
-  void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {});
-    super.initState();
-  }
+  // @override
+  // void initState() {
+  //   WidgetsBinding.instance.addPostFrameCallback((_) {});
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {

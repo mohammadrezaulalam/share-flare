@@ -5,7 +5,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:share_flare/presentation/ui/screens/chat_page_test.dart';
 import 'package:share_flare/presentation/ui/screens/chat_screen.dart';
 import 'package:share_flare/presentation/ui/screens/notification_screen.dart';
-import 'package:share_flare/presentation/ui/screens/other_users_profile_screen.dart';
+//import 'package:share_flare/presentation/ui/screens/other_users_profile_screen.dart';
 import 'package:share_flare/presentation/ui/utilities/assets_path.dart';
 import 'package:share_flare/presentation/ui/utilities/auth_constant.dart';
 import 'package:share_flare/presentation/ui/utilities/colors.dart';
@@ -85,7 +85,7 @@ class _HomePageState extends State<HomePage> {
               ),
               child: GestureDetector(
                 onTap: () {
-                  Get.to(() => const OtherUsersProfileScreen());
+                  //Get.to(() => const OtherUsersProfileScreen());
                 },
                 child: const Icon(
                   Iconsax.messages_2,
@@ -162,10 +162,7 @@ class _HomePageState extends State<HomePage> {
                           //chat screen load when click on any friend's profile
                           if (_selectedIndex != 0) {
                             Get.to(()=>ChatScreen(userName: storyItems[_selectedIndex]['name']!, image: storyItems[_selectedIndex]['img']!,),);
-                           /* Get.to(() => ChatPage(
-                                reciverUserEmail:
-                                    firebaseAuth.currentUser!.email!,
-                                receiverUserId: firebaseAuth.currentUser!.uid,));*/
+
                           }
 
                           setState(() {});
