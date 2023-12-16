@@ -22,6 +22,14 @@ class MainBottomNavScreen extends StatefulWidget {
 }
 
 class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   WidgetsBinding.instance.addPostFrameCallback((_) async {
+  //     userProfileController.listenToUserInfo();
+  //   });
+  // }
+
   MainBottomNavController mainBottomNavController =
       Get.put(MainBottomNavController());
 
@@ -35,11 +43,11 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
     )
   ];
 
-  @override
-  void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {});
-    super.initState();
-  }
+  // @override
+  // void initState() {
+  //   WidgetsBinding.instance.addPostFrameCallback((_) {});
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {

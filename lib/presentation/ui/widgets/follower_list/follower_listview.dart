@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:share_flare/data/models/fetch_followers_model.dart';
+import 'package:share_flare/presentation/ui/utilities/auth_constant.dart';
 import 'package:share_flare/presentation/ui/widgets/custom_search_bar.dart';
 import 'package:share_flare/presentation/ui/widgets/follower_list/follower_list_tap.dart';
 
-
 class FollowerListView extends StatelessWidget {
-  const FollowerListView({super.key});
+  FollowerListView({super.key, required this.followerList});
+
+  List followerList;
 
   @override
   Widget build(BuildContext context) {
@@ -19,18 +22,21 @@ class FollowerListView extends StatelessWidget {
         ),
         Expanded(
           child: ListView.builder(
-            itemCount: 11,
-            itemBuilder: (context, index) => Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: const FollowerListTap(),
-            ),
-          ),
+              itemCount: followUserController.userList.length,
+              itemBuilder: (context, index) {
+                FetchFollowerModel followers =
+                    followUserController.userList[index];
+                return Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: FollowerListTap(
+                    followerList: followers,
+                  ),
+                );
+              }),
         ),
       ],
     );
   }
 }
-
-

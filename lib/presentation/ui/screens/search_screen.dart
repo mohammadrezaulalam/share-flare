@@ -137,7 +137,7 @@ class _SearchScreenState extends State<SearchScreen> {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(10.0),
                           child: Image.network(
-                            searchController[index],
+                            'https://cdn.pixabay.com/photo/2013/10/02/23/03/mountains-190055_640.jpg',
                             fit: BoxFit.fill,
                           ),
                         ),
