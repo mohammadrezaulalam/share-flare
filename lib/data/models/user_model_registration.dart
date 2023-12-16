@@ -41,7 +41,7 @@ class UserModelRegistration {
   static UserModelRegistration fromSnap(DocumentSnapshot snap) {
     var snapshot = snap.data() as Map<String, dynamic>;
     return UserModelRegistration(
-      firstName: snapshot['email'],
+      firstName: snapshot['firstName'],
       lastName: snapshot['lastName'],
       userName: snapshot['userName'],
       profilePhoto: snapshot['profilePhoto'],

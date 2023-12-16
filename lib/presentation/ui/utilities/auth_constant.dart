@@ -8,6 +8,7 @@ import 'package:share_flare/presentation/state_holders/registration_controller.d
 import 'package:share_flare/presentation/state_holders/user_controller.dart';
 
 import '../../state_holders/auth_controller.dart';
+import '../../state_holders/chat_controller.dart';
 
 //FIREBASE
 var firebaseAuth = FirebaseAuth.instance;
@@ -19,4 +20,6 @@ var registrationController = RegistrationController.instance;
 var loginController = LoginController.instance;
 var userProfileController = UserProfileController.instance;
 var authController = AuthController.instance;
+var chatController = ChatController.instance;
 var followUserController = FollowUserController.instance;
+
